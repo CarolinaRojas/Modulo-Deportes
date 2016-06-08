@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Idrd\Usuarios\Repo\Persona as MPersona;
 
-class Persona extends Model
+class Persona extends MPersona
 {
     //
 }
