@@ -25,16 +25,12 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_ETAPA')->unsigned();
             $table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
             $table->integer('FK_I_ID_BANCO')->unsigned();
-            
-            
             $table->integer('FK_I_ID_DEPARTAMENTO')->unsigned();
             $table->integer('FK_I_ID_EPS')->unsigned();
             $table->integer('FK_I_ID_LOCALIDAD')->unsigned();
             $table->integer('FK_I_ID_BARRIO')->unsigned();
             
-            $table->string('V_DOCUMENTO');
             $table->string('V_DIRECCION_RESIDENCIA');
-            $table->string('V_BARRIO');
             $table->string('V_TELEFONO_FIJO');
             $table->string('V_TELEFONO_CELULAR');
             $table->string('V_CORREO_ELECTRONICO');

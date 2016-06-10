@@ -124,7 +124,12 @@
                                 <label for="inputEmail" class="control-label pull-right">Barrio:</label>
                               </div>
                               <div class="col-md-4">
-                                <input class="form-control" placeholder="Barrio" type="text" name="Barrio">
+                                <select name="Barrio" id="Barrio" class="form-control">
+                                    <option value="">Seleccionar</option>
+                                    @foreach($barrio as $barrios)
+                                            <option value="{{ $barrios['PK_I_ID_BARRIO'] }}">{{ $barrios['V_NOMBRE_BARRIO'] }}</option>
+                                    @endforeach
+                                </select>
                               </div>
                               <div class="col-md-2">
                                 <label for="inputEmail" class="control-label pull-right">Localidad:</label>

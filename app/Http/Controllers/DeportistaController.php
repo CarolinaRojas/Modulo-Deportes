@@ -16,6 +16,7 @@ use App\DepartamentoModel;
 use App\Pais;
 use App\DeportistaModel;
 use App\Persona;
+use App\BarrioModel;
 
 
 class DeportistaController extends Controller
@@ -31,6 +32,7 @@ class DeportistaController extends Controller
         $estadoCivil = EstadoCivilModel::all();
         $departamento = DepartamentoModel::all();
         $pais = Pais::all();
+        $barrio = BarrioModel::all();
         $selected = array();
         $deportista = array();
         
@@ -46,7 +48,8 @@ class DeportistaController extends Controller
                 ->with(compact('etapa'))
                 ->with(compact('estadoCivil'))
                 ->with(compact('departamento'))
-                ->with(compact('pais'));
+                ->with(compact('pais'))
+                ->with(compact('barrio'));
         
     }
         

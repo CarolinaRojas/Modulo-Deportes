@@ -8,6 +8,5 @@ class BarrioModel extends Model
 {
     protected $table = 'TB_SRD_BARRIO';
     protected $primaryKey = 'PK_I_ID_BARRIO';
-    protected $fillable = ['V_NOMBRE_BARRIO'];
-    protected $fillable = ['I_COD_UPZ'];
+    protected $fillable = ['V_NOMBRE_BARRIO', 'I_COD_UPZ'];
 }

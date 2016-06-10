@@ -98,8 +98,7 @@ $(function(e){
       
       console.log(persona.deportista);
       if(persona.deportista){
-          $('input[name="Direccion_Residencia"]').val($.trim(persona.deportista['V_DIRECCION_RESIDENCIA']));
-          $('input[name="Barrio"]').val($.trim(persona.deportista['V_BARRIO']));
+          $('input[name="Direccion_Residencia"]').val($.trim(persona.deportista['V_DIRECCION_RESIDENCIA']));          
           $('input[name="Telefono_Fijo"]').val($.trim(persona.deportista['V_TELEFONO_FIJO']));
           $('input[name="Telefono_Celular"]').val($.trim(persona.deportista['V_TELEFONO_CELULAR']));
           $('input[name="Correo_Electronico"]').val($.trim(persona.deportista['V_CORREO_ELECTRONICO']));
@@ -115,6 +114,7 @@ $(function(e){
           $("#Modalidad").val(persona.deportista['FK_I_ID_MODALIDAD']).change();
           $("#Etapa").val(persona.deportista['FK_I_ID_ETAPA']).change();
           $("#Departamento").val(persona.deportista['FK_I_ID_DEPARTAMENTO']).change();
+          $("#Barrio").val(persona.deportista['FK_I_ID_BARRIO']).change();
       }
       
       $('#modal_form_persona').modal('show');
