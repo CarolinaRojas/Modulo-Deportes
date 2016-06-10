@@ -19,12 +19,15 @@ Route::get('uno', function () {
     return 'welcome';
 });
 
-Route::get('/deportista','DeportistaController@datos');
+
+
+
+
+
+
 Route::get('/personaDeportista/{id}','PersonaDeportistaController@obtener');
 Route::get('/personaBuscarDeportista/{id}','PersonaDeportistaController@buscar');
 Route::get('/personaDeportistaDatos/{id}','PersonaDeportistaController@InformacionDeportia');
-
-
 
 
 Route::get('/personas', '\Idrd\Usuarios\Controllers\PersonaController@index');
@@ -45,5 +48,8 @@ Route::get('/service/buscar/{key}', '\Idrd\Usuarios\Controllers\PersonaControlle
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+
+    Route::get('DatosDeportista','DeportistaController@index');
+    Route::get('deportista/{id}','DeportistaController@datos');
+    
 });

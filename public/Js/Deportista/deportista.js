@@ -21,33 +21,29 @@ $(function(e)
                           var html = '';
                           $.each(data, function(i, e){
                             html += '<li class="list-group-item" style="border:0">'+
-
-                                                '<br>'+                                                     
+                                        '<br>'+                                                     
+                                              '<div class="row">'+
+                                                  '<div class="col-xs-12">'+
                                                       '<div class="row">'+
-                                                          '<div class="col-xs-12">'+
-                                                              '<div class="row">'+
-                                                                  '<div class="col-xs-6">'+
-                                                                            '<h4 class="list-group-item-heading">'+
-                                                                                ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
-                                                                            '<p class="list-group-item-text">'+
-                                                                            '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
-                                                                  '</div>'+
-                                                                  
-                                                                  '<div class="col-xs-6 ">'+
-                                                                            '<div class="pull-right btn-group" role="group" aria-label="Informacion">'+
-                                                                              '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary">Información Basica</button>'+
-                                                                              '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>'+
-                                                                              '<button type="button" class="btn btn-primary">Apoyos y servicios</button>'+
-                                                                            '</div>'+
-                                                                  '</div>'+
-                                                              '</div>'+
+                                                          '<div class="col-xs-6">'+
+                                                                    '<h4 class="list-group-item-heading">'+
+                                                                        ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
+                                                                    '<p class="list-group-item-text">'+
+                                                                    '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
+                                                          '</div>'+
+
+                                                          '<div class="col-xs-6 ">'+
+                                                                    '<div class="pull-right btn-group" role="group" aria-label="Informacion">'+
+                                                                      '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary">Información Basica</button>'+
+                                                                      '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>'+
+                                                                      '<button type="button" class="btn btn-primary">Apoyos y servicios</button>'+
+                                                                    '</div>'+
                                                           '</div>'+
                                                       '</div>'+
+                                                  '</div>'+
+                                              '</div>'+
+                                        '</li>';
 
-                                                  
-                                      '</li>';
-
-                              
                                             
                                         
                           });
@@ -67,13 +63,13 @@ $(function(e)
                     var id = $(this).data('rel');
                     
                      $.get(
-                      'personaDeportista/'+id,
+                      'PersonaDeportista/'+id,
                       {},
                       function(data)
                       { 
                         if(data)
                         {
-                          popular_modal_persona(data);
+                         // popular_modal_persona(data);
                         }
                       },
                       'json'
@@ -185,9 +181,9 @@ $(function(e)
                   var nombreDeportista="";
                   var cedulaDeportista="";
                  
-                  nombreDeportista=$.trim(persona['Primer_Apellido'])+' '+$.trim(persona['Segundo_Apellido'])+' '+$.trim(persona['Primer_Nombre'])+' '+$.trim(persona['Segundo_Nombre']);
+                  nombreDeportista = $.trim(persona['Primer_Apellido'])+' '+$.trim(persona['Segundo_Apellido'])+' '+$.trim(persona['Primer_Nombre'])+' '+$.trim(persona['Segundo_Nombre']);
                   $('p[name="Cedula"]').val($.trim(persona['Cedula']));
-                  cedulaDeportista=$.trim(persona['Cedula']);
+                  cedulaDeportista = $.trim(persona['Cedula']);
                   
 
                   document.getElementById("titulo").innerHTML= "INFORMACIÓN BASICA";
@@ -198,7 +194,6 @@ $(function(e)
                   $('input[name="Fecha_Nacimiento"]').val($.trim(persona['Fecha_Nacimiento']));
                   $('input[name="Nombre_Ciudad"]').val($.trim(persona['Nombre_Ciudad']));
 
-                  
                   $('#modal_form_persona').modal('show');
                 };
 

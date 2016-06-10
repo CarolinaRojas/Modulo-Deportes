@@ -18,7 +18,7 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_PERSONA')->unsigned();
             $table->integer('FK_I_ID_ESTADO_CIVIL')->unsigned();
             $table->integer('FK_I_ID_ESTRATO')->unsigned();
-            $table->integer('FK_I_ID_GRUPO')->unsigned();
+            $table->integer('FK_I_ID_GRUPO_SANGUINEO')->unsigned();
             $table->integer('FK_I_ID_AGRUPACION')->unsigned();
             $table->integer('FK_I_ID_DEPORTE')->unsigned();
             $table->integer('FK_I_ID_MODALIDAD')->unsigned();
@@ -26,6 +26,12 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
             $table->integer('FK_I_ID_BANCO')->unsigned();
             
+            
+            $table->integer('FK_I_ID_DEPARTAMENTO')->unsigned();//??
+            $table->integer('FK_I_ID_EPS')->unsigned();//Sin llave foranea
+            $table->integer('FK_I_ID_LOCALIDAD')->unsigned();//Sin llave foranea
+            
+            $table->string('V_DOCUMENTO');
             $table->string('V_DIRECCION_RESIDENCIA');
             $table->string('V_BARRIO');
             $table->string('V_TELEFONO_FIJO');
@@ -44,6 +50,7 @@ class CrearTablaSrdDeportista extends Migration
              $table->foreign('FK_I_ID_ETAPA')->references('PK_I_ID_ETAPA')->on('TB_SRD_ETAPA');
              $table->foreign('FK_I_ID_TIPO_DEPORTISTA')->references('PK_I_ID_TIPO_DEPORTISTA')->on('TB_SRD_TIPO_DEPORTISTA');
              $table->foreign('FK_I_ID_BANCO')->references('PK_I_ID_BANCO')->on('TB_SRD_BANCO');
+             
             
             /*$table->integer('FK_I_ID_PERSONA')->unsigned();
              * 

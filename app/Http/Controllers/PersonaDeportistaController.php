@@ -10,5 +10,5 @@ class PersonaDeportistaController extends MPersonaController
 {
     public function InformacionDeportia(Request $request, $id){
     		echo "fadsfd ".$id;
-    }
+    }    
 }

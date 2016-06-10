@@ -16,8 +16,6 @@ class CrearTablaSrdDeporte extends Migration
             $table->increments('PK_I_ID_DEPORTE');            
             $table->string('V_NOMBRE_DEPORTE');
             
-            $table->timestamps();
-            
         });
     }
 

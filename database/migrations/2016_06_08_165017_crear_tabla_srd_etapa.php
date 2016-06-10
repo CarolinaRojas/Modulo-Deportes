@@ -15,9 +15,6 @@ class CrearTablaSrdEtapa extends Migration
         Schema::create('TB_SRD_ETAPA', function (Blueprint $table) {
             $table->increments('PK_I_ID_ETAPA');
             $table->string('V_NOMBRE_ETAPA');
-            
-            $table->timestamps();
-            
         });
     }
 

@@ -63,7 +63,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST2'),
             'port' => env('DB_PORT2'),
-            'database' => 'idrdgov_simgeneral_prueba',
+            'database' => env('DB_PRINCIPAL'),
             'username' => env('DB_USERNAME2'),
             'password' => env('DB_PASSWORD2'),
             'charset' => 'utf8',

@@ -16,8 +16,6 @@ class CrearTablaSrdModalidad extends Migration
             $table->increments('PK_I_ID_MODALIDAD');            
             $table->string('V_NOMBRE_MODALIDAD');
             
-            $table->timestamps();
-            
         });
     }
 

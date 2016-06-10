@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class DeportistaModel extends Model
 {
     protected $table = 'TB_SRD_DEPORTISTA';
@@ -19,6 +20,9 @@ class DeportistaModel extends Model
         'FK_I_ID_ETAPA',
         'FK_I_ID_TIPO_DEPORTISTA',
         'FK_I_ID_BANCO',
+        'FK_I_ID_DEPARTAMENTO',
+        'FK_I_ID_EPS',
+        'FK_I_ID_LOCALIDAD',
         'V_DIRECCION_RESIDENCIA',
         'V_BARRIO',
         'V_TELEFONO_FIJO',
@@ -26,6 +30,11 @@ class DeportistaModel extends Model
         'V_CORREO_ELECTRONICO',
         'B_SITUACION_MILITAR',
         'V_CANTIDAD_HIJOS',
-        'V_NUMERO_CUENTA'
+        'V_NUMERO_CUENTA'        
         ];
+    
+    public function persona()
+    {
+        return $this->belongsTo('App\Persona', 'FK_I_ID_PERSONA');
+    }
 }
