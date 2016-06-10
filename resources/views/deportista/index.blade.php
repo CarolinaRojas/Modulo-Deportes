@@ -1,9 +1,10 @@
 @extends('master')
 @section('script')
   @parent
-    <script src="{{ asset('public/Js/Deportista/Deportista2.js') }}"></script> 
+    <script src="{{ asset('public/Js/Deportista/Deportista.js') }}"></script> 
 @stop  
 @section('content') 
+ <input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
     <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">  
         <div class="content">
             <div class="panel panel-primary">
@@ -73,7 +74,7 @@
                                 <div class="form-group">
                                    <div class="col-lg-12 ">
                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                     <button type="submit" class="btn btn-primary">Enviar</button>
+                                     <button type="button" class="btn btn-primary" name="Enviar" id="Enviar">Enviar</button>
                                    </div>
                                 </div>
                             </div>

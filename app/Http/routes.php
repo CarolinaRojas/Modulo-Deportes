@@ -48,8 +48,14 @@ Route::get('/service/buscar/{key}', '\Idrd\Usuarios\Controllers\PersonaControlle
 */
 
 Route::group(['middleware' => ['web']], function () {
+    
+    Route::resource('AddDatos', 'DeportistaController');
 
     Route::get('DatosDeportista','DeportistaController@index');
     Route::get('deportista/{id}','DeportistaController@datos');
+    
+    
+    
+    
     
 });

@@ -1,8 +1,6 @@
 $(function(e){ 
-    var $personas_actuales = $('#personas').html();
-    var URL = $('#main_persona').data('url');
-    
-    
+    var $personas_actuales = $('#personas').html();    
+    var URL = $('#main_persona').data('url');    
     var buscar = function(e){
       var key = $('input[name="buscador"]').val();
       if (key.length > 2){
@@ -50,33 +48,12 @@ $(function(e){
         reset(e);
       }
     };
-
-    $('#buscar').on('click', function(e)
-    {
-      var role = $(this).data('role');
-      switch(role)
-      {
-        case 'buscar':
-          $(this).data('role', 'reset');
-          buscar(e);
-        break;
-
-        case 'reset':
-          $(this).data('role', 'buscar');
-          reset(e);
-        break;
-      }
-    });
-
-
     var reset = function(e){
       $('input[name="buscador"]').val('');
       $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-search');
       $('#personas').html($personas_actuales);
       $('#paginador').fadeIn();
-    };
-
-
+    };    
     var popular_modal_persona = function(persona){
       var nombreDeportista="";
       var cedulaDeportista="";
@@ -122,12 +99,89 @@ $(function(e){
       $('#modal_form_persona').modal('show');
     };
 
+    $('#buscar').on('click', function(e){
+      var role = $(this).data('role');
+      switch(role)
+      {
+        case 'buscar':
+          $(this).data('role', 'reset');
+          buscar(e);
+        break;
 
+        case 'reset':
+          $(this).data('role', 'buscar');
+          reset(e);
+        break;
+      }
+    });
+    
     $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){
         var id = $(this).data('rel');
         $.get("deportista/" + id + "", function (response) {
             popular_modal_persona(response);
         });
     });
-
+   
 });
+
+$(document).ready(function () {    
+    RegistroDeportista();
+});
+function RegistroDeportista(){
+    $('#Enviar').on('click', function () {
+        //var Id_Persona = $("#idPredio").val();
+        var Eps = $('#Eps').val();
+        var Departamento = $('#Departamento').val();
+        var Localidad = $('#Localidad').val();
+        var Barrio = $('#Barrio').val();
+        var Direccion_Residencia = $('#Direccion_Residencia').val();
+        var Telefono_Fijo = $('#Telefono_Fijo').val();
+        var Telefono_Celular = $('#Telefono_Celular').val();
+        var Correo_Electronico = $('#Correo_Electronico').val();
+        var Estado_Civil = $('#Estado_Civil').val();
+        var Hijos = $('#Hijos').val();
+        var Banco = $('#Banco').val();
+        var Cuenta = $('#Cuenta').val();
+        var Deporte = $('#Deporte').val();
+        var Modalidad = $('#Modalidad').val();
+        var Agrupacion = $('#Agrupacion').val();
+        var Etapa = $('#Etapa').val();
+        
+        if(Eps){
+            //Editar
+        }else{
+            //Agregar
+            var token = $("#token").val();
+            $.ajax({
+                type: 'POST',
+                url: "AddDatos",
+                headers: {'X-CSRF-TOKEN': token},
+                dataType: 'json',
+                data: {
+                    Eps: Eps,
+                    Departamento: Departamento,
+                    Localidad: Localidad,
+                    Barrio: Barrio,
+                    Direccion_Residencia: Direccion_Residencia,
+                    Telefono_Fijo: Telefono_Fijo,
+                    Telefono_Celular: Telefono_Celular,
+                    Correo_Electronico: Correo_Electronico,
+                    Estado_Civil: Estado_Civil,
+                    Hijos: Hijos,
+                    Banco: Banco,
+                    Cuenta: Cuenta,
+                    Deporte: Deporte,
+                    Modalidad: Modalidad,
+                    Agrupacion: Agrupacion,
+                    Etapa: Etapa
+                },
+                success: function (xhr) {
+                    alert(xhr.responseJSON.Departamento);
+                },
+                error: function (xhr) { 
+                    alert(xhr.responseJSON.Departamento);
+                }
+            });
+        }
+    });
+}

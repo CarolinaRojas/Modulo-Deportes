@@ -13,7 +13,7 @@ class RegistroDeportistaRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,24 @@ class RegistroDeportistaRequest extends Request
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $validaciones = [                        
+            'Eps' => 'required',
+            'Departamento' => 'required',
+            'Localidad' => 'required|min:10|numeric',
+            'Barrio' => 'required',
+            'Direccion_Residencia'=> 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
+            'Telefono_Fijo'=> 'required|numeric|digits_between:7,10',
+            'Telefono_Celular'=> 'required|numeric|digits:10',
+            'Correo_Electronico'=> 'required|email|min:7|max:40',
+            'Estado_Civil'=> 'required',
+            'Hijos'=> 'required|numeric|digits_between:1,3',
+            'Banco' => 'required',
+            'Cuenta' => 'required|numeric|digits_between:1,20',
+            'Deporte' => 'required',
+            'Modalidad' => 'required',
+            'Agrupacion' => 'required',
+            'Etapa' => 'required',
+            ];
+        return $validaciones;
     }
 }

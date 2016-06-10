@@ -21,6 +21,9 @@ use App\Ciudad;
 use App\Genero;
 use App\BancoModel;
 
+use App\Http\Requests\RegistroDeportistaRequest;
+
+
 
 class DeportistaController extends Controller
 {   
@@ -66,4 +69,27 @@ class DeportistaController extends Controller
         $persona = Persona::with('deportista')->find($id);        
         return $persona;
     }
+    public function show() {
+        return response()->json(["Mensaje" => 'SHOW']);
+    }
+    
+    public function store(RegistroDeportistaRequest $request) {
+        return response()->json(["Mensaje" => 'STORE']);
+    }
+    
+    public function create() {  
+         return response()->json(["Mensaje" => 'CREATE']);
+    }
+    
+    public function edit($id) {
+        return response()->json(["Mensaje" => 'EDIT']);
+    }
+    
+    public function update(RegistroDeportistaRequest $request, $id) {
+        return response()->json(["Mensaje" => 'UPDATE']);
+    }
+    
+    public function destroy($id) {
+        return response()->json(["Mensaje" => 'DESTROY']);
+    }    
 }
