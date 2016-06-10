@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\EpsModel;
 use App\LocalidadModel;
-use App\EtniaModel;
+use App\Etnia;
 use App\AgrupacionModel;
 use App\DeporteModel;
 use App\ModalidadModel;
@@ -17,6 +17,9 @@ use App\Pais;
 use App\DeportistaModel;
 use App\Persona;
 use App\BarrioModel;
+use App\Ciudad;
+use App\Genero;
+use App\BancoModel;
 
 
 class DeportistaController extends Controller
@@ -24,7 +27,7 @@ class DeportistaController extends Controller
     public function index(){
         $eps = EpsModel::all();
         $localidad = LocalidadModel::all();
-        $etnia = EtniaModel::all();
+        $etnia = Etnia::all();
         $agrupacion = AgrupacionModel::all();
         $deporte = DeporteModel::all();
         $modalidad = ModalidadModel::all();
@@ -33,6 +36,10 @@ class DeportistaController extends Controller
         $departamento = DepartamentoModel::all();
         $pais = Pais::all();
         $barrio = BarrioModel::all();
+        $ciudad = Ciudad::all();
+        $genero = Genero::all();
+        $banco = BancoModel::all();
+        
         $selected = array();
         $deportista = array();
         
@@ -49,8 +56,10 @@ class DeportistaController extends Controller
                 ->with(compact('estadoCivil'))
                 ->with(compact('departamento'))
                 ->with(compact('pais'))
-                ->with(compact('barrio'));
-        
+                ->with(compact('barrio'))
+                ->with(compact('ciudad'))
+                ->with(compact('genero'))
+                ->with(compact('banco'));
     }
         
     public function datos($id){

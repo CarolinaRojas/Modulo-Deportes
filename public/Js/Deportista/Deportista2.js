@@ -93,10 +93,11 @@ $(function(e){
       $("#Pais").val(persona['Id_Pais']).change();
       $('input[name="Fecha_Nacimiento"]').val($.trim(persona['Fecha_Nacimiento']));
       $('input[name="Nombre_Ciudad"]').val($.trim(persona['Nombre_Ciudad']));
+      $("#Genero").val(persona['Id_Genero']).change();
       $("#Grupo_Etnico").val(persona['Id_Etnia']).change();
       
       
-      console.log(persona.deportista);
+      console.log(persona);
       if(persona.deportista){
           $('input[name="Direccion_Residencia"]').val($.trim(persona.deportista['V_DIRECCION_RESIDENCIA']));          
           $('input[name="Telefono_Fijo"]').val($.trim(persona.deportista['V_TELEFONO_FIJO']));
@@ -115,6 +116,7 @@ $(function(e){
           $("#Etapa").val(persona.deportista['FK_I_ID_ETAPA']).change();
           $("#Departamento").val(persona.deportista['FK_I_ID_DEPARTAMENTO']).change();
           $("#Barrio").val(persona.deportista['FK_I_ID_BARRIO']).change();
+          $("#Banco").val(persona.deportista['FK_I_ID_BANCO']).change();
       }
       
       $('#modal_form_persona').modal('show');
