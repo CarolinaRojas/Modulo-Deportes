@@ -70,7 +70,7 @@
                                 <label for="inputEmail" class="control-label pull-right">Pais Nacimiento:</label>
                               </div>
                               <div class="col-md-4">
-                                <select name="Pais" id="Pais" class="form-control">
+                                  <select name="Pais" id="Pais" class="form-control" disabled="">
                                     <option value="">Seleccionar</option>
                                     @foreach($pais as $paises)
                                             <option value="{{ $paises['Id_Pais'] }}">{{ $paises['Nombre_Pais'] }}</option>
@@ -165,7 +165,7 @@
                                 <label for="inputEmail" class="control-label pull-right">Grupo Etnico:</label>
                               </div>
                               <div class="col-md-4">
-                                <select name="Grupo_Etnico" id="Grupo_Etnico" class="form-control">
+                                  <select name="Grupo_Etnico" id="Grupo_Etnico" class="form-control" disabled="">
                                     <option value="">Seleccionar</option>
                                     @foreach($etnia as $etnias)
                                             <option value="{{ $etnias['Id_Etnia'] }}">{{ $etnias['Nombre_Etnia'] }}</option>

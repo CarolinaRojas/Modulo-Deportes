@@ -15,7 +15,7 @@ class CrearTablaSrdBarrio extends Migration
         Schema::create('TB_SRD_BARRIO', function (Blueprint $table) {
             $table->increments('PK_I_ID_BARRIO');
             $table->string('V_NOMBRE_BARRIO');
-            $table->integer('V_COD_UPZ');
+            $table->integer('I_COD_UPZ');
         });
     }
 
