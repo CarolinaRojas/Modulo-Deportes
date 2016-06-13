@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaSrdDeportista extends Migration
+class CrearTablaSdrDeportista extends Migration
 {
     /**
      * Run the migrations.
@@ -29,12 +29,13 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_EPS')->unsigned();
             $table->integer('FK_I_ID_LOCALIDAD')->unsigned();
             $table->integer('FK_I_ID_BARRIO')->unsigned();
+            $table->integer('FK_I_ID_SITUACION_MILITAR')->unsigned();
+            
             
             $table->string('V_DIRECCION_RESIDENCIA');
             $table->string('V_TELEFONO_FIJO');
             $table->string('V_TELEFONO_CELULAR');
             $table->string('V_CORREO_ELECTRONICO');
-            $table->boolean('B_SITUACION_MILITAR');
             $table->string('V_CANTIDAD_HIJOS');
             $table->string('V_NUMERO_CUENTA');
             
@@ -48,6 +49,7 @@ class CrearTablaSrdDeportista extends Migration
             $table->foreign('FK_I_ID_TIPO_DEPORTISTA')->references('PK_I_ID_TIPO_DEPORTISTA')->on('TB_SRD_TIPO_DEPORTISTA');
             $table->foreign('FK_I_ID_BANCO')->references('PK_I_ID_BANCO')->on('TB_SRD_BANCO');
             $table->foreign('FK_I_ID_BARRIO')->references('PK_I_ID_BARRIO')->on('TB_SRD_BARRIO');
+            $table->foreign('FK_I_ID_SITUACION_MILITAR')->references('PK_I_ID_SITUACION_MILITAR')->on('TB_SRD_SITUACION_MILITAR');
             
         });
     }
@@ -68,7 +70,9 @@ class CrearTablaSrdDeportista extends Migration
             $table->dropForeign(['FK_I_ID_TIPO_DEPORTISTA']);
             $table->dropForeign(['FK_I_ID_BANCO']);
             $table->dropForeign(['FK_I_ID_BARRIO']);
+            $table->dropForeign(['FK_I_ID_SITUACION_MILITAR']);
         });
         Schema::drop('TB_SRD_DEPORTISTA');
+
     }
 }
