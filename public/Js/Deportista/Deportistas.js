@@ -23,13 +23,13 @@ $(function(e){
                                                         '<h4 class="list-group-item-heading">'+
                                                             ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
                                                         '<p class="list-group-item-text">'+
-                                                        '<small>IdentificaciÃ³n: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
+                                                        '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
                                               '</div>'+
 
                                               '<div class="col-xs-6 ">'+
                                                         '<div class="pull-right btn-group" role="group" aria-label="Informacion">'+
-                                                          '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary">InformaciÃ³n Basica</button>'+
-                                                          '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default">InformaciÃ³n Deportiva</button>'+
+                                                          '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary">Información Basica</button>'+
+                                                          '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>'+
                                                           '<button type="button" class="btn btn-primary">Apoyos y servicios</button>'+
                                                         '</div>'+
                                               '</div>'+
@@ -63,7 +63,7 @@ $(function(e){
       cedulaDeportista = $.trim(persona['Cedula']);
 
 
-      document.getElementById("titulo").innerHTML= "INFORMACIÃ“N BASICA";
+      document.getElementById("titulo").innerHTML= "INFORMACIÓN BASICA";
       document.getElementById("nombreDeport").innerHTML= nombreDeportista.toUpperCase();
       document.getElementById("Cedula").innerHTML=cedulaDeportista;
 
@@ -73,9 +73,7 @@ $(function(e){
       $("#Genero").val(persona['Id_Genero']).change();
       $("#Grupo_Etnico").val(persona['Id_Etnia']).change();
       $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
-      
-      
-      console.log(persona);
+            
       if(persona.deportista){
           $('input[name="Direccion_Residencia"]').val($.trim(persona.deportista['V_DIRECCION_RESIDENCIA']));          
           $('input[name="Telefono_Fijo"]').val($.trim(persona.deportista['V_TELEFONO_FIJO']));
@@ -152,6 +150,8 @@ function RegistroDeportista(){
         var Estrato = $('#Estrato').val();
         
         $("#mensajeIncorrecto").html(':');
+        
+        alert('KAJHSKJASHKA');
         
         if(Id_Deportista){
             //Editar

@@ -41,6 +41,7 @@ class RegistroDeportistaRequest extends Request
             'Modalidad' => 'required',
             'Agrupacion' => 'required',
             'Etapa' => 'required',
+            'Id_persona' => 'unique',
             ];
         return $validaciones;
     }

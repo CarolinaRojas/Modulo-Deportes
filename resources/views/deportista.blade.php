@@ -1,7 +1,7 @@
 @extends('master')
 @section('script')
   @parent
-    <script src="{{ asset('public/Js/Deportista/deportista.js') }}"></script> 
+    <script src="{{ asset('public/Js/Deportista/Deportistas.js') }}"></script> 
 @stop  
 @section('content') 
     <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">  
@@ -212,14 +212,14 @@
                               </div>
                             </div>
                             <br>
-                            <div class="col-xs-12 col-md-12 ">   
+                            <!--<div class="col-xs-12 col-md-12 ">   
                                 <div class="form-group">
                                    <div class="col-lg-12 ">
                                      <button type="reset" class="btn btn-default">Cancel</button>
                                      <button type="submit" class="btn btn-primary">Enviar</button>
                                    </div>
                                 </div>
-                            </div>
+                            </div-->
                         </fieldset>
                       </form>
                     </div>
