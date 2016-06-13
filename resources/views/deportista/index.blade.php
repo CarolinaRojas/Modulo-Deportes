@@ -1,7 +1,7 @@
 @extends('master')
 @section('script')
   @parent
-    <script src="{{ asset('public/Js/Deportista/Deportista.js') }}"></script> 
+    <script src="{{ asset('public/Js/Deportista/Deportistas.js') }}"></script> 
 @stop  
 @section('content') 
  <input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
