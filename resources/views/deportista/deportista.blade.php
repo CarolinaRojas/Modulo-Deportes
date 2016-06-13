@@ -1,6 +1,7 @@
+<input type="hidden" name="Id_Deportista" id="Id_Deportista">
 <div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">EPS:</label>                                
+        <label for="inputEmail" class="control-label pull-right" id="EpsL">EPS:</label>                                
     </div>
     <div class="col-md-4">
         <select name="Eps" id="Eps" class="form-control">
@@ -14,7 +15,7 @@
 <br>
 <div class="row">
     <div class="col-md-2">
-      <label for="inputEmail" class="control-label pull-right">Departamento:</label>
+        <label for="inputEmail" class="control-label pull-right" id="DepartamentoL">Departamento:</label>
     </div>
     <div class="col-md-4">
       <select name="Departamento" id="Departamento" class="form-control">
@@ -25,7 +26,7 @@
       </select>
     </div>  
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Localidad:</label>
+        <label for="inputEmail" class="control-label pull-right" id="LocalidadL">Localidad:</label>
     </div>
     <div class="col-md-4">
         <select name="Localidad" id="Localidad" class="form-control">
@@ -39,7 +40,7 @@
 <br>
 <div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Barrio:</label>
+        <label for="inputEmail" class="control-label pull-right" id="BarrioL">Barrio:</label>
     </div>
     <div class="col-md-4">
         <select name="Barrio" id="Barrio" class="form-control">
@@ -50,40 +51,40 @@
         </select>
     </div>
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Dirección Residencia:</label>
+        <label for="inputEmail" class="control-label pull-right" id="Direccion_ResidenciaL">Dirección Residencia:</label>
     </div>
     <div class="col-md-4">
-        <input class="form-control" placeholder="Dirección Residencia" type="text" name="Direccion_Residencia">
+        <input class="form-control" placeholder="Dirección Residencia" type="text" name="Direccion_Residencia" id="Direccion_Residencia">
     </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Telefono fijo:</label>
+        <label for="inputEmail" class="control-label pull-right" id="Telefono_FijoL">Telefono fijo:</label>
     </div>
     <div class="col-md-4">
-        <input class="form-control" placeholder="Telefono fijo" type="text" name="Telefono_Fijo">
+        <input class="form-control" placeholder="Telefono fijo" type="text" name="Telefono_Fijo" id="Telefono_Fijo">
     </div>
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Telefono Celular:</label>
+        <label for="inputEmail" class="control-label pull-right" id="Telefono_CelularL">Telefono Celular:</label>
     </div>
     <div class="col-md-4">
-        <input class="form-control" placeholder="Telefono Celular" type="text" name="Telefono_Celular">
+        <input class="form-control" placeholder="Telefono Celular" type="text" name="Telefono_Celular" id="Telefono_Celular">
     </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Correo Electronico:</label>
+        <label for="inputEmail" class="control-label pull-right" id="Correo_ElectronicoL">Correo Electronico:</label>
     </div>
     <div class="col-md-4">
-        <input class="form-control" placeholder="Correo Electronico" type="text" name="Correo_Electronico">
+        <input class="form-control" placeholder="Correo Electronico" type="text" name="Correo_Electronico" id="Correo_Electronico">
     </div>
 </div>
 <br>
 <div class="row">
   <div class="col-md-2">
-    <label for="inputEmail" class="control-label pull-right">Estado Civil:</label>
+      <label for="inputEmail" class="control-label pull-right" id="Estado_CivilL">Estado Civil:</label>
   </div>
   <div class="col-md-4">
     <select name="Estado_Civil" id="Estado_Civil" class="form-control">
@@ -94,16 +95,16 @@
     </select>
   </div>
   <div class="col-md-2">
-    <label for="inputEmail" class="control-label pull-right">Hijos:</label>
+      <label for="inputEmail" class="control-label pull-right" id="HijosL">Hijos:</label>
   </div>
   <div class="col-md-4">
-    <input class="form-control" placeholder="Hijos" type="text" name="Hijos">
+      <input class="form-control" placeholder="Hijos" type="text" name="Hijos" id="Hijos">
   </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-2">
-    <label for="inputEmail" class="control-label pull-right">Banco:</label>
+        <label for="inputEmail" class="control-label pull-right" id="BancoL">Banco:</label>
   </div>
   <div class="col-md-4">
     <select name="Banco" id="Banco" class="form-control">
@@ -114,16 +115,16 @@
     </select>
   </div>
     <div class="col-md-2">
-    <label for="inputEmail" class="control-label pull-right">Cuenta:</label>
+        <label for="inputEmail" class="control-label pull-right" id="CuentaL">Cuenta:</label>
   </div>
   <div class="col-md-4">
-    <input class="form-control" placeholder="Cuenta" type="text" name="Cuenta">
+      <input class="form-control" placeholder="Cuenta" type="text" name="Cuenta" id="Cuenta">
   </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Deporte:</label>
+        <label for="inputEmail" class="control-label pull-right"  id="DeporteL">Deporte:</label>
     </div>
     <div class="col-md-4">
         <select name="Deporte" id="Deporte" class="form-control">
@@ -134,7 +135,7 @@
         </select>
     </div>
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Modalidad:</label>
+        <label for="inputEmail" class="control-label pull-right" id="ModalidadL">Modalidad:</label>
     </div>
     <div class="col-md-4">
         <select name="Modalidad" id="Modalidad" class="form-control">
@@ -148,7 +149,7 @@
 <br>
 <div class="row">  
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Agrupación:</label>
+        <label for="inputEmail" class="control-label pull-right" id="AgrupacionL">Agrupación:</label>
     </div>
     <div class="col-md-4">
         <select name="Agrupacion" id="Agrupacion" class="form-control">
@@ -159,7 +160,7 @@
         </select>
     </div>
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Etapa:</label>
+        <label for="inputEmail" class="control-label pull-right" id="EtapaL">Etapa:</label>
     </div>
     <div class="col-md-4">
         <select name="Etapa" id="Etapa" class="form-control">

@@ -1,3 +1,4 @@
+<input type="hidden" name="Id_Persona" id="Id_Persona">
 <div class="row">
     <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right">Fecha Nacimiento:</label>

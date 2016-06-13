@@ -59,10 +59,13 @@
                                 <div class="col-md-4"></div>
                             </div>
                             <br><br>
-                            
                             <div>
                                 <h4>Datos de la persona:</h4>
                                 @include('deportista.persona')
+                            </div>
+                            <br>
+                            <div id="mensaje-incorrecto" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
+                                <strong>Error: </strong> <span id="mensajeIncorrecto"></span>
                             </div>
                             <br>
                             <div>

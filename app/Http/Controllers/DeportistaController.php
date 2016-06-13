@@ -74,7 +74,37 @@ class DeportistaController extends Controller
     }
     
     public function store(RegistroDeportistaRequest $request) {
-        return response()->json(["Mensaje" => 'STORE']);
+        return response()->json(["Mensaje" => $request->Id_Persona]);
+        if ($request->ajax()) {     
+            //$deportista = DeportistaModel:: create();
+            $deportista = new  DeportistaModel;
+            $deportista->FK_I_ID_PERSONA = $request->Id_Persona;
+            $deportista->FK_I_ID_ESTADO_CIVIL = $request->Estado_Civil;
+            $deportista->FK_I_ID_ESTRATO = 1; 
+            $deportista->FK_I_ID_GRUPO_SANGUINEO = 1;
+            $deportista->FK_I_ID_AGRUPACION = $request->Agrupacion;            
+            $deportista->FK_I_ID_DEPORTE = $request->Deporte;
+            $deportista->FK_I_ID_MODALIDAD = $request->Modalidad;
+            $deportista->FK_I_ID_ETAPA = $request->Etapa;
+            $deportista->FK_I_ID_TIPO_DEPORTISTA = 1;
+            $deportista->FK_I_ID_BANCO = $request->Banco;
+            $deportista->FK_I_ID_DEPARTAMENTO = $request->Departamento;
+            $deportista->FK_I_ID_EPS = $request->Eps;
+            $deportista->FK_I_ID_LOCALIDAD = $request->Localidad;
+            $deportista->FK_I_ID_BARRIO = $request->Barrio;
+            $deportista->V_DIRECCION_RESIDENCIA = $request->Direccion_Residencia;
+            $deportista->V_TELEFONO_FIJO = $request->Telefono_Fijo;
+            $deportista->V_TELEFONO_CELULAR = $request->Telefono_Celular;
+            $deportista->V_CORREO_ELECTRONICO = $request->Correo_Electronico;
+            $deportista->B_SITUACION_MILITAR = 0;
+            $deportista->V_CANTIDAD_HIJOS = $request->Hijos;
+            $deportista->V_NUMERO_CUENTA = $request->Cuenta;       
+            $deportista->SAVE();
+           return response()->json(["Mensaje" => '$deportista']);
+            //$deportista->SAVE();
+        }
+        
+        return response()->json(["Mensaje" => $deportista]);
     }
     
     public function create() {  

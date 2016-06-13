@@ -24,11 +24,11 @@ class RegistroDeportistaRequest extends Request
     public function rules()
     {
         $validaciones = [                        
-            'Eps' => 'required',
+           /* 'Eps' => 'required',
             'Departamento' => 'required',
-            'Localidad' => 'required|min:10|numeric',
+            'Localidad' => 'required',
             'Barrio' => 'required',
-            'Direccion_Residencia'=> 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
+            'Direccion_Residencia'=> 'required|min:3|regex:/^[(a-zA-Z0-9\s\#\-\°)]+$/u',
             'Telefono_Fijo'=> 'required|numeric|digits_between:7,10',
             'Telefono_Celular'=> 'required|numeric|digits:10',
             'Correo_Electronico'=> 'required|email|min:7|max:40',
@@ -39,7 +39,7 @@ class RegistroDeportistaRequest extends Request
             'Deporte' => 'required',
             'Modalidad' => 'required',
             'Agrupacion' => 'required',
-            'Etapa' => 'required',
+            'Etapa' => 'required',*/
             ];
         return $validaciones;
     }
