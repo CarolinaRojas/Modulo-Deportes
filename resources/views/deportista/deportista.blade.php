@@ -11,6 +11,17 @@
             @endforeach
         </select>
   </div>
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="EstratoL">Estrato:</label>                                
+    </div>
+    <div class="col-md-4">
+        <select name="Estrato" id="Estrato" class="form-control">
+            <option value="">Seleccionar</option>
+            @foreach($estrato as $estratos)
+                    <option value="{{ $estratos['PK_I_ID_ESTRATO'] }}">{{ $estratos['V_NOMBRE_ESTRATO'] }}</option>
+            @endforeach
+        </select>
+  </div>
 </div>
 <br>
 <div class="row">

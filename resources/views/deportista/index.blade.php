@@ -65,7 +65,7 @@
                             </div>
                             <br>
                             <div id="mensaje-incorrecto" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
-                                <strong>Error: </strong> <span id="mensajeIncorrecto"></span>
+                                <strong>Error </strong> <span id="mensajeIncorrecto"></span>
                             </div>
                             <br>
                             <div>

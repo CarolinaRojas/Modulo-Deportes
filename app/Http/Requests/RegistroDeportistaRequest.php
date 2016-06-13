@@ -24,7 +24,8 @@ class RegistroDeportistaRequest extends Request
     public function rules()
     {
         $validaciones = [                        
-           /* 'Eps' => 'required',
+            'Eps' => 'required',
+            'Estrato'=> 'required',
             'Departamento' => 'required',
             'Localidad' => 'required',
             'Barrio' => 'required',
@@ -39,7 +40,7 @@ class RegistroDeportistaRequest extends Request
             'Deporte' => 'required',
             'Modalidad' => 'required',
             'Agrupacion' => 'required',
-            'Etapa' => 'required',*/
+            'Etapa' => 'required',
             ];
         return $validaciones;
     }

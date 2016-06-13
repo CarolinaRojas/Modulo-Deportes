@@ -20,6 +20,7 @@ use App\BarrioModel;
 use App\Ciudad;
 use App\Genero;
 use App\BancoModel;
+use App\EstratoModel;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 
@@ -39,6 +40,7 @@ class DeportistaController extends Controller
         $departamento = DepartamentoModel::all();
         $pais = Pais::all();
         $barrio = BarrioModel::all();
+        $estrato = EstratoModel::all();
         $ciudad = Ciudad::all();
         $genero = Genero::all();
         $banco = BancoModel::all();
@@ -62,7 +64,8 @@ class DeportistaController extends Controller
                 ->with(compact('barrio'))
                 ->with(compact('ciudad'))
                 ->with(compact('genero'))
-                ->with(compact('banco'));
+                ->with(compact('banco'))
+                ->with(compact('estrato'));
     }
         
     public function datos($id){
@@ -74,13 +77,13 @@ class DeportistaController extends Controller
     }
     
     public function store(RegistroDeportistaRequest $request) {
-        return response()->json(["Mensaje" => $request->Id_Persona]);
+        
         if ($request->ajax()) {     
             //$deportista = DeportistaModel:: create();
             $deportista = new  DeportistaModel;
             $deportista->FK_I_ID_PERSONA = $request->Id_Persona;
             $deportista->FK_I_ID_ESTADO_CIVIL = $request->Estado_Civil;
-            $deportista->FK_I_ID_ESTRATO = 1; 
+            $deportista->FK_I_ID_ESTRATO = $request->Estrato;
             $deportista->FK_I_ID_GRUPO_SANGUINEO = 1;
             $deportista->FK_I_ID_AGRUPACION = $request->Agrupacion;            
             $deportista->FK_I_ID_DEPORTE = $request->Deporte;
