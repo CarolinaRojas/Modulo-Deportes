@@ -1,5 +1,16 @@
 <input type="hidden" name="Id_Deportista" id="Id_Deportista">
-<div class="row">
+<div class="row">    
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="Grupo_SanguineoL">Grupo Sanguineo:</label>
+    </div>
+    <div class="col-md-4">
+        <select name="Grupo_Sanguineo" id="Grupo_Sanguineo" class="form-control">
+            <option value="">Seleccionar</option>
+            @foreach($grupoSanguineo as $grupoSanguineos)
+                    <option value="{{ $grupoSanguineos['Id_GrupoSanguineo'] }}">{{ $grupoSanguineos['Nombre_GrupoSanguineo'] }}</option>
+            @endforeach
+        </select>
+  </div>
     <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right" id="EpsL">EPS:</label>                                
     </div>
@@ -10,6 +21,20 @@
                     <option value="{{ $epss['Id_Eps'] }}">{{ $epss['Nombre_Eps'] }}</option>
             @endforeach
         </select>
+  </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2">
+      <label for="inputEmail" class="control-label pull-right" id="Estado_CivilL">Estado Civil:</label>
+  </div>
+  <div class="col-md-4">
+    <select name="Estado_Civil" id="Estado_Civil" class="form-control">
+        <option value="">Seleccionar</option>
+        @foreach($estadoCivil as $estadoCiviles)
+                <option value="{{ $estadoCiviles['PK_I_ID_ESTADO_CIVIL'] }}">{{ $estadoCiviles['V_NOMBRE_ESTADO_CIVIL'] }}</option>
+        @endforeach
+    </select>
   </div>
     <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right" id="EstratoL">Estrato:</label>                                
@@ -95,13 +120,13 @@
 <br>
 <div class="row">
   <div class="col-md-2">
-      <label for="inputEmail" class="control-label pull-right" id="Estado_CivilL">Estado Civil:</label>
+      <label for="inputEmail" class="control-label pull-right" id="Tipo_DeportistaL">Tipo de  Deportista:</label>
   </div>
   <div class="col-md-4">
-    <select name="Estado_Civil" id="Estado_Civil" class="form-control">
+    <select name="Tipo_Deportista" id="Tipo_Deportista" class="form-control">
         <option value="">Seleccionar</option>
-        @foreach($estadoCivil as $estadoCiviles)
-                <option value="{{ $estadoCiviles['PK_I_ID_ESTADO_CIVIL'] }}">{{ $estadoCiviles['V_NOMBRE_ESTADO_CIVIL'] }}</option>
+        @foreach($tipoDeportista as $tipoDeportistas)
+                <option value="{{ $tipoDeportistas['PK_I_ID_TIPO_DEPORTISTA'] }}">{{ $tipoDeportistas['V_NOMBRE_TIPO_DEPORTISTA'] }}</option>
         @endforeach
     </select>
   </div>

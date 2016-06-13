@@ -42,6 +42,9 @@ class RegistroDeportistaRequest extends Request
             'Agrupacion' => 'required',
             'Etapa' => 'required',
             'Id_persona' => 'unique',
+            'Estrato'=>'required',
+            'Grupo_Sanguineo' =>'required',
+            'Tipo_Deportista' => 'required',
             ];
         return $validaciones;
     }

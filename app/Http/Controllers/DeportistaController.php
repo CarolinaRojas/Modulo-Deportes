@@ -21,6 +21,8 @@ use App\Ciudad;
 use App\Genero;
 use App\BancoModel;
 use App\EstratoModel;
+use App\GrupoSanguineoModel;
+use App\TipoDeportistaModel;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 
@@ -44,6 +46,8 @@ class DeportistaController extends Controller
         $ciudad = Ciudad::all();
         $genero = Genero::all();
         $banco = BancoModel::all();
+        $grupoSanguineo = GrupoSanguineoModel::all();
+        $tipoDeportista = TipoDeportistaModel::all();
         
         $selected = array();
         $deportista = array();
@@ -65,7 +69,9 @@ class DeportistaController extends Controller
                 ->with(compact('ciudad'))
                 ->with(compact('genero'))
                 ->with(compact('banco'))
-                ->with(compact('estrato'));
+                ->with(compact('estrato'))
+                ->with(compact('grupoSanguineo'))
+                ->with(compact('tipoDeportista'));
     }
         
     public function datos($id){
@@ -79,17 +85,17 @@ class DeportistaController extends Controller
     public function store(RegistroDeportistaRequest $request) {
         
         if ($request->ajax()) {     
-            //$deportista = DeportistaModel:: create();
+            
             $deportista = new  DeportistaModel;
             $deportista->FK_I_ID_PERSONA = $request->Id_Persona;
             $deportista->FK_I_ID_ESTADO_CIVIL = $request->Estado_Civil;
             $deportista->FK_I_ID_ESTRATO = $request->Estrato;
-            $deportista->FK_I_ID_GRUPO_SANGUINEO = 1;
+            $deportista->FK_I_ID_GRUPO_SANGUINEO = $request->Grupo_Sanguineo;
             $deportista->FK_I_ID_AGRUPACION = $request->Agrupacion;            
             $deportista->FK_I_ID_DEPORTE = $request->Deporte;
             $deportista->FK_I_ID_MODALIDAD = $request->Modalidad;
             $deportista->FK_I_ID_ETAPA = $request->Etapa;
-            $deportista->FK_I_ID_TIPO_DEPORTISTA = 1;
+            $deportista->FK_I_ID_TIPO_DEPORTISTA = $request->Tipo_Deportista;
             $deportista->FK_I_ID_BANCO = $request->Banco;
             $deportista->FK_I_ID_DEPARTAMENTO = $request->Departamento;
             $deportista->FK_I_ID_EPS = $request->Eps;
@@ -101,13 +107,14 @@ class DeportistaController extends Controller
             $deportista->V_CORREO_ELECTRONICO = $request->Correo_Electronico;
             $deportista->B_SITUACION_MILITAR = 0;
             $deportista->V_CANTIDAD_HIJOS = $request->Hijos;
-            $deportista->V_NUMERO_CUENTA = $request->Cuenta;       
-            $deportista->SAVE();
-           return response()->json(["Mensaje" => '$deportista']);
-            //$deportista->SAVE();
+            $deportista->V_NUMERO_CUENTA = $request->Cuenta;                   
+                        
+            if($deportista->save()){
+                return response()->json(["Mensaje" => "Deportista ingresado correctamente."]);
+            }else{
+                return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);
+            }
         }
-        
-        return response()->json(["Mensaje" => $deportista]);
     }
     
     public function create() {  
@@ -119,6 +126,36 @@ class DeportistaController extends Controller
     }
     
     public function update(RegistroDeportistaRequest $request, $id) {
+        if ($request->ajax()){
+            $deportista = DeportistaModel::find($id);
+            $deportista->FK_I_ID_PERSONA = $request->Id_Persona;
+            $deportista->FK_I_ID_ESTADO_CIVIL = $request->Estado_Civil;
+            $deportista->FK_I_ID_ESTRATO = $request->Estrato;
+            $deportista->FK_I_ID_GRUPO_SANGUINEO = $request->Grupo_Sanguineo;
+            $deportista->FK_I_ID_AGRUPACION = $request->Agrupacion;            
+            $deportista->FK_I_ID_DEPORTE = $request->Deporte;
+            $deportista->FK_I_ID_MODALIDAD = $request->Modalidad;
+            $deportista->FK_I_ID_ETAPA = $request->Etapa;
+            $deportista->FK_I_ID_TIPO_DEPORTISTA = $request->Tipo_Deportista;
+            $deportista->FK_I_ID_BANCO = $request->Banco;
+            $deportista->FK_I_ID_DEPARTAMENTO = $request->Departamento;
+            $deportista->FK_I_ID_EPS = $request->Eps;
+            $deportista->FK_I_ID_LOCALIDAD = $request->Localidad;
+            $deportista->FK_I_ID_BARRIO = $request->Barrio;
+            $deportista->V_DIRECCION_RESIDENCIA = $request->Direccion_Residencia;
+            $deportista->V_TELEFONO_FIJO = $request->Telefono_Fijo;
+            $deportista->V_TELEFONO_CELULAR = $request->Telefono_Celular;
+            $deportista->V_CORREO_ELECTRONICO = $request->Correo_Electronico;
+            $deportista->B_SITUACION_MILITAR = 0;
+            $deportista->V_CANTIDAD_HIJOS = $request->Hijos;
+            $deportista->V_NUMERO_CUENTA = $request->Cuenta;                   
+                        
+            if($deportista->save()){
+                return response()->json(["Mensaje" => "Deportista actualizado correctamente."]);
+            }else{
+                return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
+            }
+        }
         return response()->json(["Mensaje" => 'UPDATE']);
     }
     

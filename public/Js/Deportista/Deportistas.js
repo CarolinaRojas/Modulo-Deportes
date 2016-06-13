@@ -94,6 +94,9 @@ $(function(e){
           $("#Barrio").val(persona.deportista['FK_I_ID_BARRIO']).change();
           $("#Banco").val(persona.deportista['FK_I_ID_BANCO']).change();
           $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
+          $("#Estrato").val(persona.deportista['FK_I_ID_ESTRATO']).change();
+          $("#Grupo_Sanguineo").val(persona.deportista['FK_I_ID_GRUPO_SANGUINEO']).change();
+          $("#Tipo_Deportista").val(persona.deportista['FK_I_ID_TIPO_DEPORTISTA']).change();
       }
       
       $('#modal_form_persona').modal('show');
@@ -127,6 +130,7 @@ $(function(e){
 $(document).ready(function () {    
     RegistroDeportista();
 });
+
 function RegistroDeportista(){
     $('#Enviar').on('click', function () {
         var Id_Persona = $("#Id_Persona").val();
@@ -148,22 +152,10 @@ function RegistroDeportista(){
         var Agrupacion = $('#Agrupacion').val();
         var Etapa = $('#Etapa').val();
         var Estrato = $('#Estrato').val();
+        var Grupo_Sanguineo = $('#Grupo_Sanguineo').val();
+        var Tipo_Deportista = $('#Tipo_Deportista').val();
         
-        $("#mensajeIncorrecto").html(':');
-        
-        alert('KAJHSKJASHKA');
-        
-        if(Id_Deportista){
-            //Editar
-        }else{
-            //Agregar
-            var token = $("#token").val();
-            $.ajax({
-                type: 'POST',
-                url: "AddDatos",
-                headers: {'X-CSRF-TOKEN': token},
-                dataType: 'json',
-                data: {
+        var datos = {
                     Eps: Eps,
                     Departamento: Departamento,
                     Localidad: Localidad,
@@ -182,38 +174,23 @@ function RegistroDeportista(){
                     Etapa: Etapa,
                     Id_Persona: Id_Persona,
                     Id_Deportista: Id_Deportista,
-                    Estrato: Estrato
-                },
-                success: function (xhr) {
-                    alert(xhr.Mensaje);
-                },
-                error: function (xhr) {                     
-                    if(xhr.responseJSON.Eps){ Validacion('Eps', xhr.responseJSON.Eps);}else{Normal('Eps');}
-                    if(xhr.responseJSON.Estrato){ Validacion('Estrato', xhr.responseJSON.Estrato);}else{Normal('Estrato');}
-                    if(xhr.responseJSON.Departamento){ Validacion('Departamento', xhr.responseJSON.Departamento);}else{Normal('Departamento');}
-                    if(xhr.responseJSON.Localidad){ Validacion('Localidad', xhr.responseJSON.Localidad);}else{Normal('Localidad');}
-                    if(xhr.responseJSON.Barrio){ Validacion('Barrio', xhr.responseJSON.Barrio);}else{Normal('Barrio');}
-                    if(xhr.responseJSON.Direccion_Residencia){ Validacion('Direccion_Residencia', xhr.responseJSON.Direccion_Residencia);}else{Normal('Direccion_Residencia');}
-                    if(xhr.responseJSON.Telefono_Fijo){ Validacion('Telefono_Fijo', xhr.responseJSON.Telefono_Fijo);}else{Normal('Telefono_Fijo');}
-                    if(xhr.responseJSON.Telefono_Celular){ Validacion('Telefono_Celular', xhr.responseJSON.Telefono_Celular);}else{Normal('Telefono_Celular');}
-                    if(xhr.responseJSON.Correo_Electronico){ Validacion('Correo_Electronico', xhr.responseJSON.Correo_Electronico);}else{Normal('Correo_Electronico');}
-                    if(xhr.responseJSON.Estado_Civil){ Validacion('Estado_Civil', xhr.responseJSON.Estado_Civil);}else{Normal('Estado_Civil');}
-                    if(xhr.responseJSON.Hijos){ Validacion('Hijos', xhr.responseJSON.Hijos);}else{Normal('Hijos');}
-                    if(xhr.responseJSON.Banco){ Validacion('Banco', xhr.responseJSON.Banco);}else{Normal('Banco');}
-                    if(xhr.responseJSON.Cuenta){ Validacion('Cuenta', xhr.responseJSON.Cuenta);}else{Normal('Cuenta');}
-                    if(xhr.responseJSON.Deporte){ Validacion('Deporte', xhr.responseJSON.Deporte);}else{Normal('Deporte');}
-                    if(xhr.responseJSON.Modalidad){ Validacion('Modalidad', xhr.responseJSON.Modalidad);}else{Normal('Modalidad');}
-                    if(xhr.responseJSON.Agrupacion){ Validacion('Agrupacion', xhr.responseJSON.Agrupacion);}else{Normal('Agrupacion');}
-                    if(xhr.responseJSON.Etapa){ Validacion('Etapa', xhr.responseJSON.Etapa);}else{Normal('Etapa');}
-                    
-                    var scrollPos;                    
-                    scrollPos = $("#mensajeIncorrecto").offset().top;
-                    $(window).scrollTop(scrollPos);
-                    
-                    return false;
+                    Estrato: Estrato,
+                    Grupo_Sanguineo: Grupo_Sanguineo,
+                    Tipo_Deportista: Tipo_Deportista
                 }
-            });
-        }
+                
+        $("#mensajeIncorrecto").html(':');
+        
+        var token = $("#token").val();
+                
+        if(Id_Deportista){
+            //Editar
+            Proceso ('PUT', 'AddDatos/'+Id_Deportista, datos, token);
+
+        }else{
+            //Agregar 
+            Proceso ('POST', 'AddDatos', datos, token);
+        }        
     });
 }
 
@@ -230,4 +207,46 @@ function Validacion(campo, mensaje){
 function Normal(campo){
     $("#"+campo).css({ 'border-color': '#CCCCCC' });    
     $("#"+campo+"L").css({ 'color': '#555555' });    
+}
+
+function Proceso (tipo, url, datos, token){
+     $.ajax({
+        type: tipo,
+        url: url,
+        headers: {'X-CSRF-TOKEN': token},
+        dataType: 'json',
+        data: datos,
+        success: function (xhr) {
+            console.log(xhr.Mensaje);
+        },
+        error: function (xhr) {                     
+            if(xhr.responseJSON.Grupo_Sanguineo){ Validacion('Grupo_Sanguineo', xhr.responseJSON.Grupo_Sanguineo);}else{Normal('Grupo_Sanguineo');}
+            if(xhr.responseJSON.Eps){ Validacion('Eps', xhr.responseJSON.Eps);}else{Normal('Eps');}
+            if(xhr.responseJSON.Estrato){ Validacion('Estrato', xhr.responseJSON.Estrato);}else{Normal('Estrato');}
+            if(xhr.responseJSON.Departamento){ Validacion('Departamento', xhr.responseJSON.Departamento);}else{Normal('Departamento');}
+            if(xhr.responseJSON.Localidad){ Validacion('Localidad', xhr.responseJSON.Localidad);}else{Normal('Localidad');}
+            if(xhr.responseJSON.Barrio){ Validacion('Barrio', xhr.responseJSON.Barrio);}else{Normal('Barrio');}
+            if(xhr.responseJSON.Direccion_Residencia){ Validacion('Direccion_Residencia', xhr.responseJSON.Direccion_Residencia);}else{Normal('Direccion_Residencia');}
+            if(xhr.responseJSON.Telefono_Fijo){ Validacion('Telefono_Fijo', xhr.responseJSON.Telefono_Fijo);}else{Normal('Telefono_Fijo');}
+            if(xhr.responseJSON.Telefono_Celular){ Validacion('Telefono_Celular', xhr.responseJSON.Telefono_Celular);}else{Normal('Telefono_Celular');}
+            if(xhr.responseJSON.Correo_Electronico){ Validacion('Correo_Electronico', xhr.responseJSON.Correo_Electronico);}else{Normal('Correo_Electronico');}
+            if(xhr.responseJSON.Tipo_Deportista){ Validacion('Tipo_Deportista', xhr.responseJSON.Tipo_Deportista);}else{Normal('Tipo_Deportista');}
+            if(xhr.responseJSON.Estado_Civil){ Validacion('Estado_Civil', xhr.responseJSON.Estado_Civil);}else{Normal('Estado_Civil');}
+            if(xhr.responseJSON.Hijos){ Validacion('Hijos', xhr.responseJSON.Hijos);}else{Normal('Hijos');}
+            if(xhr.responseJSON.Banco){ Validacion('Banco', xhr.responseJSON.Banco);}else{Normal('Banco');}
+            if(xhr.responseJSON.Cuenta){ Validacion('Cuenta', xhr.responseJSON.Cuenta);}else{Normal('Cuenta');}
+            if(xhr.responseJSON.Deporte){ Validacion('Deporte', xhr.responseJSON.Deporte);}else{Normal('Deporte');}
+            if(xhr.responseJSON.Modalidad){ Validacion('Modalidad', xhr.responseJSON.Modalidad);}else{Normal('Modalidad');}
+            if(xhr.responseJSON.Agrupacion){ Validacion('Agrupacion', xhr.responseJSON.Agrupacion);}else{Normal('Agrupacion');}
+            if(xhr.responseJSON.Etapa){ Validacion('Etapa', xhr.responseJSON.Etapa);}else{Normal('Etapa');}
+
+
+            var scrollPos;                    
+            scrollPos = $("#mensajeIncorrecto").offset().top;
+            $(window).scrollTop(scrollPos);
+
+            return false;
+        }
+    });
+    
 }
