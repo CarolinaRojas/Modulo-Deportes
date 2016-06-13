@@ -217,7 +217,8 @@ function Proceso (tipo, url, datos, token){
         dataType: 'json',
         data: datos,
         success: function (xhr) {
-            console.log(xhr.Mensaje);
+            alert(xhr.Mensaje);
+            $('#modal_form_persona').modal('hide');
         },
         error: function (xhr) {                     
             if(xhr.responseJSON.Grupo_Sanguineo){ Validacion('Grupo_Sanguineo', xhr.responseJSON.Grupo_Sanguineo);}else{Normal('Grupo_Sanguineo');}

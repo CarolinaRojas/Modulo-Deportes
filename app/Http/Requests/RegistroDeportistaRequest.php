@@ -41,7 +41,7 @@ class RegistroDeportistaRequest extends Request
             'Modalidad' => 'required',
             'Agrupacion' => 'required',
             'Etapa' => 'required',
-            'Id_persona' => 'unique',
+            'Id_persona' => 'unique:FK_I_ID_PERSONA',
             'Estrato'=>'required',
             'Grupo_Sanguineo' =>'required',
             'Tipo_Deportista' => 'required',
