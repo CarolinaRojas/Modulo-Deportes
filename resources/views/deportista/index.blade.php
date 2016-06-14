@@ -47,20 +47,9 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="form_deportista" action="">
-                        <fieldset>
-                          <legend><p clase="text-uppercase" id="nombreDeport"></p></legend>
-                            <div class="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4 text-center">
-                                    <label for="inputEmail" class="control-label">Foto</label><br>
-                                    <img src="" alt="" class="img-thumbnail img-responsive" style="width:100%; height:100%; max-width:200px; min-height:200px;max-height:250px;"><br>
-                                     C.C <label class="control-label" id="Cedula"></label>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <br><br>
-                            <div>
-                                <h4>Datos de la persona:</h4>
+                        <fieldset>                          
+                            <div>                                
+                                <h3 class="modal-title text-uppercase">Datos personales:</h3>
                                 @include('deportista.persona')
                             </div>
                             <br>
@@ -69,7 +58,7 @@
                             </div>
                             <br>
                             <div>
-                                <h4>Datos del deportista:</h4>
+                                <h3 class="modal-title text-uppercase">Datos del deportista:</h3>
                                 @include('deportista.deportista')
                             </div>                            
                             <br>

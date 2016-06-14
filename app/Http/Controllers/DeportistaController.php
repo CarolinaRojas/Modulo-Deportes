@@ -23,6 +23,7 @@ use App\BancoModel;
 use App\EstratoModel;
 use App\GrupoSanguineoModel;
 use App\TipoDeportistaModel;
+use App\SituacionMilitarModel;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 
@@ -48,6 +49,7 @@ class DeportistaController extends Controller
         $banco = BancoModel::all();
         $grupoSanguineo = GrupoSanguineoModel::all();
         $tipoDeportista = TipoDeportistaModel::all();
+        $situacionMilitar = SituacionMilitarModel::all();
         
         $selected = array();
         $deportista = array();
@@ -71,13 +73,15 @@ class DeportistaController extends Controller
                 ->with(compact('banco'))
                 ->with(compact('estrato'))
                 ->with(compact('grupoSanguineo'))
-                ->with(compact('tipoDeportista'));
+                ->with(compact('tipoDeportista'))
+                ->with(compact('situacionMilitar'));
     }
         
     public function datos($id){
         $persona = Persona::with('deportista')->find($id);        
         return $persona;
     }
+    
     public function show() {
         return response()->json(["Mensaje" => 'SHOW']);
     }
@@ -105,9 +109,9 @@ class DeportistaController extends Controller
             $deportista->V_TELEFONO_FIJO = $request->Telefono_Fijo;
             $deportista->V_TELEFONO_CELULAR = $request->Telefono_Celular;
             $deportista->V_CORREO_ELECTRONICO = $request->Correo_Electronico;
-            $deportista->B_SITUACION_MILITAR = 0;
             $deportista->V_CANTIDAD_HIJOS = $request->Hijos;
-            $deportista->V_NUMERO_CUENTA = $request->Cuenta;                   
+            $deportista->V_NUMERO_CUENTA = $request->Cuenta;      
+            $deportista->FK_I_ID_SITUACION_MILITAR = $request->Situacion_Militar;
                         
             if($deportista->save()){
                 return response()->json(["Mensaje" => "Deportista ingresado correctamente."]);
@@ -146,9 +150,9 @@ class DeportistaController extends Controller
             $deportista->V_TELEFONO_FIJO = $request->Telefono_Fijo;
             $deportista->V_TELEFONO_CELULAR = $request->Telefono_Celular;
             $deportista->V_CORREO_ELECTRONICO = $request->Correo_Electronico;
-            $deportista->B_SITUACION_MILITAR = 0;
             $deportista->V_CANTIDAD_HIJOS = $request->Hijos;
             $deportista->V_NUMERO_CUENTA = $request->Cuenta;                   
+            $deportista->FK_I_ID_SITUACION_MILITAR = $request->Situacion_Militar;
                         
             if($deportista->save()){
                 return response()->json(["Mensaje" => "Deportista actualizado correctamente."]);

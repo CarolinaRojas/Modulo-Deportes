@@ -51,6 +51,26 @@
 <br>
 <div class="row">
     <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="Situacion_MilitarL">Situación Militar:</label>
+    </div>
+    <div class="col-md-4">
+        <select name="Situacion_Militar" id="Situacion_Militar" class="form-control">
+            <option value="">Seleccionar</option>
+            @foreach($situacionMilitar as $situacionMilitares)
+                    <option value="{{ $situacionMilitares['PK_I_ID_SITUACION_MILITAR'] }}">{{ $situacionMilitares['V_NOMBRE_SITUACION_MILITAR'] }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="HijosL">N° de Hijos:</label>
+    </div>
+    <div class="col-md-4">
+        <input class="form-control" placeholder="Hijos" type="text" name="Hijos" id="Hijos">
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right" id="DepartamentoL">Departamento:</label>
     </div>
     <div class="col-md-4">
@@ -129,12 +149,6 @@
                 <option value="{{ $tipoDeportistas['PK_I_ID_TIPO_DEPORTISTA'] }}">{{ $tipoDeportistas['V_NOMBRE_TIPO_DEPORTISTA'] }}</option>
         @endforeach
     </select>
-  </div>
-  <div class="col-md-2">
-      <label for="inputEmail" class="control-label pull-right" id="HijosL">Hijos:</label>
-  </div>
-  <div class="col-md-4">
-      <input class="form-control" placeholder="Hijos" type="text" name="Hijos" id="Hijos">
   </div>
 </div>
 <br>

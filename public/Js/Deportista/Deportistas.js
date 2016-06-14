@@ -63,7 +63,7 @@ $(function(e){
       cedulaDeportista = $.trim(persona['Cedula']);
 
 
-      document.getElementById("titulo").innerHTML= "INFORMACIÓN BASICA";
+      document.getElementById("titulo").innerHTML= "GESTOR DE FUNCIONARIOS EN EL MÓDULO DE RENDIMIENTO DEPORTIVO";
       document.getElementById("nombreDeport").innerHTML= nombreDeportista.toUpperCase();
       document.getElementById("Cedula").innerHTML=cedulaDeportista;
 
@@ -97,6 +97,7 @@ $(function(e){
           $("#Estrato").val(persona.deportista['FK_I_ID_ESTRATO']).change();
           $("#Grupo_Sanguineo").val(persona.deportista['FK_I_ID_GRUPO_SANGUINEO']).change();
           $("#Tipo_Deportista").val(persona.deportista['FK_I_ID_TIPO_DEPORTISTA']).change();
+          $("#Situacion_Militar").val(persona.deportista['FK_I_ID_SITUACION_MILITAR']).change();
       }
       
       $('#modal_form_persona').modal('show');
@@ -154,6 +155,7 @@ function RegistroDeportista(){
         var Estrato = $('#Estrato').val();
         var Grupo_Sanguineo = $('#Grupo_Sanguineo').val();
         var Tipo_Deportista = $('#Tipo_Deportista').val();
+        var Situacion_Militar = $('#Situacion_Militar').val();
         
         var datos = {
                     Eps: Eps,
@@ -176,7 +178,8 @@ function RegistroDeportista(){
                     Id_Deportista: Id_Deportista,
                     Estrato: Estrato,
                     Grupo_Sanguineo: Grupo_Sanguineo,
-                    Tipo_Deportista: Tipo_Deportista
+                    Tipo_Deportista: Tipo_Deportista,
+                    Situacion_Militar: Situacion_Militar
                 }
                 
         $("#mensajeIncorrecto").html(':');
@@ -223,7 +226,10 @@ function Proceso (tipo, url, datos, token){
         error: function (xhr) {                     
             if(xhr.responseJSON.Grupo_Sanguineo){ Validacion('Grupo_Sanguineo', xhr.responseJSON.Grupo_Sanguineo);}else{Normal('Grupo_Sanguineo');}
             if(xhr.responseJSON.Eps){ Validacion('Eps', xhr.responseJSON.Eps);}else{Normal('Eps');}
+            if(xhr.responseJSON.Estado_Civil){ Validacion('Estado_Civil', xhr.responseJSON.Estado_Civil);}else{Normal('Estado_Civil');}
             if(xhr.responseJSON.Estrato){ Validacion('Estrato', xhr.responseJSON.Estrato);}else{Normal('Estrato');}
+            if(xhr.responseJSON.Situacion_Militar){ Validacion('Situacion_Militar', xhr.responseJSON.Situacion_Militar);}else{Normal('Situacion_Militar');}
+            if(xhr.responseJSON.Hijos){ Validacion('Hijos', xhr.responseJSON.Hijos);}else{Normal('Hijos');}
             if(xhr.responseJSON.Departamento){ Validacion('Departamento', xhr.responseJSON.Departamento);}else{Normal('Departamento');}
             if(xhr.responseJSON.Localidad){ Validacion('Localidad', xhr.responseJSON.Localidad);}else{Normal('Localidad');}
             if(xhr.responseJSON.Barrio){ Validacion('Barrio', xhr.responseJSON.Barrio);}else{Normal('Barrio');}
@@ -232,16 +238,13 @@ function Proceso (tipo, url, datos, token){
             if(xhr.responseJSON.Telefono_Celular){ Validacion('Telefono_Celular', xhr.responseJSON.Telefono_Celular);}else{Normal('Telefono_Celular');}
             if(xhr.responseJSON.Correo_Electronico){ Validacion('Correo_Electronico', xhr.responseJSON.Correo_Electronico);}else{Normal('Correo_Electronico');}
             if(xhr.responseJSON.Tipo_Deportista){ Validacion('Tipo_Deportista', xhr.responseJSON.Tipo_Deportista);}else{Normal('Tipo_Deportista');}
-            if(xhr.responseJSON.Estado_Civil){ Validacion('Estado_Civil', xhr.responseJSON.Estado_Civil);}else{Normal('Estado_Civil');}
-            if(xhr.responseJSON.Hijos){ Validacion('Hijos', xhr.responseJSON.Hijos);}else{Normal('Hijos');}
             if(xhr.responseJSON.Banco){ Validacion('Banco', xhr.responseJSON.Banco);}else{Normal('Banco');}
             if(xhr.responseJSON.Cuenta){ Validacion('Cuenta', xhr.responseJSON.Cuenta);}else{Normal('Cuenta');}
             if(xhr.responseJSON.Deporte){ Validacion('Deporte', xhr.responseJSON.Deporte);}else{Normal('Deporte');}
             if(xhr.responseJSON.Modalidad){ Validacion('Modalidad', xhr.responseJSON.Modalidad);}else{Normal('Modalidad');}
             if(xhr.responseJSON.Agrupacion){ Validacion('Agrupacion', xhr.responseJSON.Agrupacion);}else{Normal('Agrupacion');}
             if(xhr.responseJSON.Etapa){ Validacion('Etapa', xhr.responseJSON.Etapa);}else{Normal('Etapa');}
-
-
+            
             var scrollPos;                    
             scrollPos = $("#mensajeIncorrecto").offset().top;
             $(window).scrollTop(scrollPos);
