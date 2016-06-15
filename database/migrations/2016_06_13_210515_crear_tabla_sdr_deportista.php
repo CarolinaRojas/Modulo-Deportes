@@ -44,6 +44,7 @@ class CrearTablaSdrDeportista extends Migration
             $table->foreign('FK_I_ID_ESTADO_CIVIL')->references('PK_I_ID_ESTADO_CIVIL')->on('TB_SRD_ESTADO_CIVIL');
             $table->foreign('FK_I_ID_ESTRATO')->references('PK_I_ID_ESTRATO')->on('TB_SRD_ESTRATO');
             $table->foreign('FK_I_ID_AGRUPACION')->references('PK_I_ID_AGRUPACION')->on('TB_SRD_AGRUPACION');
+            $table->foreign('FK_I_ID_DEPORTE')->references('PK_I_ID_DEPORTE')->on('TB_SRD_DEPORTE');
             $table->foreign('FK_I_ID_MODALIDAD')->references('PK_I_ID_MODALIDAD')->on('TB_SRD_MODALIDAD');
             $table->foreign('FK_I_ID_ETAPA')->references('PK_I_ID_ETAPA')->on('TB_SRD_ETAPA');
             $table->foreign('FK_I_ID_TIPO_DEPORTISTA')->references('PK_I_ID_TIPO_DEPORTISTA')->on('TB_SRD_TIPO_DEPORTISTA');

@@ -1,21 +1,17 @@
 <input type="hidden" name="Id_Persona" id="Id_Persona">
 <legend>
-    <h4 clase="text-uppercase " id="nombreDeport"></h4>
+    <h3 clase="text-uppercase " id="nombreDeport"></h3>
+    <small class="control-label text-left" id="Cedula"></small>
 </legend>
+<h4 class="modal-title text-uppercase">Datos personales:</h4>
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
         <label for="inputEmail" class="control-label">Foto</label><br>
         <img src="" alt="" class="img-thumbnail img-responsive" style="width:100%; height:100%; max-width:200px; min-height:200px;max-height:250px;"><br>
-         C.C <label class="control-label" id="Cedula"></label>
+         
     </div>
     <br>
-</div>
-<div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <input type="file" id="Foto" name="Foto"/>
-    </div>
 </div>
 <br><br>
 <div class="row">

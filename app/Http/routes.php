@@ -54,6 +54,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('DatosDeportista','DeportistaController@index');
     Route::get('deportista/{id}','DeportistaController@datos');
     
+    /*Route::resource('file', 'DeportistaController@storeImg');*/
+    
     
     
     

@@ -26,7 +26,7 @@
           <script src="{{ asset('public/Js/main.js') }}"></script>
       @show
 
-      <title>´Módulo Rendimiento Deportivo</title>
+      <title>Módulo Rendimiento Deportivo</title>
   </head>
 
   <body>

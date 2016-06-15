@@ -166,4 +166,8 @@ class DeportistaController extends Controller
     public function destroy($id) {
         return response()->json(["Mensaje" => 'DESTROY']);
     }    
+    
+    /*public function storeImg(RegistroDeportistaRequest $request) {
+        
+    }*/
 }

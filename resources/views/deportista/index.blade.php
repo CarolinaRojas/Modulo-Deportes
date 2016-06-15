@@ -2,6 +2,10 @@
 @section('script')
   @parent
     <script src="{{ asset('public/Js/Deportista/Deportistas.js') }}"></script> 
+    <link href="{{ asset('public/Css/dropzone.css') }}" rel="stylesheet">
+    <!--<script src="{{ asset('public/Js/dropzone.js') }}"></script>
+    <link href="{{ asset('public/Css/dropzone.css') }}" rel="stylesheet">-->
+    
 @stop  
 @section('content') 
  <input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
@@ -48,8 +52,7 @@
                 <div class="modal-body">
                     <form class="form-horizontal" id="form_deportista" action="">
                         <fieldset>                          
-                            <div>                                
-                                <h3 class="modal-title text-uppercase">Datos personales:</h3>
+                            <div>                                                                
                                 @include('deportista.persona')
                             </div>
                             <br>
@@ -58,7 +61,7 @@
                             </div>
                             <br>
                             <div>
-                                <h3 class="modal-title text-uppercase">Datos del deportista:</h3>
+                                <h4 class="modal-title text-uppercase">Datos del deportista:</h4>
                                 @include('deportista.deportista')
                             </div>                            
                             <br>
