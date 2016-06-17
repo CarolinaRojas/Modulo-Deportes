@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaSdrDeportista extends Migration
+class CrearTablaSrdDeportista extends Migration
 {
     /**
      * Run the migrations.
@@ -12,24 +12,25 @@ class CrearTablaSdrDeportista extends Migration
      */
     public function up()
     {
-        Schema::create('TB_SRD_DEPORTISTA', function (Blueprint $table) {
+            Schema::create('TB_SRD_DEPORTISTA', function (Blueprint $table) {
             $table->increments('PK_I_ID_DEPORTISTA');
             
             $table->integer('FK_I_ID_PERSONA')->unsigned();
             $table->integer('FK_I_ID_ESTADO_CIVIL')->unsigned();
+            $table->integer('FK_I_ID_SITUACION_MILITAR')->unsigned();
             $table->integer('FK_I_ID_ESTRATO')->unsigned();
-            $table->integer('FK_I_ID_GRUPO_SANGUINEO')->unsigned();
+            $table->integer('FK_I_ID_EPS')->unsigned();
+            $table->integer('FK_I_ID_GRUPO_SANGUINEO')->unsigned();                        
+            $table->integer('FK_I_ID_BANCO')->unsigned();
+            $table->integer('FK_I_ID_DEPARTAMENTO')->unsigned();            
+            $table->integer('FK_I_ID_LOCALIDAD')->unsigned();
+            $table->integer('FK_I_ID_BARRIO')->unsigned();
+            $table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
             $table->integer('FK_I_ID_AGRUPACION')->unsigned();
             $table->integer('FK_I_ID_DEPORTE')->unsigned();
             $table->integer('FK_I_ID_MODALIDAD')->unsigned();
             $table->integer('FK_I_ID_ETAPA')->unsigned();
-            $table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
-            $table->integer('FK_I_ID_BANCO')->unsigned();
-            $table->integer('FK_I_ID_DEPARTAMENTO')->unsigned();
-            $table->integer('FK_I_ID_EPS')->unsigned();
-            $table->integer('FK_I_ID_LOCALIDAD')->unsigned();
-            $table->integer('FK_I_ID_BARRIO')->unsigned();
-            $table->integer('FK_I_ID_SITUACION_MILITAR')->unsigned();
+            $table->integer('FK_I_ID_CLUB_DEPORTIVO')->unsigned();
             
             
             $table->string('V_DIRECCION_RESIDENCIA');
@@ -56,6 +57,7 @@ class CrearTablaSdrDeportista extends Migration
             $table->foreign('FK_I_ID_BANCO')->references('PK_I_ID_BANCO')->on('TB_SRD_BANCO');
             $table->foreign('FK_I_ID_BARRIO')->references('PK_I_ID_BARRIO')->on('TB_SRD_BARRIO');
             $table->foreign('FK_I_ID_SITUACION_MILITAR')->references('PK_I_ID_SITUACION_MILITAR')->on('TB_SRD_SITUACION_MILITAR');
+            $table->foreign('FK_I_ID_CLUB_DEPORTIVO')->references('PK_I_ID_CLUB_DEPORTIVO')->on('TB_SRD_CLUB_DEPORTIVO');
             
         });
     }
@@ -77,8 +79,8 @@ class CrearTablaSdrDeportista extends Migration
             $table->dropForeign(['FK_I_ID_BANCO']);
             $table->dropForeign(['FK_I_ID_BARRIO']);
             $table->dropForeign(['FK_I_ID_SITUACION_MILITAR']);
+            $table->dropForeign(['FK_I_ID_CLUB_DEPORTIVO']);
         });
         Schema::drop('TB_SRD_DEPORTISTA');
-
     }
 }
