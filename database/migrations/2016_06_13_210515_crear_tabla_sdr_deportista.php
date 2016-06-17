@@ -39,6 +39,11 @@ class CrearTablaSdrDeportista extends Migration
             $table->string('V_CANTIDAD_HIJOS');
             $table->string('V_NUMERO_CUENTA');
             
+            $table->integer('I_TALLA_SUDADERA');
+            $table->integer('I_TALLA_CAMISA');
+            $table->integer('I_TALLA_ZAPATOS');
+            $table->integer('I_TALLA_PANTALON');
+            
             $table->timestamps();
             
             $table->foreign('FK_I_ID_ESTADO_CIVIL')->references('PK_I_ID_ESTADO_CIVIL')->on('TB_SRD_ESTADO_CIVIL');

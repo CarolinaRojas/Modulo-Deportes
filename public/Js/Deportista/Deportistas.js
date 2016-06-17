@@ -65,7 +65,7 @@ $(function(e){
 
 
       document.getElementById("titulo").innerHTML= "GESTOR DE FUNCIONARIOS EN EL MÓDULO DE RENDIMIENTO DEPORTIVO";
-      document.getElementById("nombreDeport").innerHTML= nombreDeportista.toUpperCase();
+     document.getElementById("nombreDeport").innerHTML= nombreDeportista.toUpperCase();
       document.getElementById("Cedula").innerHTML=cedulaDeportista;
 
       $("#Pais").val(persona['Id_Pais']).change();
@@ -129,7 +129,7 @@ $(function(e){
       }
     });
     
-    $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){
+    $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){        
         var id = $(this).data('rel');
         $.get("deportista/" + id + "", function (response) {
             popular_modal_persona(response);
@@ -140,7 +140,6 @@ $(function(e){
 
 function RegistroDeportista(){
     $('#Enviar').on('click', function () {
-        alert('askljdhakjdhba')
         var Id_Persona = $("#Id_Persona").val();
         var Id_Deportista = $("#Id_Deportista").val();
         var Eps = $('#Eps').val();

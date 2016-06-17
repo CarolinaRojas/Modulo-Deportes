@@ -2,6 +2,7 @@
 @section('script')
   @parent
     <script src="{{ asset('public/Js/Deportista/Deportistas.js') }}"></script> 
+    <script src="{{ asset('public/Js/Deportista/Deportiva.js') }}"></script> 
     <link href="{{ asset('public/Css/dropzone.css') }}" rel="stylesheet">
     <!--<script src="{{ asset('public/Js/dropzone.js') }}"></script>
     <link href="{{ asset('public/Css/dropzone.css') }}" rel="stylesheet">-->
@@ -79,5 +80,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
+        @include('deportista.modalDeportiva')
 @stop

@@ -180,9 +180,5 @@ class DeportistaController extends Controller
         }
         return response()->json($modalidad);
     }
-
-
-    /*public function storeImg(RegistroDeportistaRequest $request) {
-        
-    }*/
+    
 }
