@@ -139,6 +139,26 @@
 </div>
 <br>
 <div class="row">
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="BancoL">Banco:</label>
+  </div>
+  <div class="col-md-4">
+    <select name="Banco" id="Banco" class="form-control">
+        <option value="">Seleccionar</option>
+        @foreach($banco as $bancos)
+            <option value="{{ $bancos['PK_I_ID_BANCO'] }}">{{ $bancos['V_NOMBRE_BANCO'] }}</option>
+        @endforeach
+    </select>
+  </div>
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="CuentaL">N° de Cuenta:</label>
+  </div>
+  <div class="col-md-4">
+      <input class="form-control" placeholder="Cuenta" type="text" name="Cuenta" id="Cuenta">
+  </div>
+</div>
+<br>
+<div class="row">
   <div class="col-md-2">
       <label for="inputEmail" class="control-label pull-right" id="Tipo_DeportistaL">Tipo de  Deportista:</label>
   </div>
@@ -154,25 +174,16 @@
 <br>
 <div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right" id="BancoL">Banco:</label>
-  </div>
-  <div class="col-md-4">
-    <select name="Banco" id="Banco" class="form-control">
-        <option value="">Seleccionar</option>
-        @foreach($banco as $bancos)
-            <option value="{{ $bancos['PK_I_ID_BANCO'] }}">{{ $bancos['V_NOMBRE_BANCO'] }}</option>
-        @endforeach
-    </select>
-  </div>
-    <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right" id="CuentaL">Cuenta:</label>
-  </div>
-  <div class="col-md-4">
-      <input class="form-control" placeholder="Cuenta" type="text" name="Cuenta" id="Cuenta">
-  </div>
-</div>
-<br>
-<div class="row">
+        <label for="inputEmail" class="control-label pull-right" id="AgrupacionL">Agrupación:</label>
+    </div>
+    <div class="col-md-4">
+        <select name="Agrupacion" id="Agrupacion" class="form-control">
+            <option value="">Seleccionar</option>
+            @foreach($agrupacion as $agrupaciones)
+                <option value="{{ $agrupaciones['PK_I_ID_AGRUPACION'] }}">{{ $agrupaciones['V_NOMBRE_AGRUPACION'] }}</option>
+            @endforeach
+        </select>
+    </div>
     <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right"  id="DeporteL">Deporte:</label>
     </div>
@@ -184,6 +195,9 @@
             @endforeach
         </select>
     </div>
+</div>
+<br>
+<div class="row">    
     <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right" id="ModalidadL">Modalidad:</label>
     </div>
@@ -192,20 +206,6 @@
             <option value="">Seleccionar</option>
             @foreach($modalidad as $modalidades)
                 <option value="{{ $modalidades['PK_I_ID_MODALIDAD'] }}">{{ $modalidades['V_NOMBRE_MODALIDAD'] }}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
-<br>
-<div class="row">  
-    <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right" id="AgrupacionL">Agrupación:</label>
-    </div>
-    <div class="col-md-4">
-        <select name="Agrupacion" id="Agrupacion" class="form-control">
-            <option value="">Seleccionar</option>
-            @foreach($agrupacion as $agrupaciones)
-                <option value="{{ $agrupaciones['PK_I_ID_AGRUPACION'] }}">{{ $agrupaciones['V_NOMBRE_AGRUPACION'] }}</option>
             @endforeach
         </select>
     </div>

@@ -54,6 +54,7 @@ $(function(e){
       $('#personas').html($personas_actuales);
       $('#paginador').fadeIn();
     };    
+    
     var popular_modal_persona = function(persona){
       var nombreDeportista="";
       var cedulaDeportista="";
@@ -73,8 +74,13 @@ $(function(e){
       $("#Genero").val(persona['Id_Genero']).change();
       $("#Grupo_Etnico").val(persona['Id_Etnia']).change();
       $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
+      $("#Deporte").empty();
+      $("#Modalidad").empty();
+      $("#Modalidad").append("<option value=''>Seleccionar</option>");
+      $("#Deporte").append("<option value=''>Seleccionar</option>");
             
       if(persona.deportista){
+          
           $('input[name="Direccion_Residencia"]').val($.trim(persona.deportista['V_DIRECCION_RESIDENCIA']));          
           $('input[name="Telefono_Fijo"]').val($.trim(persona.deportista['V_TELEFONO_FIJO']));
           $('input[name="Telefono_Celular"]').val($.trim(persona.deportista['V_TELEFONO_CELULAR']));
@@ -86,11 +92,11 @@ $(function(e){
           $("#Eps").val(persona.deportista['FK_I_ID_EPS']).change();
           $("#Estado_Civil").val(persona.deportista['FK_I_ID_ESTADO_CIVIL']).change();
           $("#Localidad").val(persona.deportista['FK_I_ID_LOCALIDAD']).change();
+          
           $("#Agrupacion").val(persona.deportista['FK_I_ID_AGRUPACION']).change();
-          $("#Deporte").val(persona.deportista['FK_I_ID_DEPORTE']).change();
-          $("#Modalidad").val(persona.deportista['FK_I_ID_MODALIDAD']).change();
-          $("#Etapa").val(persona.deportista['FK_I_ID_ETAPA']).change();
           $("#Departamento").val(persona.deportista['FK_I_ID_DEPARTAMENTO']).change();
+          
+          $("#Etapa").val(persona.deportista['FK_I_ID_ETAPA']).change();
           $("#Barrio").val(persona.deportista['FK_I_ID_BARRIO']).change();
           $("#Banco").val(persona.deportista['FK_I_ID_BANCO']).change();
           $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
@@ -98,6 +104,10 @@ $(function(e){
           $("#Grupo_Sanguineo").val(persona.deportista['FK_I_ID_GRUPO_SANGUINEO']).change();
           $("#Tipo_Deportista").val(persona.deportista['FK_I_ID_TIPO_DEPORTISTA']).change();
           $("#Situacion_Militar").val(persona.deportista['FK_I_ID_SITUACION_MILITAR']).change();
+          
+          showDeportes(persona.deportista['FK_I_ID_AGRUPACION'], persona.deportista['FK_I_ID_DEPORTE']);
+          
+          showModalidades(persona.deportista['FK_I_ID_DEPORTE'], persona.deportista['FK_I_ID_MODALIDAD']);          
       }
       
       $('#modal_form_persona').modal('show');
@@ -127,46 +137,10 @@ $(function(e){
     });
    
 });
-/*
-$(document).ready(function () {    
-    RegistroDeportista();
-    
-    Dropzone.options.myDropzone = {
-            
-            autoProcessQueue: false,
-            uploadMultiple: true,
-            maxFilezise: 10,
-            maxFiles: 2,
-            
-            init: function() {
-                var submitBtn = document.querySelector("#submit");
-                myDropzone = this;
-                
-                submitBtn.addEventListener("click", function(e){
-                    e.preventDefault();
-                    e.stopPropagation();
-                    myDropzone.processQueue();
-                });
-                this.on("addedfile", function(file) {
-                    alert("file uploaded");
-                });
-                
-                this.on("complete", function(file) {
-                    myDropzone.removeFile(file);
-                });
- 
-                this.on("success", 
-                    myDropzone.processQueue.bind(myDropzone)
-                );
-            }
-        };
 
-
-
-});
-*/
 function RegistroDeportista(){
     $('#Enviar').on('click', function () {
+        alert('askljdhakjdhba')
         var Id_Persona = $("#Id_Persona").val();
         var Id_Deportista = $("#Id_Deportista").val();
         var Eps = $('#Eps').val();
@@ -220,11 +194,8 @@ function RegistroDeportista(){
         var token = $("#token").val();
                 
         if(Id_Deportista){
-            //Editar
             Proceso ('PUT', 'AddDatos/'+Id_Deportista, datos, token);
-
         }else{
-            //Agregar 
             Proceso ('POST', 'AddDatos', datos, token);
         }        
     });
@@ -281,9 +252,46 @@ function Proceso (tipo, url, datos, token){
             var scrollPos;                    
             scrollPos = $("#mensajeIncorrecto").offset().top;
             $(window).scrollTop(scrollPos);
-
             return false;
         }
     });
     
 }
+
+function showDeportes(id, sel) {  
+    $.get("getDeportes/" + id + "", function (response) {            
+        $("#Deporte").empty();
+        $("#Deporte").append("<option value=''>Seleccionar</option>");
+        $.each(response, function(i, e){
+            $("#Deporte").append("<option value='" +e.PK_I_ID_DEPORTE + "'>" + e.V_NOMBRE_DEPORTE + "</option>");
+        });
+    }).done(function(e){
+        $("#Deporte").val(sel);
+    });
+}
+
+function showModalidades(id, seleccion) {
+    $("#Modalidad").empty();
+    $.get("getModalidades/" + id + "", function (response) {    
+        $("#Modalidad").append("<option value=''>Seleccionar</option>");
+        $.each(response, function(i, e){
+           $('#Modalidad').append('<option value="'+ e.PK_I_ID_MODALIDAD +'">'+ e.V_NOMBRE_MODALIDAD +'</option>');
+        });
+    }).done(function(e){
+        $("#Modalidad").val(seleccion);
+    });
+}
+
+$(document).ready(function () {  
+    
+    RegistroDeportista();
+    
+    
+    $('#Agrupacion').on('change', function(e){
+        showDeportes($('#Agrupacion').val());
+    });
+    
+    $('#Deporte').on('change', function(e){
+        showModalidades($('#Deporte').val());
+    });
+});

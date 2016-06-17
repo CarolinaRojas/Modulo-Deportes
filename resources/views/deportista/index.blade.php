@@ -62,7 +62,8 @@
                             <br>
                             <div>
                                 <h4 class="modal-title text-uppercase">Datos del deportista:</h4>
-                                @include('deportista.deportista')
+                                <br>
+                                @include('deportista.deportista')                                
                             </div>                            
                             <br>
                             <div class="col-xs-12 col-md-12 ">   

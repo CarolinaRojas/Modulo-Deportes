@@ -165,8 +165,23 @@ class DeportistaController extends Controller
     
     public function destroy($id) {
         return response()->json(["Mensaje" => 'DESTROY']);
-    }    
+    }
     
+    public static function getDeporte(Request $request, $id) {      
+        if ($request->ajax()) {
+            $deportes = DeporteModel::getDeportesJSON($id);            
+        }
+        return response()->json($deportes);
+    }
+    
+    public static function getModalidad(Request $request, $id) {      
+        if ($request->ajax()) {
+            $modalidad = ModalidadModel::getModalidadesJSON($id);            
+        }
+        return response()->json($modalidad);
+    }
+
+
     /*public function storeImg(RegistroDeportistaRequest $request) {
         
     }*/

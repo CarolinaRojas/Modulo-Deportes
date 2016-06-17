@@ -9,4 +9,9 @@ class ModalidadModel extends Model
     protected $table = 'TB_SRD_MODALIDAD';
     protected $primaryKey = 'PK_I_ID_MODALIDAD';
     protected $fillable = ['V_NOMBRE_MODALIDAD'];
+    
+    public static function getModalidadesJSON($id){
+        return ModalidadModel::where('FK_I_ID_DEPORTE', '=', $id)
+                ->get();
+    }
 }

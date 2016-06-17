@@ -9,4 +9,11 @@ class DeporteModel extends Model
     protected $table = 'TB_SRD_DEPORTE';
     protected $primaryKey = 'PK_I_ID_DEPORTE';
     protected $fillable = ['V_NOMBRE_DEPORTE'];
+    
+    
+    public static function getDeportesJSON($id){
+        return DeporteModel::where('FK_I_ID_AGRUPACION', '=', $id)
+                ->get();
+    }
+    
 }
