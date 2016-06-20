@@ -10,4 +10,9 @@ class Persona extends MPersona
     {
         return $this->hasOne('App\DeportistaModel', 'FK_I_ID_PERSONA');
     }
+    
+    public function entrenador()
+    {
+        return $this->hasOne('App\EntrenadorModel', 'FK_I_ID_PERSONA');
+    }
 }

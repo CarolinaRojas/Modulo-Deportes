@@ -29,10 +29,15 @@
                       <br>                            
                       <div class="row">
                            <div class="col-md-2">
-                              <label for="inputEmail" class="control-label pull-right" id="ClubL">Club Deportivo:</label>
+                              <label for="inputEmail" class="control-label pull-right" id="Club_DeportivoL">Club Deportivo:</label>
                           </div>
                           <div class="col-md-4">
-                              CLUB
+                            <select name="Club_Deportivo" id="Club_Deportivo" class="form-control">
+                                <option value="">Seleccionar</option>
+                                @foreach($clubDeportivo as $clubDeportivos)                                        
+                                        <option value="{{ $clubDeportivos['PK_I_ID_CLUB_DEPORTIVO'] }}">{{ $clubDeportivos['V_NOMBRE_CLUB_DEPORTIVO'] }}</option>
+                                @endforeach
+                            </select>
                           </div>
                       </div>
                       <br>
@@ -41,7 +46,12 @@
                               <label for="inputEmail" class="control-label pull-right" id="Nombre_EntrenadorL">Nombre del entrenador:</label>
                           </div>
                           <div class="col-md-4">
-                              ENTRENADOR
+                              <select name="Entrenador" id="Entrenador" class="form-control">
+                                <option value="">Seleccionar</option>
+                                @foreach($entrenadores as $entrenador)
+                                        <option value="{{ $entrenador.entrenador['PK_I_ID_ENTRENADOR'] }}">{{$entrenador['Primer_Nombre'] }}</option>
+                                @endforeach
+                            </select>
                           </div>
                           <div class="col-md-2">
                               <label for="inputEmail" class="control-label pull-right" id="Contacto_EntrenadorL">Contacto del entrenador:</label>

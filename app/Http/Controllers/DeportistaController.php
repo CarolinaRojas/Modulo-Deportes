@@ -24,8 +24,13 @@ use App\EstratoModel;
 use App\GrupoSanguineoModel;
 use App\TipoDeportistaModel;
 use App\SituacionMilitarModel;
+use App\ClubDeportivoModel;
+use App\EntrenadorModel;
+use App\TallaModel; 
 
 use App\Http\Requests\RegistroDeportistaRequest;
+use App\Http\Requests\DeportivaRequest;
+
 
 
 
@@ -50,7 +55,13 @@ class DeportistaController extends Controller
         $grupoSanguineo = GrupoSanguineoModel::all();
         $tipoDeportista = TipoDeportistaModel::all();
         $situacionMilitar = SituacionMilitarModel::all();
+        $clubDeportivo = ClubDeportivoModel::all();        
+                
+        $QEntrenadores = EntrenadorModel::all();
+        $entrenadores = Persona::with('entrenador')->whereIn('Id_Persona', $QEntrenadores->lists('FK_I_ID_PERSONA'))->get();
         
+        $talla = TallaModel::all();
+                
         $selected = array();
         $deportista = array();
         
@@ -74,7 +85,10 @@ class DeportistaController extends Controller
                 ->with(compact('estrato'))
                 ->with(compact('grupoSanguineo'))
                 ->with(compact('tipoDeportista'))
-                ->with(compact('situacionMilitar'));
+                ->with(compact('situacionMilitar'))
+                ->with(compact('clubDeportivo'))
+                ->with(compact('entrenadores'))
+                ->with(compact('talla'));
     }
         
     public function datos($id){
@@ -82,12 +96,17 @@ class DeportistaController extends Controller
         return $persona;
     }
     
+    public function datosEntrenador($id){
+        $entrenador = Persona::with('entrenador')->find($id);        
+        return $entrenador;
+    }
+
+
     public function show() {
         return response()->json(["Mensaje" => 'SHOW']);
     }
     
-    public function store(RegistroDeportistaRequest $request) {
-        
+    public function store(RegistroDeportistaRequest $request) {        
         if ($request->ajax()) {     
             
             $deportista = new  DeportistaModel;
@@ -159,8 +178,7 @@ class DeportistaController extends Controller
             }else{
                 return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
             }
-        }
-        return response()->json(["Mensaje" => 'UPDATE']);
+        }        
     }
     
     public function destroy($id) {
@@ -179,6 +197,30 @@ class DeportistaController extends Controller
             $modalidad = ModalidadModel::getModalidadesJSON($id);            
         }
         return response()->json($modalidad);
+    }
+    
+    public function storeDeportiva(DeportivaRequest $request, $id) {          
+        if ($request->ajax()){
+            $deportista = DeportistaModel::find($id);
+            $deportista->FK_I_ID_CLUB_DEPORTIVO = $request->Club_Deportivo;
+            $deportista->FK_I_ID_TALLA_CAMISA = $request->Talla_Camisa;
+            $deportista->FK_I_ID_TALLA_ZAPATOS = $request->Talla_Zapatos;
+            $deportista->FK_I_ID_TALLA_CHAQUETA = $request->Talla_Chaqueta;
+            $deportista->FK_I_ID_TALLA_PANTALON = $request->Talla_Pantalon;
+            
+            if($deportista->save()){
+                return response()->json(["Mensaje" => "Deportista actualizado correctamente."]);
+            }else{
+                return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
+            }
+        }
+    }
+    
+    public function storeEntrenador(Request $request) {
+        if ($request->ajax()) {
+            //Buscar todos los datos que hayan de este deportista
+        }
+        return response()->json(["Mensaje" => "storeEntrenador"]);
     }
     
 }

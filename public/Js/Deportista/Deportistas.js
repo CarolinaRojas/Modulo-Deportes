@@ -65,7 +65,7 @@ $(function(e){
 
 
       document.getElementById("titulo").innerHTML= "GESTOR DE FUNCIONARIOS EN EL MÓDULO DE RENDIMIENTO DEPORTIVO";
-     document.getElementById("nombreDeport").innerHTML= nombreDeportista.toUpperCase();
+      document.getElementById("nombreDeport").innerHTML= nombreDeportista.toUpperCase();
       document.getElementById("Cedula").innerHTML=cedulaDeportista;
 
       $("#Pais").val(persona['Id_Pais']).change();

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaSrdEntrenador extends Migration
+class CrearTablaSrdTalla extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class CrearTablaSrdEntrenador extends Migration
      */
     public function up()
     {
-         Schema::create('TB_SRD_ENTRENADOR', function (Blueprint $table) {
-            $table->increments('PK_I_ID_ENTRENADOR');
-            $table->integer('FK_I_ID_PERSONA');
-            $table->string('V_TELEFONO');
+        Schema::create('TB_SRD_TALLA', function (Blueprint $table) {
+            $table->increments('PK_I_ID_TALLA');
+            $table->string('V_NOMBRE_TALLA');
             
-            $table->timestamps();
         });
     }
 
@@ -28,6 +26,6 @@ class CrearTablaSrdEntrenador extends Migration
      */
     public function down()
     {
-        Schema::drop('TB_SRD_ENTRENADOR');
+        Schema::drop('TB_SRD_SITUACION_MILITAR');
     }
 }

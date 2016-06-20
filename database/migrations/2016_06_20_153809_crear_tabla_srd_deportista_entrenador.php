@@ -22,8 +22,6 @@ class CrearTablaSrdDeportistaEntrenador extends Migration
             $table->foreign('FK_I_ID_DEPORTISTA')->references('PK_I_ID_DEPORTISTA')->on('TB_SRD_DEPORTISTA');
             $table->foreign('FK_I_ID_ENTRENADOR')->references('PK_I_ID_ENTRENADOR')->on('TB_SRD_ENTRENADOR');
         });
-        
-        
     }
 
     /**

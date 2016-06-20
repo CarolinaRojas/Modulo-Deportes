@@ -12,7 +12,7 @@ class CrearTablaSrdDeportista extends Migration
      */
     public function up()
     {
-            Schema::create('TB_SRD_DEPORTISTA', function (Blueprint $table) {
+        Schema::create('TB_SRD_DEPORTISTA', function (Blueprint $table) {
             $table->increments('PK_I_ID_DEPORTISTA');
             
             $table->integer('FK_I_ID_PERSONA')->unsigned();
@@ -31,6 +31,10 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_MODALIDAD')->unsigned();
             $table->integer('FK_I_ID_ETAPA')->unsigned();
             $table->integer('FK_I_ID_CLUB_DEPORTIVO')->unsigned();
+            $table->integer('FK_I_ID_TALLA_CAMISA')->unsigned();
+            $table->integer('FK_I_ID_TALLA_ZAPATOS')->unsigned();
+            $table->integer('FK_I_ID_TALLA_PANTALON')->unsigned();
+            $table->integer('FK_I_ID_TALLA_CHAQUETA')->unsigned();
             
             
             $table->string('V_DIRECCION_RESIDENCIA');
@@ -40,10 +44,7 @@ class CrearTablaSrdDeportista extends Migration
             $table->string('V_CANTIDAD_HIJOS');
             $table->string('V_NUMERO_CUENTA');
             
-            $table->integer('I_TALLA_SUDADERA');
-            $table->integer('I_TALLA_CAMISA');
-            $table->integer('I_TALLA_ZAPATOS');
-            $table->integer('I_TALLA_PANTALON');
+            
             
             $table->timestamps();
             
@@ -59,6 +60,10 @@ class CrearTablaSrdDeportista extends Migration
             $table->foreign('FK_I_ID_SITUACION_MILITAR')->references('PK_I_ID_SITUACION_MILITAR')->on('TB_SRD_SITUACION_MILITAR');
             $table->foreign('FK_I_ID_CLUB_DEPORTIVO')->references('PK_I_ID_CLUB_DEPORTIVO')->on('TB_SRD_CLUB_DEPORTIVO');
             
+            $table->foreign('FK_I_ID_TALLA_CAMISA')->references('PK_I_ID_TALLA')->on('TB_SRD_TALLA');
+            $table->foreign('FK_I_ID_TALLA_ZAPATOS')->references('PK_I_ID_TALLA')->on('TB_SRD_TALLA');
+            $table->foreign('FK_I_ID_TALLA_PANTALON')->references('PK_I_ID_TALLA')->on('TB_SRD_TALLA');
+            $table->foreign('FK_I_ID_TALLA_CHAQUETA')->references('PK_I_ID_TALLA')->on('TB_SRD_TALLA');
         });
     }
 
@@ -80,6 +85,12 @@ class CrearTablaSrdDeportista extends Migration
             $table->dropForeign(['FK_I_ID_BARRIO']);
             $table->dropForeign(['FK_I_ID_SITUACION_MILITAR']);
             $table->dropForeign(['FK_I_ID_CLUB_DEPORTIVO']);
+            
+            $table->dropForeign(['FK_I_ID_TALLA_CAMISA']);
+            $table->dropForeign(['FK_I_ID_TALLA_ZAPATOS']);
+            $table->dropForeign(['FK_I_ID_TALLA_PANTALON']);
+            $table->dropForeign(['FK_I_ID_TALLA_CHAQUETA']);
+            
         });
         Schema::drop('TB_SRD_DEPORTISTA');
     }
