@@ -1,3 +1,5 @@
+var contador = 0;
+var conEnt =[];
 $(function(e){   
     RegistroDeportiva();
     
@@ -41,12 +43,13 @@ function popular_modal_deportiva(persona){
 
 function SeleccionEntrenador(id){
     $.get("entrenador/" + id + "", function (persona) {
+        //console.log(persona);
         if(persona.entrenador){
             var Nombre = persona['Primer_Nombre']+' '+persona['Segundo_Nombre']+' '+persona['Primer_Apellido']+' '+persona['Segundo_Apellido'];
             var Telefono = persona.entrenador['V_TELEFONO'];
             var campos = '<div class="panel panel-default" id="DivEntrenador'+id+'" name="DivEntrenador'+id+'" >\n\
                             <div class="panel-body" >\n\
-                                <input type="text" value="'+id+'" />\n\
+                                <input type="hidden" id ="IdEntrenador'+id+'" name="IdEntrenador'+id+'" value="'+persona.entrenador['PK_I_ID_ENTRENADOR']+'" />\n\
                                 <h4>ENTRENADOR:</h4>\n\
                                 <div class="col-md-4">\n\
                                     <h5>Nombre: <small id="Nombre_Entrenador'+id+'" name="Nombre_Entrenador'+id+'">'+Nombre+'</small></h5>\n\
@@ -55,34 +58,18 @@ function SeleccionEntrenador(id){
                                     <h5>Contacto: <small>'+Telefono+'</small></h5>\n\
                                 </div>\n\
                                 <div class="col-md-2">\n\
-                                    <button onclick="DesechaEntrenador(this, \''+Nombre+'\' )" type="button" class="btn btn-danger" id="EliminarEntrenador" name="EliminarEntrenador" value="'+persona.entrenador['PK_I_ID_ENTRENADOR']+'">-</button>\n\
+                                    <button onclick="DesechaEntrenador(this, \''+Nombre+'\' )" type="button" class="btn btn-danger" id="EliminarEntrenador" name="EliminarEntrenador" value="'+persona['Id_Persona']+'">-</button>\n\
                                 </div>\n\
                             </div>\n\
                         </div>';            
             $('#PanelEntrenador').append(campos);            
-            document.getElementById("Entrenador").remove(document.getElementById("Entrenador").selectedIndex);           
-            //INCIIO DE PROCESO DE ALMACENAMIENTO
+            document.getElementById("Entrenador").remove(document.getElementById("Entrenador").selectedIndex);                      
             
-            
+            contador = contador + 1;
+            conEnt[id] = persona.entrenador['PK_I_ID_ENTRENADOR'];
+            console.log('depues->'+conEnt);            
         }
     });
-    var Id_Persona = $("#Id_Persona").val();
-    $.get("deportista/" + Id_Persona + "", function (persona) {
-        
-        //console.log(persona);
-        
-        var datos = {                    
-                    Id_Persona: Id_Persona,
-                    Id_Deportista: persona.deportista['PK_I_ID_DEPORTISTA'],
-                    Id_Entrenador: id
-                }
-        
-        var token = $("#token").val();
-        Proceso ('POST', 'AddDeportiva', datos, token);
-        //Proceso ('PUT', 'AddDeportiva/', datos, token);
-        //popular_modal_deportiva(deportista);
-    });
-    
 }
 
 function RegistroDeportiva(){
@@ -95,6 +82,12 @@ function RegistroDeportiva(){
         var Talla_Zapatos = $("#Talla_Zapatos").val();
         var Talla_Chaqueta = $("#Talla_Chaqueta").val();
         var Talla_Pantalon = $("#Talla_Pantalon").val();
+        var ArrayEntrenador = conEnt;
+        
+        if(ArrayEntrenador.length == 0){
+            Validacion('Entrenador', 'Primero debe escoger uno o más entrenadores.');
+            return false;
+        }else{Normal('Entrenador');}
         
         var datos = {                    
                     Id_Persona: Id_Persona,
@@ -104,7 +97,8 @@ function RegistroDeportiva(){
                     Talla_Camisa: Talla_Camisa,
                     Talla_Zapatos: Talla_Zapatos,
                     Talla_Chaqueta: Talla_Chaqueta,
-                    Talla_Pantalon: Talla_Pantalon
+                    Talla_Pantalon: Talla_Pantalon,
+                    ArrayEntrenador: ArrayEntrenador
                 }
         
         var token = $("#token").val();
@@ -116,8 +110,6 @@ function RegistroDeportiva(){
 }
 
 function Proceso (tipo, url, datos, token){
-    /*alert(tipo+' - '+url+' - '+datos+' - '+token);
-    return false;*/
     $.ajax({
         type: tipo,
         url: url,
@@ -147,6 +139,7 @@ function Proceso (tipo, url, datos, token){
 function DesechaEntrenador(id, nombre){    
     document.getElementById("DivEntrenador"+id.value).remove(document.getElementById("DivEntrenador"+id.value));
     $('#Entrenador').append('<option value="'+id.value+'">'+nombre+'</option>');
+    delete conEnt[parseInt(id.value)];
 }
 
 function Validacion(campo, mensaje){

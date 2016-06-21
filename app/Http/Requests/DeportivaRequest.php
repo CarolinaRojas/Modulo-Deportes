@@ -29,6 +29,7 @@ class DeportivaRequest extends Request
             'Talla_Zapatos' => 'required',
             'Talla_Chaqueta' => 'required',
             'Talla_Pantalon' => 'required',
+            'ArrayEntrenador' => 'required',
             ];
         return $validaciones;
     }

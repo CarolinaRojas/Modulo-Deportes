@@ -63,11 +63,4 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('EditDeportiva', 'DeportistaController@storeDeportiva');
     Route::resource('AddDeportiva', 'DeportistaController@storeEntrenador');
     
-    
-    
-    /*Route::resource('file', 'DeportistaController@storeImg');*/
-    
-    
-    
-    
 });

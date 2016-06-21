@@ -137,7 +137,7 @@
                                 <select name="Entrenador" id="Entrenador" class="form-control">
                                    <option value="">Seleccionar</option>
                                    @foreach($entrenadores as $entrenador)
-                                           <option value="{{ $entrenador->entrenador['PK_I_ID_ENTRENADOR'] }}">{{$entrenador['Primer_Nombre'].' '.$entrenador['Segundo_Nombre'].' '.$entrenador['Primer_Apellido'].' '.$entrenador['Segundo_Apellido']}}</option>
+                                           <option value="{{ $entrenador['Id_Persona'] }}">{{$entrenador['Primer_Nombre'].' '.$entrenador['Segundo_Nombre'].' '.$entrenador['Primer_Apellido'].' '.$entrenador['Segundo_Apellido']}}</option>
                                    @endforeach
                                </select>
                             </div>

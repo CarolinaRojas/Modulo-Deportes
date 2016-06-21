@@ -59,7 +59,6 @@ class DeportistaController extends Controller
                 
         $QEntrenadores = EntrenadorModel::all();
         $entrenadores = Persona::with('entrenador')->whereIn('Id_Persona', $QEntrenadores->lists('FK_I_ID_PERSONA'))->get();
-        
         $talla = TallaModel::all();
                 
         $selected = array();
@@ -97,16 +96,15 @@ class DeportistaController extends Controller
     }
     
     public function datosEntrenador($id){
-        $entrenador = Persona::with('entrenador')->find($id);        
+        $entrenador = Persona::with('entrenador')->find($id);
         return $entrenador;
     }
-
 
     public function show() {
         return response()->json(["Mensaje" => 'SHOW']);
     }
     
-    public function store(RegistroDeportistaRequest $request) {        
+    public function store(RegistroDeportistaRequest $request) {         
         if ($request->ajax()) {     
             
             $deportista = new  DeportistaModel;
@@ -149,6 +147,7 @@ class DeportistaController extends Controller
     }
     
     public function update(RegistroDeportistaRequest $request, $id) {
+        
         if ($request->ajax()){
             $deportista = DeportistaModel::find($id);
             $deportista->FK_I_ID_PERSONA = $request->Id_Persona;
@@ -174,7 +173,7 @@ class DeportistaController extends Controller
             $deportista->FK_I_ID_SITUACION_MILITAR = $request->Situacion_Militar;
                         
             if($deportista->save()){
-                return response()->json(["Mensaje" => "Deportista actualizado correctamente."]);
+                return response()->json(["Mensaje" => "Deportista actualizado correctamente!!."]);
             }else{
                 return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
             }
@@ -200,8 +199,13 @@ class DeportistaController extends Controller
     }
     
     public function storeDeportiva(DeportivaRequest $request, $id) {          
+        
         if ($request->ajax()){
+            
+            $ArrayEntrenadores=array_values(array_diff($request->ArrayEntrenador, array('')));
             $deportista = DeportistaModel::find($id);
+            $deportista->entrenadores()->sync($ArrayEntrenadores);
+           
             $deportista->FK_I_ID_CLUB_DEPORTIVO = $request->Club_Deportivo;
             $deportista->FK_I_ID_TALLA_CAMISA = $request->Talla_Camisa;
             $deportista->FK_I_ID_TALLA_ZAPATOS = $request->Talla_Zapatos;
@@ -212,15 +216,7 @@ class DeportistaController extends Controller
                 return response()->json(["Mensaje" => "Deportista actualizado correctamente."]);
             }else{
                 return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
-            }
+           }
         }
     }
-    
-    public function storeEntrenador(Request $request) {
-        if ($request->ajax()) {
-            //Buscar todos los datos que hayan de este deportista
-        }
-        return response()->json(["Mensaje" => "storeEntrenador"]);
-    }
-    
 }
