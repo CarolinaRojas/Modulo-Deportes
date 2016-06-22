@@ -20,11 +20,6 @@ Route::get('uno', function () {
 });
 
 
-
-
-
-
-
 Route::get('/personaDeportista/{id}','PersonaDeportistaController@obtener');
 Route::get('/personaBuscarDeportista/{id}','PersonaDeportistaController@buscar');
 Route::get('/personaDeportistaDatos/{id}','PersonaDeportistaController@InformacionDeportia');
@@ -61,6 +56,8 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::resource('AddDeportiva', 'DeportistaController');
     Route::resource('EditDeportiva', 'DeportistaController@storeDeportiva');
-    Route::resource('AddDeportiva', 'DeportistaController@storeEntrenador');
+    /*Route::resource('AddDeportiva', 'DeportistaController@storeEntrenador');*/
+    
+    Route::get('Dentrenadores/{id}','DeportistaController@deportistaEntrenadores');
     
 });

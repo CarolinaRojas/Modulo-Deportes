@@ -13,8 +13,15 @@ $(function(e){
           function(data){
             if(data.length > 0){
               var html = '';
-              $.each(data, function(i, e){
-                html += '<li class="list-group-item" style="border:0">'+
+              $.each(data, function(i, e){   
+                    $.get("deportista/" + e['Id_Persona'] + "", function (response) {
+                        if(response.deportista){
+                          var botonera = '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>'+
+                                   '<button type="button" class="btn btn-primary">Apoyos y servicios</button>';
+                          $("#Botonera").append(botonera);
+                        }
+                    });                  
+                    html += '<li class="list-group-item" style="border:0">'+
                             '<br>'+                                                     
                                   '<div class="row">'+
                                       '<div class="col-xs-12">'+
@@ -27,10 +34,8 @@ $(function(e){
                                               '</div>'+
 
                                               '<div class="col-xs-6 ">'+
-                                                        '<div class="pull-right btn-group" role="group" aria-label="Informacion">'+
+                                                        '<div class="pull-right btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
                                                           '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary">Información Basica</button>'+
-                                                          '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>'+
-                                                          '<button type="button" class="btn btn-primary">Apoyos y servicios</button>'+
                                                         '</div>'+
                                               '</div>'+
                                           '</div>'+
@@ -40,7 +45,7 @@ $(function(e){
               });
               $('#personas').html(html);
               $('#paginador').fadeOut();
-            }
+            }            
           },
           'json'
         )
@@ -108,6 +113,7 @@ $(function(e){
           showDeportes(persona.deportista['FK_I_ID_AGRUPACION'], persona.deportista['FK_I_ID_DEPORTE']);
           
           showModalidades(persona.deportista['FK_I_ID_DEPORTE'], persona.deportista['FK_I_ID_MODALIDAD']);          
+          
       }
       
       $('#modal_form_persona').modal('show');
@@ -132,6 +138,11 @@ $(function(e){
     $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){        
         var id = $(this).data('rel');
         $.get("deportista/" + id + "", function (response) {
+            $("#mensaje-incorrecto").fadeOut();
+            Normal('Grupo_Sanguineo'); Normal('Eps'); Normal('Estado_Civil'); Normal('Estrato'); Normal('Situacion_Militar');
+            Normal('Hijos'); Normal('Departamento'); Normal('Localidad'); Normal('Barrio'); Normal('Direccion_Residencia'); Normal('Telefono_Fijo'); 
+            Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Tipo_Deportista'); Normal('Banco'); Normal('Cuenta');
+            Normal('Deporte'); Normal('Modalidad'); Normal('Agrupacion'); Normal('Etapa');
             popular_modal_persona(response);
         });
     });
@@ -191,11 +202,11 @@ function RegistroDeportista(){
         $("#mensajeIncorrecto").html(':');
         
         var token = $("#token").val();
-                
+               
         if(Id_Deportista){
-            Proceso ('PUT', 'AddDatos/'+Id_Deportista, datos, token);
-        }else{
-            Proceso ('POST', 'AddDatos', datos, token);
+            Proceso('PUT', 'AddDatos/'+Id_Deportista, datos, token);
+        }else{            
+            Proceso('POST', 'AddDatos', datos, token);
         }        
     });
 }
@@ -208,6 +219,7 @@ function Validacion(campo, mensaje){
     
     $("#mensajeIncorrecto").html(texto + '<br>' + mensaje);
     $("#mensaje-incorrecto").fadeIn();
+    $('#mensaje-incorrecto').focus();
 }
 
 function Normal(campo){
@@ -221,12 +233,13 @@ function Proceso (tipo, url, datos, token){
         url: url,
         headers: {'X-CSRF-TOKEN': token},
         dataType: 'json',
-        data: datos,
-        success: function (xhr) {
+        data: datos,        
+        success: function (xhr) {            
             alert(xhr.Mensaje);
-            $('#modal_form_persona').modal('hide');
+            location.href = 'DatosDeportista';
+            //$('#modal_form_persona').modal('hide');
         },
-        error: function (xhr) {                     
+        error: function (xhr) {      
             if(xhr.responseJSON.Grupo_Sanguineo){ Validacion('Grupo_Sanguineo', xhr.responseJSON.Grupo_Sanguineo);}else{Normal('Grupo_Sanguineo');}
             if(xhr.responseJSON.Eps){ Validacion('Eps', xhr.responseJSON.Eps);}else{Normal('Eps');}
             if(xhr.responseJSON.Estado_Civil){ Validacion('Estado_Civil', xhr.responseJSON.Estado_Civil);}else{Normal('Estado_Civil');}

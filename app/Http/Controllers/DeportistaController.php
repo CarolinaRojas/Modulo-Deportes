@@ -104,7 +104,8 @@ class DeportistaController extends Controller
         return response()->json(["Mensaje" => 'SHOW']);
     }
     
-    public function store(RegistroDeportistaRequest $request) {         
+    public function store(RegistroDeportistaRequest $request) {       
+        
         if ($request->ajax()) {     
             
             $deportista = new  DeportistaModel;
@@ -218,5 +219,10 @@ class DeportistaController extends Controller
                 return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
            }
         }
+    }
+    
+    public function deportistaEntrenadores($id){
+        $deportistaE = DeportistaModel::with('entrenadores', 'entrenadores.persona')->find($id);
+        return $deportistaE;
     }
 }

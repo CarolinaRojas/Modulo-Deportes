@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <div class="input-group">
-                                    <input name="buscador" type="text" class="form-control" placeholder="Buscar" value="1073157928">
+                                    <input name="buscador" type="text" class="form-control" placeholder="Buscar" value="1032455961">
                                     <span class="input-group-btn">
                                         <button id="buscar" data-role="buscar" class="btn btn-default" type="button">
                                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -59,7 +59,7 @@
                                 @include('deportista.persona')
                             </div>
                             <br>
-                            <div id="mensaje-incorrecto" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
+                            <div tabindex="-1" id="mensaje-incorrecto" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
                                 <strong>Error </strong> <span id="mensajeIncorrecto"></span>
                             </div>
                             <br>
@@ -111,7 +111,7 @@
               <form class="form-horizontal" id="form_deportista" action="">
                   <fieldset>                          
                         <br>
-                        <div id="mensaje-incorrecto-dos" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
+                        <div tabindex="-1" id="mensaje-incorrecto-dos" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
                             <strong>Error </strong> <span id="mensajeIncorrectoDos"></span>
                         </div>
                         <br>
@@ -205,7 +205,7 @@
                           <div class="form-group">
                              <div class="col-lg-12 ">
                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                               <button type="button" class="btn btn-primary" name="Enviar2" id="Enviar2">Enviar</button>
+                               <button type="button" class="btn btn-primary" name="EnviarDeportiva" id="EnviarDeportiva">Enviar</button>
                              </div>
                           </div>
                       </div>
