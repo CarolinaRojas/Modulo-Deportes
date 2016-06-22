@@ -10,33 +10,26 @@ class DeporteTablaSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        $terrestre = ['',
-            'Ciclismo',
-            'Ecuestre',
-            'Patinaje Artístico',
-            'Patinaje Carreras',
-        ];
-        
-        $acuatico = ['',
-            'Actividades Subacuáticas',
-            'Canotaje',
-            'Natación',
-            'Vela'
-        ];
-        
+    {        
         $arte = ['',
             'Ajedrez',
-            'Arqueria',
-            'Atletismo',
+            'Arqueria(C+R)',
             'Billar',
-            'Gimnasia',            
-            'Levantamiento de Pesas',
+            'Bolo',
+            'Ecuestre',
+            'Gimnasia',
+            'Golf',
+            'Patinaje artístico',
             'Tejo',
-            'Tiro',
-            'Triathlon'
+            'Tiro'
         ];
-                
+        for ($contador = 1; $contador < count($arte); $contador ++) {
+            DB::table('TB_SRD_DEPORTE')->insert([
+                'FK_I_ID_AGRUPACION' => 1,
+                'V_NOMBRE_DEPORTE' => ($arte [$contador])
+            ]);
+        }
+        
         $combate = ['',
             'Boxeo',
             'Esgrima',
@@ -45,52 +38,60 @@ class DeporteTablaSeeder extends Seeder
             'Lucha',
             'TaeKwondo'
         ];
-                
+        for ($contador = 1; $contador < count($combate); $contador ++) {
+            DB::table('TB_SRD_DEPORTE')->insert([
+                'FK_I_ID_AGRUPACION' => 2,
+                'V_NOMBRE_DEPORTE' => ($combate [$contador])
+            ]);
+        }
+             
         $pelota = ['',
+            'Badminton',
             'Baloncesto',
-            'Beisbol',
-            'Bolo',            
+            'Balón Mano',
+            'Beisbol',      
             'Fútbol',
-            'Fútbol Sala',
             'Fútbol de Salón',
+            'Rugby',
             'Softbol',
             'Squash',
+            'Tenis',
             'Tenis de Mesa',
             'Tenis',
             'Voleibol'
         ];
         
-        
-        for ($contador = 1; $contador < count($terrestre); $contador ++) {
+        for ($contador = 1; $contador < count($pelota); $contador ++) {
             DB::table('TB_SRD_DEPORTE')->insert([
-                'FK_I_ID_AGRUPACION' => 1,
-                'V_NOMBRE_DEPORTE' => ($terrestre [$contador])
+                'FK_I_ID_AGRUPACION' => 3,
+                'V_NOMBRE_DEPORTE' => ($pelota [$contador])
             ]);
         }
+         $acuatico = ['',
+            'Actividades Subacuáticas',
+            'Esquí Náutico' ,
+            'Natación',
+            'Triathlon',
+            'Vela'
+        ];
         for ($contador = 1; $contador < count($acuatico); $contador ++) {
             DB::table('TB_SRD_DEPORTE')->insert([
-                'FK_I_ID_AGRUPACION' => 2,
+                'FK_I_ID_AGRUPACION' => 4,
                 'V_NOMBRE_DEPORTE' => ($acuatico [$contador])
             ]);
         }
-        for ($contador = 1; $contador < count($arte); $contador ++) {
-            DB::table('TB_SRD_DEPORTE')->insert([
-                'FK_I_ID_AGRUPACION' => 3,
-                'V_NOMBRE_DEPORTE' => ($arte [$contador])
-            ]);
-        }
         
-        for ($contador = 1; $contador < count($combate); $contador ++) {
-            DB::table('TB_SRD_DEPORTE')->insert([
-                'FK_I_ID_AGRUPACION' => 4,
-                'V_NOMBRE_DEPORTE' => ($combate [$contador])
-            ]);
-        }
-        
-        for ($contador = 1; $contador < count($pelota); $contador ++) {
+        $terrestre = ['',
+            'Atletismo',
+            'Canotaje',
+            'Ciclismo',
+            'Levantamiento de pesas',
+            'Patinaje Carreras',
+        ];        
+        for ($contador = 1; $contador < count($terrestre); $contador ++) {
             DB::table('TB_SRD_DEPORTE')->insert([
                 'FK_I_ID_AGRUPACION' => 5,
-                'V_NOMBRE_DEPORTE' => ($pelota [$contador])
+                'V_NOMBRE_DEPORTE' => ($terrestre [$contador])
             ]);
         }
     }
