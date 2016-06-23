@@ -170,6 +170,17 @@
         @endforeach
     </select>
   </div>
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="EtapaL">Etapa:</label>
+    </div>
+    <div class="col-md-4">
+        <select name="Etapa" id="Etapa" class="form-control">
+            <option value="">Seleccionar</option>
+            @foreach($etapa as $etapas)
+                <option value="{{ $etapas['PK_I_ID_ETAPA'] }}">{{ $etapas['V_NOMBRE_ETAPA'] }}</option>
+            @endforeach
+        </select>
+    </div>
 </div>
 <br>
 <div class="row">
@@ -208,16 +219,5 @@
                 <option value="{{ $modalidades['PK_I_ID_MODALIDAD'] }}">{{ $modalidades['V_NOMBRE_MODALIDAD'] }}</option>
             @endforeach
         </select>
-    </div>
-    <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right" id="EtapaL">Etapa:</label>
-    </div>
-    <div class="col-md-4">
-        <select name="Etapa" id="Etapa" class="form-control">
-            <option value="">Seleccionar</option>
-            @foreach($etapa as $etapas)
-                <option value="{{ $etapas['PK_I_ID_ETAPA'] }}">{{ $etapas['V_NOMBRE_ETAPA'] }}</option>
-            @endforeach
-        </select>
-    </div>
+    </div>    
 </div>

@@ -81,8 +81,10 @@ $(function(e){
       $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
       $("#Deporte").empty();
       $("#Modalidad").empty();
+      $("#Etapa").empty();
       $("#Modalidad").append("<option value=''>Seleccionar</option>");
       $("#Deporte").append("<option value=''>Seleccionar</option>");
+      $("#Etapa").append("<option value=''>Seleccionar</option>");
             
       if(persona.deportista){
           
@@ -113,6 +115,8 @@ $(function(e){
           showDeportes(persona.deportista['FK_I_ID_AGRUPACION'], persona.deportista['FK_I_ID_DEPORTE']);
           
           showModalidades(persona.deportista['FK_I_ID_DEPORTE'], persona.deportista['FK_I_ID_MODALIDAD']);          
+          
+          showEtapas(persona.deportista['FK_I_ID_TIPO_DEPORTISTA'], persona.deportista['FK_I_ID_ETAPA']);          
           
       }
       
@@ -294,10 +298,24 @@ function showModalidades(id, seleccion) {
     });
 }
 
+function showEtapas(id, seleccion) {    
+    $("#Etapa").empty();
+    $("#Etapa").append("<option value=''>Seleccionar</option>");
+    $.get("getEtapas/" + id + "", function (response) {    
+        $.each(response, function(i, e){
+           $('#Etapa').append('<option value="'+ e.PK_I_ID_ETAPA +'">'+ e.V_NOMBRE_ETAPA +'</option>');
+        });
+    }).done(function(e){
+        $("#Etapa").val(seleccion);
+    });
+}
+
 $(document).ready(function () {  
     
     RegistroDeportista();
-    
+    $('#Tipo_Deportista').on('change', function(e){
+        showEtapas($('#Tipo_Deportista').val());
+    });
     
     $('#Agrupacion').on('change', function(e){
         showDeportes($('#Agrupacion').val());
@@ -307,3 +325,5 @@ $(document).ready(function () {
         showModalidades($('#Deporte').val());
     });
 });
+
+

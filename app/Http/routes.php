@@ -53,6 +53,7 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::get('getDeportes/{id}', 'DeportistaController@getDeporte');
     Route::get('getModalidades/{id}', 'DeportistaController@getModalidad');
+    Route::get('getEtapas/{id}', 'DeportistaController@getEtapas');
     
     Route::resource('AddDeportiva', 'DeportistaController');
     Route::resource('EditDeportiva', 'DeportistaController@storeDeportiva');

@@ -225,4 +225,12 @@ class DeportistaController extends Controller
         $deportistaE = DeportistaModel::with('entrenadores', 'entrenadores.persona')->find($id);
         return $deportistaE;
     }
+    
+    public static function getEtapas(Request $request, $id) {      
+        if ($request->ajax()) {
+            $etapas = EtapaModel::getEtapasJSON($id);            
+        }
+        return response()->json($etapas);
+    }
+    
 }
