@@ -53,8 +53,25 @@
                       <h2 class="modal-title"><p class="text-center" id="titulo"></p></h2>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" id="form_deportista" action="">
-                        <fieldset>                          
+                         
+<!--<form enctype="multipart/form-data" id="Formulario_Imagen" name="Formulario_Imagen" role="form" method="POST" action="">
+    <div class="form-group">
+        <label for="catagry_name">Name</label>
+        <input type="text" name="_token" value="{{ csrf_token()}}">
+        <input type="text" class="form-control" id="catagry_name" placeholder="Name">
+        <p class="invalid">Enter Catagory Name.</p>
+    </div>
+    <div class="form-group">
+        <label for="catagry_name">Logo</label>
+        <input type="file" name="Fotografia" class="form-control" id="Fotografia">
+        <p class="invalid">Enter Catagory Logo.</p>
+    </div>
+    <div class="modelFootr">
+        <button type="submit" class="addbtn" id="addbtn" name="addbtn" >Add</button>
+        <button type="button" class="cnclbtn">Reset</button>
+    </div>
+</form>-->
+                 <!--   <form class="form-horizontal" id="form_deportista" action="">-->
                             <div>                                                                
                                 @include('deportista.persona')
                             </div>
@@ -78,7 +95,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                      </form>
+                      <!--</form>-->
                     </div>
                 </div>
             </div>
@@ -215,4 +232,6 @@
           </div>
       </div>
   </div>
+        
+   
 @stop

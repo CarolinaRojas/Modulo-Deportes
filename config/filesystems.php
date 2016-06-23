@@ -61,7 +61,13 @@ return [
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
-
+        
+        'fotografias' => [
+            'driver' => 'local',
+            'root' => storage_path('app/fotografias'),
+            'visibility' => 'public',
+        ],
+       
     ],
 
 ];

@@ -233,4 +233,18 @@ class DeportistaController extends Controller
         return response()->json($etapas);
     }
     
+    
+    public function AgregarImagen(Request $request)
+    {
+        if ($request->hasFile('Fotografia'))
+        {
+            $file = $request->file('Fotografia'); 
+            $nombre = $file->getClientOriginalName();            
+            \Storage::disk('fotografias')->put($nombre,  \File::get($file));
+            return "archivo guardado";       
+        }
+        else{
+            return "file not present";
+        }
+    }
 }

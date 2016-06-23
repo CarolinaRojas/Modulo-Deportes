@@ -57,8 +57,8 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::resource('AddDeportiva', 'DeportistaController');
     Route::resource('EditDeportiva', 'DeportistaController@storeDeportiva');
-    /*Route::resource('AddDeportiva', 'DeportistaController@storeEntrenador');*/
     
     Route::get('Dentrenadores/{id}','DeportistaController@deportistaEntrenadores');
     
+    Route::post('AddImagen','DeportistaController@AgregarImagen');    
 });

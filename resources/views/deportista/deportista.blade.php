@@ -1,3 +1,16 @@
+                         
+<form enctype="multipart/form-data" id="Formulario_Imagen" name="Formulario_Imagen" role="form" method="POST" action="">        
+    <div class="row">  
+        <div class="col-md-2">
+            <label for="inputEmail" class="control-label pull-right" id="FotografiaL">Fotografia de deportista:</label>
+        </div>
+        <div class="col-md-4">
+            <input type="file" name="Fotografia" class="form-control" id="Fotografia">
+        </div>
+    </div>
+</form>
+
+
 <input type="hidden" name="Id_Deportista" id="Id_Deportista">
 <div class="row">    
     <div class="col-md-2">

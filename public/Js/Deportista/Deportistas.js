@@ -61,6 +61,7 @@ $(function(e){
     };    
     
     var popular_modal_persona = function(persona){
+        
       var nombreDeportista="";
       var cedulaDeportista="";
 
@@ -120,7 +121,7 @@ $(function(e){
           
       }
       
-      $('#modal_form_persona').modal('show');
+    $('#modal_form_persona').modal('show');
     };
 
     $('#buscar').on('click', function(e){
@@ -310,9 +311,38 @@ function showEtapas(id, seleccion) {
     });
 }
 
-$(document).ready(function () {  
+function guardaImagen(){
+    var token = $("#token").val();
+    $.ajax({
+        url: 'AddImagen',
+        type: 'POST',
+        data:  new FormData($("#Formulario_Imagen")[0]),
+        mimeType:"multipart/form-data",
+        contentType: false,
+        cache: false,
+        processData:false,
+        headers: {'X-CSRF-TOKEN': token},
+        success: function(data){
+            console.log(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log('error');
+            $("#errores").html(errorThrown);
+        }        
+    });
+}
+
+$(document).ready(function () { 
     
     RegistroDeportista();
+    
+    $("#Fotografia").on('change', function(e){   
+        guardaImagen();
+        e.preventDefault();
+        return false;
+    });
+    
+    
     $('#Tipo_Deportista').on('change', function(e){
         showEtapas($('#Tipo_Deportista').val());
     });
@@ -327,3 +357,38 @@ $(document).ready(function () {
 });
 
 
+
+
+
+$(document).ready(function () {      
+     
+    
+    
+    
+//   $("#Formulario_Imagen").submit(function(e){   
+//       
+//     //  console.log($("#Formulario_Imagen")[0]);
+//       $.ajax({
+//           url: 'add-catagory',
+//           type: 'POST',
+//           data:  new FormData($("#Formulario_Imagen")[0]),
+//           mimeType:"multipart/form-data",
+//           contentType: false,
+//           cache: false,
+//           processData:false,
+//       success: function(data){
+//           console.log(data);
+//      /*  alertify.alert(data);
+//        $('#formInscripcion')[0].reset();
+//        $('#loading').hide();*/
+//       },
+//        error: function(jqXHR, textStatus, errorThrown){
+//            console.log('error');
+//        $("#errores").html(errorThrown);
+//        }        
+//       });
+//       e.preventDefault();
+//        return false;
+//    });
+
+});
