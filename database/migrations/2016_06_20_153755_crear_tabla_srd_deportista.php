@@ -43,6 +43,7 @@ class CrearTablaSrdDeportista extends Migration
             $table->string('V_CORREO_ELECTRONICO');
             $table->string('V_CANTIDAD_HIJOS');
             $table->string('V_NUMERO_CUENTA');
+            $table->string('V_URL_IMG');
             
             
             

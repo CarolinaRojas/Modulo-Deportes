@@ -4,8 +4,6 @@
     <script src="{{ asset('public/Js/Deportista/Deportistas.js') }}"></script> 
     <script src="{{ asset('public/Js/Deportista/Deportiva.js') }}"></script> 
     <link href="{{ asset('public/Css/dropzone.css') }}" rel="stylesheet">
-    <!--<script src="{{ asset('public/Js/dropzone.js') }}"></script>
-    <link href="{{ asset('public/Css/dropzone.css') }}" rel="stylesheet">-->
     
 @stop  
 @section('content') 
@@ -44,37 +42,16 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
         <div class="modal fade bs-example-modal-lg" id="modal_form_persona" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="padding-bottom: 50px;">
+                  <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       <h2 class="modal-title"><p class="text-center" id="titulo"></p></h2>
-                </div>
-                <div class="modal-body">
-                         
-<!--<form enctype="multipart/form-data" id="Formulario_Imagen" name="Formulario_Imagen" role="form" method="POST" action="">
-    <div class="form-group">
-        <label for="catagry_name">Name</label>
-        <input type="text" name="_token" value="{{ csrf_token()}}">
-        <input type="text" class="form-control" id="catagry_name" placeholder="Name">
-        <p class="invalid">Enter Catagory Name.</p>
-    </div>
-    <div class="form-group">
-        <label for="catagry_name">Logo</label>
-        <input type="file" name="Fotografia" class="form-control" id="Fotografia">
-        <p class="invalid">Enter Catagory Logo.</p>
-    </div>
-    <div class="modelFootr">
-        <button type="submit" class="addbtn" id="addbtn" name="addbtn" >Add</button>
-        <button type="button" class="cnclbtn">Reset</button>
-    </div>
-</form>-->
-                 <!--   <form class="form-horizontal" id="form_deportista" action="">-->
-                            <div>                                                                
+                    </div>
+                    <div class="modal-body">                                                   
                                 @include('deportista.persona')
-                            </div>
                             <br>
                             <div tabindex="-1" id="mensaje-incorrecto" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
                                 <strong>Error </strong> <span id="mensajeIncorrecto"></span>
@@ -88,21 +65,18 @@
                             <br>
                             <div class="col-xs-12 col-md-12 ">   
                                 <div class="form-group">
-                                   <div class="col-lg-12 ">
+                                   
                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                      <button type="button" class="btn btn-primary" name="Enviar" id="Enviar">Enviar</button>
-                                   </div>
+                                   
                                 </div>
                             </div>
-                        </fieldset>
-                      <!--</form>-->
                     </div>
                 </div>
             </div>
         </div>        
-        
-        
-        <div class="modal fade bs-example-modal-lg" id="modal_form_deportiva" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                
+    <div class="modal fade bs-example-modal-lg" id="modal_form_deportiva" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <div class="modal-header">
@@ -116,14 +90,16 @@
                   <small class="control-label text-left" id="CedulaD"></small>
               </legend>
               <h4 class="modal-title text-uppercase">Datos Deportivos:</h4>
-              <div class="row">
-                  <div class="col-md-4"></div>
-                  <div class="col-md-4 text-center">
-                      <label for="inputEmail" class="control-label">Foto</label><br>
-                      <img src="" alt="" class="img-thumbnail img-responsive" style="width:100%; height:100%; max-width:200px; min-height:200px;max-height:250px;"><br>
-
-                  </div>
-                  <br>
+              <div class="row">                  
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 text-center">
+                        <label for="inputEmail" class="control-label">Foto</label><br>
+                        <span id="SImagen2">
+                            <img id="Imagen2" src="" alt="" class="img-thumbnail img-responsive" style="width:100%; height:100%; max-width:200px; min-height:200px;max-height:250px;"><br>         
+                        </span>
+                    </div>
+                </div>
               </div>
               <form class="form-horizontal" id="form_deportista" action="">
                   <fieldset>                          
@@ -232,6 +208,5 @@
           </div>
       </div>
   </div>
-        
-   
+    </div>
 @stop

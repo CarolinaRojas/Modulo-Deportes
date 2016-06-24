@@ -35,8 +35,13 @@ function popular_modal_deportiva(persona){
     document.getElementById("CedulaD").innerHTML=cedulaDeportista;
     
     $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
+    $("#SImagen").empty();
     
     if(persona.deportista){
+        
+        $("#SImagen2").append("<img id='Imagen2' src=''>");
+        $("#Imagen2").attr('src',$("#Imagen2").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
+        
         $('#PanelEntrenador').empty(); 
         
         $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
@@ -45,6 +50,8 @@ function popular_modal_deportiva(persona){
         $("#Talla_Zapatos").val(persona.deportista['FK_I_ID_TALLA_ZAPATOS']).change();
         $("#Talla_Chaqueta").val(persona.deportista['FK_I_ID_TALLA_CHAQUETA']).change();
         $("#Talla_Pantalon").val(persona.deportista['FK_I_ID_TALLA_PANTALON']).change();
+        contador = 0;
+        conEnt =[];
         
         $.get("Dentrenadores/"+persona.deportista['PK_I_ID_DEPORTISTA'], function (persona) {
               if(persona){

@@ -234,17 +234,20 @@ class DeportistaController extends Controller
     }
     
     
-    public function AgregarImagen(Request $request)
+    public function AgregarImagen(Request $request, $idPersona)
     {
-        if ($request->hasFile('Fotografia'))
-        {
+        if ($request->hasFile('Fotografia')){
+            
+            $persona = Persona::with('deportista')->find($idPersona);
+            $persona->deportista['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_deportista.png';
+            $persona->deportista->save();
             $file = $request->file('Fotografia'); 
-            $nombre = $file->getClientOriginalName();            
+            $nombre = $idPersona.'_deportista.png';         
             \Storage::disk('fotografias')->put($nombre,  \File::get($file));
-            return "archivo guardado";       
+            return "Archivo almacenado correctamente";
         }
         else{
-            return "file not present";
+            return "No se encontro archivo.";
         }
     }
 }

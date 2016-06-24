@@ -8,12 +8,24 @@
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
         <label for="inputEmail" class="control-label">Foto</label><br>
-        <img src="" alt="" class="img-thumbnail img-responsive" style="width:100%; height:100%; max-width:200px; min-height:200px;max-height:250px;"><br>
-         
+        <span id="SImagen">
+            <img id="Imagen" src="" alt="" class="img-thumbnail img-responsive" style="width:100%; height:100%; max-width:200px; min-height:200px;max-height:250px;"><br>         
+        </span>
     </div>
     <br>
 </div>
-<br><br>
+<br>
+<div class="row">    
+    <form enctype="multipart/form-data" id="Formulario_Imagen" name="Formulario_Imagen" role="form" method="POST" action="">        
+        <div class="col-md-2">
+            <label for="inputEmail" class="control-label pull-right" id="FotografiaL">Fotografia de deportista:</label>
+        </div>
+        <div class="col-md-4">
+            <input type="file" name="Fotografia" class="form-control" id="Fotografia">
+        </div>
+      </form>  
+</div>
+<br>
 <div class="row">
     <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right">Fecha Nacimiento:</label>
@@ -34,9 +46,7 @@
       </select>
     </div>
 </div>
-
 <br>
-
 <div class="row">
    <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right">Pais Nacimiento:</label>

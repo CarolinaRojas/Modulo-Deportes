@@ -30,7 +30,8 @@ class DeportistaModel extends Model
         'V_CORREO_ELECTRONICO',
         'B_SITUACION_MILITAR',
         'V_CANTIDAD_HIJOS',
-        'V_NUMERO_CUENTA'        
+        'V_NUMERO_CUENTA',
+        'V_URL_IMG'        
         ];
     
     public function persona()
