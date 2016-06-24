@@ -159,6 +159,11 @@ function ProcesoDeportiva (tipo, url, datos, token){
         data: datos,
         success: function (xhr) {
             alert(xhr.Mensaje);
+            $("#Botonera").empty();
+            var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary">Información Basica</button>\
+                            <button type="button" data-role="InformacionDeportiva" data-rel="'+datos['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>\
+                            <button type="button" data-role="ApoyoServicios" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary">Apoyos y servicios</button>';
+            $("#Botonera").append(botonera);
             $('#modal_form_deportiva').modal('hide');
         },
         error: function (xhr) {          
