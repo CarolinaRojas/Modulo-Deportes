@@ -61,4 +61,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('Dentrenadores/{id}','DeportistaController@deportistaEntrenadores');
     
     Route::post('AddImagen/{id}','DeportistaController@AgregarImagen');    
+    
+    Route::get('HEtapa/{id}','DeportistaController@HistorialEtapa');
 });

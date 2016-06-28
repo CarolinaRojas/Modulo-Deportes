@@ -1,26 +1,35 @@
-var contador = 0;
-var conEnt =[];
-$(function(e){   
+$(function(e){       
     
-    RegistroDeportiva();
-    
-    $('#AgregarEntrenador').on('click', function(e){ SeleccionEntrenador($('#Entrenador').val()); });   
-    
-    $('#personas').delegate('button[data-role="InformacionDeportiva"]', 'click', function(e){    
-        var id = $(this).data('rel');        
-        $.get("deportista/" + id + "", function (deportista) {
-            $("#mensaje-incorrecto-dos").fadeOut();
-            Normal('Club_Deportivo');
-            Normal('Entrenador');
-            Normal('Talla_Camisa');
-            Normal('Talla_Zapatos');
-            Normal('Talla_Chaqueta');
-            Normal('Talla_Pantalon');
-                popular_modal_deportiva(deportista);
-            })
+    $('#personas').delegate('button[data-role="ApoyoServicios"]', 'click', function(e){    
+        var id = $(this).data('rel'); 
+        $.get("HEtapa/" + id + "", function (deportista) {
+            popular_modal_apoyo(deportista);
+        })
     });   
 });
+function popular_modal_apoyo(persona){
+    var nombreDeportista="";
+    var cedulaDeportista="";
+    
+    nombreDeportista = $.trim(persona['Primer_Apellido'])+' '+$.trim(persona['Segundo_Apellido'])+' '+$.trim(persona['Primer_Nombre'])+' '+$.trim(persona['Segundo_Nombre']);
+    $('p[name="CedulaA"]').val($.trim(persona['Cedula']));
+    cedulaDeportista = "CC: "+ $.trim(persona['Cedula']);
 
+    document.getElementById("nombreDeportA").innerHTML= nombreDeportista.toUpperCase();
+    document.getElementById("CedulaA").innerHTML=cedulaDeportista;
+    
+    $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
+    $("#SImagen3").empty();
+    
+     if(persona.deportista){
+        $("#SImagen3").append("<img id='Imagen3' src=''>");
+        $("#Imagen3").attr('src',$("#Imagen3").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
+        
+    }
+    $('#modal_form_apoyo').modal('show');
+    
+}
+/*
 function popular_modal_deportiva(persona){
     
     var nombreDeportista="";
@@ -30,11 +39,12 @@ function popular_modal_deportiva(persona){
     $('p[name="Cedula"]').val($.trim(persona['Cedula']));
     cedulaDeportista = "CC: "+ $.trim(persona['Cedula']);
 
+    document.getElementById("tituloDeportiva").innerHTML= "GESTOR DE FUNCIONARIOS EN EL MÓDULO DE RENDIMIENTO DEPORTIVO";
     document.getElementById("nombreDeportD").innerHTML= nombreDeportista.toUpperCase();
     document.getElementById("CedulaD").innerHTML=cedulaDeportista;
     
     $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
-    $("#SImagen2").empty();
+    $("#SImagen").empty();
     
     if(persona.deportista){
         
@@ -201,4 +211,4 @@ function ValidacionDeportiva(campo, mensaje){
 function Normal(campo){
     $("#"+campo).css({ 'border-color': '#CCCCCC' });    
     $("#"+campo+"L").css({ 'color': '#555555' });    
-}
+}*/

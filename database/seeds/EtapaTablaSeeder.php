@@ -32,7 +32,7 @@ class EtapaTablaSeeder extends Seeder
             ['FK_I_ID_TIPO_DEPORTISTA' => 1, 'V_NOMBRE_ETAPA' => 'ELITE INTERNACIONAL V', 'V_POR_ESTIMULO'=>'1.75'],
             ['FK_I_ID_TIPO_DEPORTISTA' => 1, 'V_NOMBRE_ETAPA' => 'ELITE INTERNACIONAL VI', 'V_POR_ESTIMULO'=>'2.0'],
             ['FK_I_ID_TIPO_DEPORTISTA' => 1, 'V_NOMBRE_ETAPA' => 'ELITE INTERNACIONAL VII', 'V_POR_ESTIMULO'=>'3.0'],
-            ['FK_I_ID_TIPO_DEPORTISTA' => 1, 'V_NOMBRE_ETAPA' => 'RETIRADO', '0'=>'3.0'],
+            ['FK_I_ID_TIPO_DEPORTISTA' => 1, 'V_NOMBRE_ETAPA' => 'RETIRADO', 'V_POR_ESTIMULO'=>'0'],
             
             /*****PARALIMPICO*******/            
             ['FK_I_ID_TIPO_DEPORTISTA' => 2, 'V_NOMBRE_ETAPA' => 'ELITE PARANACIONAL I', 'V_POR_ESTIMULO'=>'1.0'],
@@ -46,7 +46,7 @@ class EtapaTablaSeeder extends Seeder
             ['FK_I_ID_TIPO_DEPORTISTA' => 2, 'V_NOMBRE_ETAPA' => 'ELITE INTERNACIONAL III', 'V_POR_ESTIMULO'=>'1.5'],
             ['FK_I_ID_TIPO_DEPORTISTA' => 2, 'V_NOMBRE_ETAPA' => 'ELITE INTERNACIONAL IV', 'V_POR_ESTIMULO'=>'2.0'],
             ['FK_I_ID_TIPO_DEPORTISTA' => 2, 'V_NOMBRE_ETAPA' => 'ELITE INTERNACIONAL V', 'V_POR_ESTIMULO'=>'3.0'],
-            ['FK_I_ID_TIPO_DEPORTISTA' => 2, 'V_NOMBRE_ETAPA' => 'RETIRADO', '0'=>'3.0'],
+            ['FK_I_ID_TIPO_DEPORTISTA' => 2, 'V_NOMBRE_ETAPA' => 'RETIRADO', 'V_POR_ESTIMULO'=>'0'],
     
         ]);
     }

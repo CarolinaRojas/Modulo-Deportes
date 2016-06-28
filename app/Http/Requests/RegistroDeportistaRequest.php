@@ -45,7 +45,7 @@ class RegistroDeportistaRequest extends Request
             'Estrato'=>'required',
             'Grupo_Sanguineo' =>'required',
             'Tipo_Deportista' => 'required',
-            'Situacion_Militar' => 'required',
+            'Situacion_Militar' => 'required',            
             ];
         return $validaciones;
     }

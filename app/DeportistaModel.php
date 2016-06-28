@@ -44,4 +44,8 @@ class DeportistaModel extends Model
     {
         return $this->belongsToMany('App\EntrenadorModel', 'TB_SRD_DEPORTISTA_ENTRENADOR', 'FK_I_ID_DEPORTISTA', 'FK_I_ID_ENTRENADOR')->withTimestamps();
     }    
+    
+    public function historial() {
+        return $this->belongsToMany('App\EtapaModel', 'TB_SRD_HISTORIAL_ETAPA', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps();
+     }
 }

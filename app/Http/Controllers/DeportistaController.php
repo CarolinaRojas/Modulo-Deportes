@@ -27,6 +27,7 @@ use App\SituacionMilitarModel;
 use App\ClubDeportivoModel;
 use App\EntrenadorModel;
 use App\TallaModel; 
+use App\HistorialEtapaModel;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
@@ -34,8 +35,8 @@ use App\Http\Requests\DeportivaRequest;
 
 
 
-class DeportistaController extends Controller
-{   
+class DeportistaController extends Controller{
+    
     public function index(){
         $eps = EpsModel::all();
         $localidad = LocalidadModel::all();
@@ -132,7 +133,15 @@ class DeportistaController extends Controller
             $deportista->FK_I_ID_SITUACION_MILITAR = $request->Situacion_Militar;
                         
             if($deportista->save()){
-                return response()->json(["Mensaje" => "Deportista ingresado correctamente."]);
+                $historialEtapa = new HistorialEtapaModel;
+                $historialEtapa->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
+                $historialEtapa->FK_I_ID_ETAPA = $deportista->FK_I_ID_ETAPA;
+                $historialEtapa->I_SMMLV = 689454;                 
+                if($historialEtapa->save()){
+                    return response()->json(["Mensaje" => "Deportista ingresado correctamente."]);
+                }else{
+                    return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);
+                }
             }else{
                 return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);
             }
@@ -151,6 +160,17 @@ class DeportistaController extends Controller
         
         if ($request->ajax()){
             $deportista = DeportistaModel::find($id);
+            
+            if((int)$deportista->FK_I_ID_ETAPA == (int)$request->Etapa){
+            }else{
+                $historialEtapa = new HistorialEtapaModel;
+                $historialEtapa->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
+                $historialEtapa->FK_I_ID_ETAPA = $deportista->FK_I_ID_ETAPA;
+                $historialEtapa->I_SMMLV = 689454;                 
+                $historialEtapa->save();
+            }
+            
+            
             $deportista->FK_I_ID_PERSONA = $request->Id_Persona;
             $deportista->FK_I_ID_ESTADO_CIVIL = $request->Estado_Civil;
             $deportista->FK_I_ID_ESTRATO = $request->Estrato;
@@ -173,7 +193,7 @@ class DeportistaController extends Controller
             $deportista->V_NUMERO_CUENTA = $request->Cuenta;                   
             $deportista->FK_I_ID_SITUACION_MILITAR = $request->Situacion_Militar;
                         
-            if($deportista->save()){
+            if($deportista->save()){   
                 return response()->json(["Mensaje" => "Deportista actualizado correctamente!!."]);
             }else{
                 return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
@@ -232,10 +252,8 @@ class DeportistaController extends Controller
         }
         return response()->json($etapas);
     }
-    
-    
-    public function AgregarImagen(Request $request, $idPersona)
-    {
+        
+    public function AgregarImagen(Request $request, $idPersona){
         if ($request->hasFile('Fotografia')){
             
             $persona = Persona::with('deportista')->find($idPersona);
@@ -249,5 +267,11 @@ class DeportistaController extends Controller
         else{
             return "No se encontro archivo.";
         }
+    }
+    
+    public function HistorialEtapa($id) {
+        
+        $deportistaH = Persona::with('deportista', 'deportista.historial')->find($id);          
+        return $deportistaH;
     }
 }

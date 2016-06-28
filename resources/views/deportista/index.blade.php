@@ -3,10 +3,22 @@
   @parent
     <script src="{{ asset('public/Js/Deportista/Deportistas.js') }}"></script> 
     <script src="{{ asset('public/Js/Deportista/Deportiva.js') }}"></script> 
-    <link href="{{ asset('public/Css/dropzone.css') }}" rel="stylesheet">
+    <script src="{{ asset('public/Js/Deportista/ApoyoServicios.js') }}"></script>    
     
+    {{Html::script('public/Js/jquery.dataTables.js')}}
+    {{Html::script('public/Js/dataTables.responsive.min.js')}}        
+    {{Html::script('public/Js/bootstrap.min.js')}}
+    {{Html::script('public/Js/responsive.bootstrap.min.js')}}        
+    {{Html::style('public/Css/bootstrap-theme.css')}}
+    {{Html::style('public/Css/bootstrap-theme.min.css')}}
+    {{Html::style('public/Css/bootstrap.min.css') }}
+    {{Html::style('public/Css/jquery.dataTables.min.css')}}
+    {{Html::style('public/Css/responsive.bootstrap.min.css')}}
+    {{Html::style('public/Css/bootstrap.css')}}
+    {{Html::script('public/Js/tablesIdioma.js')}}    
 @stop  
 @section('content') 
+
  <input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
     <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">  
         <div class="content">
@@ -48,7 +60,10 @@
                 <div class="modal-content" style="padding-bottom: 50px;">
                   <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <h2 class="modal-title"><p class="text-center" id="titulo"></p></h2>
+                      <h4 class="modal-title text-center" id="nombreDeport"></h4>
+                      <p class="list-group-item-text text-center">
+                        <small id="Cedula" ></small>
+                    </p> 
                     </div>
                     <div class="modal-body">                                                   
                                 @include('deportista.persona')
@@ -80,23 +95,20 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"><p class="text-center" id="tituloDeportiva">tituloDeportiva</p></h2>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-center" id="nombreDeportD"></h4>
+            <p class="list-group-item-text text-center">
+              <small id="CedulaD" ></small>
+          </p> 
           </div>
           <div class="modal-body">
-              <input type="hidden" name="Id_Persona" id="Id_Persona">
-              <legend>
-                  <h3 clase="text-uppercase " id="nombreDeportD"></h3>
-                  <small class="control-label text-left" id="CedulaD"></small>
-              </legend>
               <h4 class="modal-title text-uppercase">Datos Deportivos:</h4>
               <div class="row">                  
                 <div class="row">
-                    <div class="col-md-4"></div>
+                    <div class="col-md-4 text-center"></div>
                     <div class="col-md-4 text-center">
-                        <label for="inputEmail" class="control-label">Foto</label><br>
                         <span id="SImagen2">
-                            <img id="Imagen2" src="" alt="" class="img-thumbnail img-responsive" style="width:100%; height:100%; max-width:200px; min-height:200px;max-height:250px;"><br>         
+                            <img id="Imagen2" src="" alt="" class="img-thumbnail img-responsive"><br>         
                         </span>
                     </div>
                 </div>
@@ -208,5 +220,32 @@
           </div>
       </div>
   </div>
+
+    <div class="modal fade bs-example-modal-lg" id="modal_form_apoyo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-center" id="nombreDeportA"></h4>
+            <p class="list-group-item-text text-center">
+              <small id="CedulaA" ></small>
+          </p> 
+        </div>
+          <div class="modal-body">
+              <h4 class="modal-title text-uppercase">Datos Deportivos:</h4>
+              <div class="row">                  
+                  <div class="col-md-4 text-center"></div>
+                <div class="col-md-4 text-center">
+                    <span id="SImagen3">
+                        <img id="Imagen3" src="" alt="" class="img-thumbnail img-responsive"><br>         
+                    </span>
+                </div>
+                </div>
+            </div>
+          </div>
+      </div>
     </div>
+</div>
+ 
+ 
 @stop

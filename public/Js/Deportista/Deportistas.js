@@ -104,8 +104,6 @@ $(function(e){
       $('p[name="Cedula"]').val($.trim(persona['Cedula']));
       cedulaDeportista = "CC: "+ $.trim(persona['Cedula']);
 
-
-      document.getElementById("titulo").innerHTML= "GESTOR DE FUNCIONARIOS EN EL MÓDULO DE RENDIMIENTO DEPORTIVO";
       document.getElementById("nombreDeport").innerHTML= nombreDeportista.toUpperCase();
       document.getElementById("Cedula").innerHTML=cedulaDeportista;
 

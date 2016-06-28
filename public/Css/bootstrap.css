@@ -6903,6 +6903,11 @@ button.close {
   color: #fff;
 }
 
-#Imagen{
-    width:100%; height:100%; max-width:200px; min-height:200px;max-height:250px;
+#Imagen, #Imagen2, #Imagen3{
+    width:100%; 
+    height:100%; 
+    max-width:100px;
+    min-height:100px;
+    max-height:150px;
+    border-radius: 5px;
 }
