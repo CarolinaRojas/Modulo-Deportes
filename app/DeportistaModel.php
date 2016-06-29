@@ -47,5 +47,9 @@ class DeportistaModel extends Model
     
     public function historial() {
         return $this->belongsToMany('App\EtapaModel', 'TB_SRD_HISTORIAL_ETAPA', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps();
-     }
+    }
+    
+    public function historialEstimulos() {
+        return $this->belongsToMany('App\TipoEstimuloModel', 'TB_SRD_DEPORTISTA_ESTIMULO', 'FK_I_ID_DEPORTISTA_E', 'FK_I_ID_TIPO_ESTIMULO')->withTimestamps();
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class DeportivaRequest extends Request
+class EstimuloRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,8 @@ class DeportivaRequest extends Request
     public function rules()
     {
         $validaciones = [                                    
-            'Club_Deportivo' => 'required',
-            'Talla_Camisa' => 'required',
-            'Talla_Zapatos' => 'required',
-            'Talla_Chaqueta' => 'required',
-            'Talla_Pantalon' => 'required',
-            'ArrayEntrenador' => 'required',
+            'Tipo_Estimulo' => 'required',
+            'Valor_Estimulo' => 'required|numeric|digits_between:3,10',
             ];
        
         return $validaciones;

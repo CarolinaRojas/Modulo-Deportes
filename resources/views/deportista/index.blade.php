@@ -280,21 +280,33 @@
                    <div class="col-md-2">
                        <button type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Buscar Reporte</button>
                    </div>                   
-              </div>     
-              <div id="reporteIndividual" class="row"></div>
+              </div>   
+              <br>
               <div id="AgregarEstimulos" class="row">
                   <div class="col-md-2">
                       <label for="date-depart" id="Tipo_EstimuloL">Seleccione un tipo de estímulo:</label>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                       <select name="Tipo_Estimulo" id="Tipo_Estimulo" class="form-control">
                             <option value="">Seleccionar</option>
-                            <!--@foreach($talla as $tallas)
-                                    <option value="{{ $tallas['PK_I_ID_TALLA'] }}">{{$tallas['V_NOMBRE_TALLA']}}</option>
-                            @endforeach-->
+                            @foreach($tipoEstimulo as $tipoEstimulos)
+                                    <option value="{{ $tipoEstimulos['PK_I_ID_TIPO_ESTIMULO'] }}">{{$tipoEstimulos['V_NOMBRE_ESTIMULO']}}</option>
+                            @endforeach
                         </select>
                   </div>
-              </div>
+                  <div class="col-md-2">
+                      <label for="date-depart" id="Valor_EstimuloL">Valor del estímulo:</label>
+                  </div>
+                  <div class="col-md-3">
+                      <input class="form-control" placeholder="Valor de estímulo" type="text" name="Valor_Estimulo" id="Valor_Estimulo">
+                  </div>
+                  <div class="col-md-2 ">   
+                      <button type="button" class="btn btn-primary" name="AgregarEstimulo" id="AgregarEstimulo">Agregar Estímulo</button>
+                </div>
+              </div>       
+              <br><br>
+              <div id="reporteIndividual" class="row"></div>
+              <br>
             </div>            
           </div>
       </div>

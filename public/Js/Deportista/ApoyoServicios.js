@@ -1,4 +1,5 @@
 $(function(e){ 
+    
     $('#fInicioDate').datepicker({        
        format: 'yyyy-mm-dd',
        autoclose: true,   
@@ -41,6 +42,10 @@ $(function(e){
         }
     });
     
+    $('#AgregarEstimulo').click(function () {
+        AgregarEstimulo();
+    });
+    
 });
 
 function popular_modal_apoyo(persona){
@@ -58,6 +63,7 @@ function popular_modal_apoyo(persona){
     $("#SImagen3").empty();
     
      if(persona.deportista){
+         $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
         $("#SImagen3").append("<img id='Imagen3' src=''>");
         $("#Imagen3").attr('src',$("#Imagen3").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());        
     }
@@ -66,7 +72,6 @@ function popular_modal_apoyo(persona){
 }
 
 function BuscarIndividual(id, inicio, fin){
-    //alert(inicio +'----'+fin);
     var personaX;
     var tabla = '';
     var nombreDeportista = '';
@@ -97,64 +102,33 @@ function BuscarIndividual(id, inicio, fin){
               </div>';
     
         $("#reporteIndividual").append(tabla);
-        //$("#DescargaExcel").focus();
     });
 }
 
- function DescargaHistorial(id, inicio, fin){
+function DescargaHistorial(id, inicio, fin){
      //Descarga de archivo excel
-     alert(id.value +'---'+ inicio +'----'+ fin);
      $.get('HistorialIndividual/'+id.value+'/'+inicio+'/'+fin, function (Hdeportista){        
         console.log(Hdeportista);
     });
 
  }
 
-
-
-
-
-/*
-
-
-function RegistroDeportiva(){
-    $('#EnviarDeportiva').on('click', function () {
-        var Id_Persona = $("#Id_Persona").val();
-        var Id_Deportista = $("#Id_Deportista").val();
-        var Club_Deportivo = $("#Club_Deportivo").val();
-        var Entrenador = $("#Entrenador").val();
-        var Talla_Camisa = $("#Talla_Camisa").val();
-        var Talla_Zapatos = $("#Talla_Zapatos").val();
-        var Talla_Chaqueta = $("#Talla_Chaqueta").val();
-        var Talla_Pantalon = $("#Talla_Pantalon").val();
-        var ArrayEntrenador = conEnt;
-        
-        if(ArrayEntrenador.length == 0){
-            ValidacionDeportiva('Entrenador', 'Primero debe escoger uno o más entrenadores.');
-            return false;
-        }else{Normal('Entrenador');}
-        
-        var datos = {                    
-                    Id_Persona: Id_Persona,
-                    Id_Deportista: Id_Deportista,
-                    Club_Deportivo: Club_Deportivo,
-                    Entrenador: Entrenador,
-                    Talla_Camisa: Talla_Camisa,
-                    Talla_Zapatos: Talla_Zapatos,
-                    Talla_Chaqueta: Talla_Chaqueta,
-                    Talla_Pantalon: Talla_Pantalon,
-                    ArrayEntrenador: ArrayEntrenador
-                }
-        
-        var token = $("#token").val();
-                
-        if(Id_Deportista){
-            ProcesoDeportiva ('PUT', 'EditDeportiva/'+Id_Deportista, datos, token);
-        }     
-    });
+function AgregarEstimulo(){
+    $("#mensaje-incorrecto-tres").fadeOut();
+    Normal('Tipo_Estimulo');
+    Normal('Valor_Estimulo');
+    
+    var Id_Deportista = $("#Id_Deportista").val();
+    var Tipo_Estimulo = $('#Tipo_Estimulo').val();
+    var Valor_Estimulo = $('#Valor_Estimulo').val();
+    var token = $("#token").val();
+    
+    var datos = {Tipo_Estimulo:Tipo_Estimulo, Valor_Estimulo: Valor_Estimulo, Id_Deportista: Id_Deportista, tipo: 'estimulos'};
+    
+    ProcesoApoyo ('POST', 'AddEstimulo', datos, token);   
 }
-*/
-function ProcesoDeportiva (tipo, url, datos, token){
+ 
+function ProcesoApoyo (tipo, url, datos, token){
     $.ajax({
         type: tipo,
         url: url,
@@ -163,25 +137,15 @@ function ProcesoDeportiva (tipo, url, datos, token){
         data: datos,
         success: function (xhr) {
             alert(xhr.Mensaje);
-//            $("#Botonera").empty();
-//            var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary">Información Basica</button>\
-//                            <button type="button" data-role="InformacionDeportiva" data-rel="'+datos['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>\
-//                            <button type="button" data-role="ApoyoServicios" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary">Apoyos y servicios</button>';
-//            $("#Botonera").append(botonera);
-//            $('#modal_form_deportiva').modal('hide');
+            $('#Tipo_Estimulo').val('');
+            $('#Valor_Estimulo').val('');
         },
-        error: function (xhr) {          
-//            $("#mensajeIncorrectoDos").empty();
-//            if(xhr.responseJSON.Club_Deportivo){ ValidacionDeportiva('Club_Deportivo', xhr.responseJSON.Club_Deportivo);}else{Normal('Club_Deportivo');}
-//            if(xhr.responseJSON.Talla_Camisa){ ValidacionDeportiva('Talla_Camisa', xhr.responseJSON.Talla_Camisa);}else{Normal('Talla_Camisa');}
-//            if(xhr.responseJSON.Talla_Zapatos){ ValidacionDeportiva('Talla_Zapatos', xhr.responseJSON.Talla_Zapatos);}else{Normal('Talla_Zapatos');}
-//            if(xhr.responseJSON.Talla_Chaqueta){ ValidacionDeportiva('Talla_Chaqueta', xhr.responseJSON.Talla_Chaqueta);}else{Normal('Talla_Chaqueta');}
-//            if(xhr.responseJSON.Talla_Pantalon){ ValidacionDeportiva('Talla_Pantalon', xhr.responseJSON.Talla_Pantalon);}else{Normal('Talla_Pantalon');}
-//                        
-//            var scrollPos;                    
-//            scrollPos = $("#mensajeIncorrectoDos").offset().top;
-//            $(window).scrollTop(scrollPos);
-//            return false;
+        error: function (xhr) {        
+            console.log('err');
+            console.log(xhr);
+            $("#mensajeIncorrectoTres").empty();
+            if(xhr.responseJSON.Tipo_Estimulo){ ValidacionDeportiva('Tipo_Estimulo', xhr.responseJSON.Tipo_Estimulo);}else{Normal('Tipo_Estimulo');}
+            if(xhr.responseJSON.Valor_Estimulo){ ValidacionDeportiva('Valor_Estimulo', xhr.responseJSON.Valor_Estimulo);}else{Normal('Valor_Estimulo');}
         }
     });
 }

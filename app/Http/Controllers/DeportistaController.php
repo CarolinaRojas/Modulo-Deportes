@@ -28,11 +28,12 @@ use App\ClubDeportivoModel;
 use App\EntrenadorModel;
 use App\TallaModel; 
 use App\HistorialEtapaModel;
+use App\TipoEstimuloModel;
+use App\DeportistaEstimuloModel;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
-
-
+use App\Http\Requests\EstimuloRequest;
 
 
 class DeportistaController extends Controller{
@@ -57,6 +58,7 @@ class DeportistaController extends Controller{
         $tipoDeportista = TipoDeportistaModel::all();
         $situacionMilitar = SituacionMilitarModel::all();
         $clubDeportivo = ClubDeportivoModel::all();        
+        $tipoEstimulo = TipoEstimuloModel::all();
                 
         $QEntrenadores = EntrenadorModel::all();
         $entrenadores = Persona::with('entrenador')->whereIn('Id_Persona', $QEntrenadores->lists('FK_I_ID_PERSONA'))->get();
@@ -88,7 +90,8 @@ class DeportistaController extends Controller{
                 ->with(compact('situacionMilitar'))
                 ->with(compact('clubDeportivo'))
                 ->with(compact('entrenadores'))
-                ->with(compact('talla'));
+                ->with(compact('talla'))
+                ->with(compact('tipoEstimulo'));
     }
         
     public function datos($id){
@@ -254,8 +257,7 @@ class DeportistaController extends Controller{
     }
         
     public function AgregarImagen(Request $request, $idPersona){
-        if ($request->hasFile('Fotografia')){
-            
+        if ($request->hasFile('Fotografia')){            
             $persona = Persona::with('deportista')->find($idPersona);
             $persona->deportista['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_deportista.png';
             $persona->deportista->save();
@@ -277,9 +279,30 @@ class DeportistaController extends Controller{
     
     public function HistorialIndividual(Request $request, $id, $inicio, $fin) {   
         
-        $deportistaH = Persona::with('deportista', 'deportista.historial')->find($id);
-        $filtro = $deportistaH->deportista->historial()->whereBetween('created_at', array( $inicio.' 00:00:00' , $fin.' 23:59:59'))->get();        
-        return $filtro;
+        $deportista = Persona::with('deportista', 'deportista.historial')->find($id);
+        $historialResolucion = $deportista->deportista->historial()->whereBetween('created_at', array( $inicio.' 00:00:00' , $fin.' 23:59:59'))->get();
+        $historialEstimulos = $deportista->deportista->historialEstimulos()->whereBetween('created_at', array( $inicio.' 00:00:00' , $fin.' 23:59:59'))->get();
+        
+        $vector[0] = $historialResolucion;
+        $vector[1] = $historialEstimulos;
+        
+        
+        
+        return $vector;
     }
     
+    public function AgregarEstimulo(EstimuloRequest $request) {
+        if ($request->ajax()){
+            $deportistaEstimulo = new DeportistaEstimuloModel;
+            $deportistaEstimulo->FK_I_ID_DEPORTISTA_E = $request->Id_Deportista;
+            $deportistaEstimulo->FK_I_ID_TIPO_ESTIMULO = $request->Tipo_Estimulo;
+            $deportistaEstimulo->V_VALOR_ESTIMULO = $request->Valor_Estimulo;
+            $deportistaEstimulo->I_SMMLV = 689454;
+            if($deportistaEstimulo->save()){
+                return response()->json(["Mensaje" => "Estímulo almacenado correctamente."]);
+            }else{
+                return response()->json(["Mensaje" => "No se ha actualizado correctamente el estímulo, por favor inténtelo más tarde."]);
+            }
+        }
+    }
 }

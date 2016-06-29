@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SituacionMilitarTablaSeeder::class);
         $this->call(TallaTablaSeeder::class);
         $this->call(ClubDeportivoSeeder::class);
+        $this->call(TipoEstimuloTablaSeeder::class);
     }
 }
