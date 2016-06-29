@@ -15,7 +15,13 @@
     {{Html::style('public/Css/jquery.dataTables.min.css')}}
     {{Html::style('public/Css/responsive.bootstrap.min.css')}}
     {{Html::style('public/Css/bootstrap.css')}}
-    {{Html::script('public/Js/tablesIdioma.js')}}    
+    {{Html::script('public/Js/tablesIdioma.js')}}   
+    {{Html::style('public/Css/dataTables.bootstrap.min.css')}}
+    {{Html::script('public/Js/dataTables.bootstrap.min.js')}}
+    
+    <script src="{{ asset('public/Js/bootstrap-datepicker.js') }}"></script>
+    {{Html::style('public/Css/bootstrap-datepicker3.css')}}
+    
 @stop  
 @section('content') 
 
@@ -220,7 +226,7 @@
           </div>
       </div>
   </div>
-
+<!------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="modal fade bs-example-modal-lg" id="modal_form_apoyo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -234,18 +240,64 @@
           <div class="modal-body">
               <h4 class="modal-title text-uppercase">Datos Deportivos:</h4>
               <div class="row">                  
-                  <div class="col-md-4 text-center"></div>
-                <div class="col-md-4 text-center">
-                    <span id="SImagen3">
-                        <img id="Imagen3" src="" alt="" class="img-thumbnail img-responsive"><br>         
-                    </span>
+                    <div class="col-md-4 text-center"></div>
+                    <div class="col-md-4 text-center">
+                        <span id="SImagen3">
+                            <img id="Imagen3" src="" alt="" class="img-thumbnail img-responsive"><br>         
+                        </span>
+                    </div>
                 </div>
-                </div>
-            </div>
+              <br>
+              <div tabindex="-1" id="mensaje-incorrecto-tres" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
+                  <strong>Error </strong> <span id="mensajeIncorrectoTres"></span>
+              </div>
+              <br>
+               <div class="row">
+                    <div class="col-md-2">
+                        <label for="date-depart" id="fInicioL">Fecha Inicio:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group date" id="fInicioDate">
+                            <input id="fInicio" class="form-control datepicker" type="text" value="" 
+                            name="fInicio" 
+                            default="" 
+                            data-date="" data-behavior="fInicio">
+                        <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
+                        </div>
+                    </div>                   
+                    <div class="col-md-2">
+                        <label for="date-depart" id="fFinL">Fecha Fin:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group date" id="fFinDate">
+                            <input id="fFin" class="form-control datepicker" type="text" value="" 
+                            name="fFin" 
+                            default="" 
+                            data-date="" data-behavior="fFin">
+                        <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
+                        </div>
+                    </div>
+                   <div class="col-md-2">
+                       <button type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Buscar Reporte</button>
+                   </div>                   
+              </div>     
+              <div id="reporteIndividual" class="row"></div>
+              <div id="AgregarEstimulos" class="row">
+                  <div class="col-md-2">
+                      <label for="date-depart" id="Tipo_EstimuloL">Seleccione un tipo de estímulo:</label>
+                  </div>
+                  <div class="col-md-4">
+                      <select name="Tipo_Estimulo" id="Tipo_Estimulo" class="form-control">
+                            <option value="">Seleccionar</option>
+                            <!--@foreach($talla as $tallas)
+                                    <option value="{{ $tallas['PK_I_ID_TALLA'] }}">{{$tallas['V_NOMBRE_TALLA']}}</option>
+                            @endforeach-->
+                        </select>
+                  </div>
+              </div>
+            </div>            
           </div>
       </div>
     </div>
-</div>
- 
- 
+</div> 
 @stop

@@ -1,12 +1,48 @@
-$(function(e){       
+$(function(e){ 
+    $('#fInicioDate').datepicker({        
+       format: 'yyyy-mm-dd',
+       autoclose: true,   
+    });
+    
+    $('#fFinDate').datepicker({
+       format: 'yyyy-mm-dd',
+       autoclose: true,
+    });
     
     $('#personas').delegate('button[data-role="ApoyoServicios"]', 'click', function(e){    
         var id = $(this).data('rel'); 
+        $("#mensaje-incorrecto-tres").fadeOut();
+        Normal('fInicio');
+        Normal('fFin');
         $.get("HEtapa/" + id + "", function (deportista) {
             popular_modal_apoyo(deportista);
         })
     });   
+    
+    $('#BuscarReporte').click(function (){       
+        $("#mensajeIncorrectoTres").empty();
+        Normal('fInicio');
+        Normal('fFin');
+        
+        var id = $('button[data-role="ApoyoServicios"]').data('rel'); 
+        var inicio  = document.getElementById("fInicio").value;
+        var fin  = document.getElementById("fFin").value;        
+       alert(inicio +'----'+fin);
+        if(!id || !inicio || !fin){
+            if(!inicio){                
+                ValidacionDeportiva("fInicio", 'Ingrese una fecha de inicio para generar el reporte.');
+            }
+            if(!fin){
+                ValidacionDeportiva("fFin", 'Ingrese una fecha de finalización para generar el reporte.');
+            }
+            return false;
+        }else{
+            BuscarIndividual(id, inicio, fin) ;
+        }
+    });
+    
 });
+
 function popular_modal_apoyo(persona){
     var nombreDeportista="";
     var cedulaDeportista="";
@@ -23,104 +59,63 @@ function popular_modal_apoyo(persona){
     
      if(persona.deportista){
         $("#SImagen3").append("<img id='Imagen3' src=''>");
-        $("#Imagen3").attr('src',$("#Imagen3").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
-        
+        $("#Imagen3").attr('src',$("#Imagen3").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());        
     }
     $('#modal_form_apoyo').modal('show');
     
 }
-/*
-function popular_modal_deportiva(persona){
-    
-    var nombreDeportista="";
-    var cedulaDeportista="";
-    
-    nombreDeportista = $.trim(persona['Primer_Apellido'])+' '+$.trim(persona['Segundo_Apellido'])+' '+$.trim(persona['Primer_Nombre'])+' '+$.trim(persona['Segundo_Nombre']);
-    $('p[name="Cedula"]').val($.trim(persona['Cedula']));
-    cedulaDeportista = "CC: "+ $.trim(persona['Cedula']);
 
-    document.getElementById("tituloDeportiva").innerHTML= "GESTOR DE FUNCIONARIOS EN EL MÓDULO DE RENDIMIENTO DEPORTIVO";
-    document.getElementById("nombreDeportD").innerHTML= nombreDeportista.toUpperCase();
-    document.getElementById("CedulaD").innerHTML=cedulaDeportista;
+function BuscarIndividual(id, inicio, fin){
+    //alert(inicio +'----'+fin);
+    var personaX;
+    var tabla = '';
+    var nombreDeportista = '';
+    $.get("HEtapa/" + id + "", function (deportista) {            
+            personaX = deportista;
+            nombreDeportista = $.trim(personaX['Primer_Apellido'])+' '+$.trim(personaX['Segundo_Apellido'])+' '+$.trim(personaX['Primer_Nombre'])+' '+$.trim(personaX['Segundo_Nombre']);
+            tabla += '<br>\n\
+             <div class="col-md-12">\n\
+                <table id="ApoyoData"  class="table table-striped table-borderless dt-responsive nowrap " cellspacing="0" width="100%">\n\
+                <thead>\n\
+                   <th>FECHA INICIO</th>\n\
+                   <th>FECHA FIN</th>\n\
+                   <th>NOMBRE</th>\n\
+                   <th>OPCIÓN</th>\n\
+                </thead>\n\
+                <tr>\n\
+                   <td>'+ inicio +'</td>\n\
+                   <td>'+ fin +'</td>\n\
+                   <td>'+nombreDeportista+'</td>\n\
+                   <td>\n\
+                      <button onclick="DescargaHistorial(this, \''+inicio+'\', \''+ fin +'\');" value="'+id+'" id="DescargaExcel" name="DescargaExcel" type="button" class="btn btn-default">\n\
+                        <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>\n\
+                        Descarga Excel\n\
+                      </button>\n\
+                   </td>\n\
+                </tr>\n\
+                </table>\n\
+              </div>';
     
-    $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
-    $("#SImagen").empty();
-    
-    if(persona.deportista){
-        
-        $("#SImagen2").append("<img id='Imagen2' src=''>");
-        $("#Imagen2").attr('src',$("#Imagen2").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
-        
-        $('#PanelEntrenador').empty(); 
-        
-        $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
-        $("#Club_Deportivo").val(persona.deportista['FK_I_ID_CLUB_DEPORTIVO']).change();
-        $("#Talla_Camisa").val(persona.deportista['FK_I_ID_TALLA_CAMISA']).change();
-        $("#Talla_Zapatos").val(persona.deportista['FK_I_ID_TALLA_ZAPATOS']).change();
-        $("#Talla_Chaqueta").val(persona.deportista['FK_I_ID_TALLA_CHAQUETA']).change();
-        $("#Talla_Pantalon").val(persona.deportista['FK_I_ID_TALLA_PANTALON']).change();
-        contador = 0;
-        conEnt =[];
-        
-        $.get("Dentrenadores/"+persona.deportista['PK_I_ID_DEPORTISTA'], function (persona) {
-              if(persona){
-                  $.each(persona.entrenadores, function(i, e){
-                      var Nombre = e.persona['Primer_Nombre']+' '+e.persona['Segundo_Nombre']+' '+e.persona['Primer_Apellido']+' '+e.persona['Segundo_Apellido'];
-                      var Telefono = e.V_TELEFONO
-                      var id = e.FK_I_ID_PERSONA;
-                      var id_entrenador = e.PK_I_ID_ENTRENADOR
-                      var campos = '<div class="panel panel-default" id="DivEntrenador'+id+'" name="DivEntrenador'+id+'" >\n\
-                            <div class="panel-body" >\n\
-                                <input type="hidden" id ="IdEntrenador'+id+'" name="IdEntrenador'+id+'" value="'+id_entrenador+'" />\n\
-                                <h4>ENTRENADOR:</h4>\n\
-                                <div class="col-md-4">\n\
-                                    <h5>Nombre: <small id="Nombre_Entrenador'+id+'" name="Nombre_Entrenador'+id+'">'+Nombre+'</small></h5>\n\
-                                </div>\n\
-                                <div class="col-md-4">\n\
-                                    <h5>Contacto: <small>'+Telefono+'</small></h5>\n\
-                                </div>\n\
-                                <div class="col-md-2">\n\
-                                    <button onclick="DesechaEntrenador(this, \''+Nombre+'\' )" type="button" class="btn btn-danger" id="EliminarEntrenador" name="EliminarEntrenador" value="'+e.FK_I_ID_PERSONA+'">-</button>\n\
-                                </div>\n\
-                            </div>\n\
-                        </div>';            
-                    $('#PanelEntrenador').append(campos);                                 
-                    $("#Entrenador option[value='"+e.FK_I_ID_PERSONA+"']").remove();                    
-                    conEnt[id] = id_entrenador;
-                  });
-              }      
-            });
-    }
-    $('#modal_form_deportiva').modal('show');
-};
-
-function SeleccionEntrenador(id){      
-    $.get("entrenador/" + id + "", function (persona) {
-        if(persona.entrenador){
-            var Nombre = persona['Primer_Nombre']+' '+persona['Segundo_Nombre']+' '+persona['Primer_Apellido']+' '+persona['Segundo_Apellido'];
-            var Telefono = persona.entrenador['V_TELEFONO'];
-            var campos = '<div class="panel panel-default" id="DivEntrenador'+id+'" name="DivEntrenador'+id+'" >\n\
-                            <div class="panel-body" >\n\
-                                <input type="hidden" id ="IdEntrenador'+id+'" name="IdEntrenador'+id+'" value="'+persona.entrenador['PK_I_ID_ENTRENADOR']+'" />\n\
-                                <h4>ENTRENADOR:</h4>\n\
-                                <div class="col-md-4">\n\
-                                    <h5>Nombre: <small id="Nombre_Entrenador'+id+'" name="Nombre_Entrenador'+id+'">'+Nombre+'</small></h5>\n\
-                                </div>\n\
-                                <div class="col-md-4">\n\
-                                    <h5>Contacto: <small>'+Telefono+'</small></h5>\n\
-                                </div>\n\
-                                <div class="col-md-2">\n\
-                                    <button onclick="DesechaEntrenador(this, \''+Nombre+'\' )" type="button" class="btn btn-danger" id="EliminarEntrenador" name="EliminarEntrenador" value="'+persona['Id_Persona']+'">-</button>\n\
-                                </div>\n\
-                            </div>\n\
-                        </div>';                        
-            $('#PanelEntrenador').append(campos);            
-            document.getElementById("Entrenador").remove(document.getElementById("Entrenador").selectedIndex);
-            contador = contador + 1;
-            conEnt[id] = persona.entrenador['PK_I_ID_ENTRENADOR'];          
-        }
+        $("#reporteIndividual").append(tabla);
+        //$("#DescargaExcel").focus();
     });
 }
+
+ function DescargaHistorial(id, inicio, fin){
+     //Descarga de archivo excel
+     alert(id.value +'---'+ inicio +'----'+ fin);
+     $.get('HistorialIndividual/'+id.value+'/'+inicio+'/'+fin, function (Hdeportista){        
+        console.log(Hdeportista);
+    });
+
+ }
+
+
+
+
+
+/*
+
 
 function RegistroDeportiva(){
     $('#EnviarDeportiva').on('click', function () {
@@ -158,7 +153,7 @@ function RegistroDeportiva(){
         }     
     });
 }
-
+*/
 function ProcesoDeportiva (tipo, url, datos, token){
     $.ajax({
         type: tipo,
@@ -168,47 +163,41 @@ function ProcesoDeportiva (tipo, url, datos, token){
         data: datos,
         success: function (xhr) {
             alert(xhr.Mensaje);
-            $("#Botonera").empty();
-            var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary">Información Basica</button>\
-                            <button type="button" data-role="InformacionDeportiva" data-rel="'+datos['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>\
-                            <button type="button" data-role="ApoyoServicios" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary">Apoyos y servicios</button>';
-            $("#Botonera").append(botonera);
-            $('#modal_form_deportiva').modal('hide');
+//            $("#Botonera").empty();
+//            var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary">Información Basica</button>\
+//                            <button type="button" data-role="InformacionDeportiva" data-rel="'+datos['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>\
+//                            <button type="button" data-role="ApoyoServicios" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary">Apoyos y servicios</button>';
+//            $("#Botonera").append(botonera);
+//            $('#modal_form_deportiva').modal('hide');
         },
         error: function (xhr) {          
-            $("#mensajeIncorrectoDos").empty();
-            if(xhr.responseJSON.Club_Deportivo){ ValidacionDeportiva('Club_Deportivo', xhr.responseJSON.Club_Deportivo);}else{Normal('Club_Deportivo');}
-            if(xhr.responseJSON.Talla_Camisa){ ValidacionDeportiva('Talla_Camisa', xhr.responseJSON.Talla_Camisa);}else{Normal('Talla_Camisa');}
-            if(xhr.responseJSON.Talla_Zapatos){ ValidacionDeportiva('Talla_Zapatos', xhr.responseJSON.Talla_Zapatos);}else{Normal('Talla_Zapatos');}
-            if(xhr.responseJSON.Talla_Chaqueta){ ValidacionDeportiva('Talla_Chaqueta', xhr.responseJSON.Talla_Chaqueta);}else{Normal('Talla_Chaqueta');}
-            if(xhr.responseJSON.Talla_Pantalon){ ValidacionDeportiva('Talla_Pantalon', xhr.responseJSON.Talla_Pantalon);}else{Normal('Talla_Pantalon');}
-                        
-            var scrollPos;                    
-            scrollPos = $("#mensajeIncorrectoDos").offset().top;
-            $(window).scrollTop(scrollPos);
-            return false;
+//            $("#mensajeIncorrectoDos").empty();
+//            if(xhr.responseJSON.Club_Deportivo){ ValidacionDeportiva('Club_Deportivo', xhr.responseJSON.Club_Deportivo);}else{Normal('Club_Deportivo');}
+//            if(xhr.responseJSON.Talla_Camisa){ ValidacionDeportiva('Talla_Camisa', xhr.responseJSON.Talla_Camisa);}else{Normal('Talla_Camisa');}
+//            if(xhr.responseJSON.Talla_Zapatos){ ValidacionDeportiva('Talla_Zapatos', xhr.responseJSON.Talla_Zapatos);}else{Normal('Talla_Zapatos');}
+//            if(xhr.responseJSON.Talla_Chaqueta){ ValidacionDeportiva('Talla_Chaqueta', xhr.responseJSON.Talla_Chaqueta);}else{Normal('Talla_Chaqueta');}
+//            if(xhr.responseJSON.Talla_Pantalon){ ValidacionDeportiva('Talla_Pantalon', xhr.responseJSON.Talla_Pantalon);}else{Normal('Talla_Pantalon');}
+//                        
+//            var scrollPos;                    
+//            scrollPos = $("#mensajeIncorrectoDos").offset().top;
+//            $(window).scrollTop(scrollPos);
+//            return false;
         }
     });
-}
-
-function DesechaEntrenador(id, nombre){
-    document.getElementById("DivEntrenador"+id.value).remove(document.getElementById("DivEntrenador"+id.value));
-    $('#Entrenador').append('<option value="'+id.value+'">'+nombre+'</option>');
-    delete conEnt[parseInt(id.value)];
 }
 
 function ValidacionDeportiva(campo, mensaje){
     $("#"+campo).css({ 'border-color': '#B94A48' });    
     $("#"+campo+"L").css({ 'color': '#B94A48' });    
     
-    var texto = $("#mensajeIncorrectoDos").html();
+    var texto = $("#mensajeIncorrectoTres").html();
     
-    $("#mensajeIncorrectoDos").html(texto + '<br>' + mensaje);
-    $("#mensaje-incorrecto-dos").fadeIn();
-    $('#mensaje-incorrecto-dos').focus();
+    $("#mensajeIncorrectoTres").html(texto + '<br>' + mensaje);
+    $("#mensaje-incorrecto-tres").fadeIn();
+    $('#mensaje-incorrecto-tres').focus();
 }
 
 function Normal(campo){
     $("#"+campo).css({ 'border-color': '#CCCCCC' });    
     $("#"+campo+"L").css({ 'color': '#555555' });    
-}*/
+}

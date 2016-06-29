@@ -274,4 +274,12 @@ class DeportistaController extends Controller{
         $deportistaH = Persona::with('deportista', 'deportista.historial')->find($id);          
         return $deportistaH;
     }
+    
+    public function HistorialIndividual(Request $request, $id, $inicio, $fin) {   
+        
+        $deportistaH = Persona::with('deportista', 'deportista.historial')->find($id);
+        $filtro = $deportistaH->deportista->historial()->whereBetween('created_at', array( $inicio.' 00:00:00' , $fin.' 23:59:59'))->get();        
+        return $filtro;
+    }
+    
 }

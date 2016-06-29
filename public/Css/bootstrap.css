@@ -6911,3 +6911,12 @@ button.close {
     max-height:150px;
     border-radius: 5px;
 }
+
+.ExcelIcon{
+    width:50%; 
+    height:50%; 
+    max-width:50px;
+    min-height:50px;
+    max-height:75px;
+    border-radius: 5px;
+}

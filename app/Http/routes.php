@@ -63,4 +63,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('AddImagen/{id}','DeportistaController@AgregarImagen');    
     
     Route::get('HEtapa/{id}','DeportistaController@HistorialEtapa');
+    
+    Route::get('HistorialIndividual/{id}/{inicio}/{fin}','DeportistaController@HistorialIndividual');
 });
