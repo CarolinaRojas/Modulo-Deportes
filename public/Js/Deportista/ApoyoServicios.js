@@ -28,7 +28,7 @@ $(function(e){
         var id = $('button[data-role="ApoyoServicios"]').data('rel'); 
         var inicio  = document.getElementById("fInicio").value;
         var fin  = document.getElementById("fFin").value;        
-       alert(inicio +'----'+fin);
+       //alert(inicio +'----'+fin);
         if(!id || !inicio || !fin){
             if(!inicio){                
                 ValidacionDeportiva("fInicio", 'Ingrese una fecha de inicio para generar el reporte.');
@@ -93,6 +93,7 @@ function BuscarIndividual(id, inicio, fin){
                    <td>'+nombreDeportista+'</td>\n\
                    <td>\n\
                       <button onclick="DescargaHistorial(this, \''+inicio+'\', \''+ fin +'\');" value="'+id+'" id="DescargaExcel" name="DescargaExcel" type="button" class="btn btn-default">\n\
+                      <a href="HistorialIndividual/'+id+'/'+inicio+'/'+fin+'">EXXP</a>\n\
                         <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>\n\
                         Descarga Excel\n\
                       </button>\n\
@@ -108,7 +109,7 @@ function BuscarIndividual(id, inicio, fin){
 function DescargaHistorial(id, inicio, fin){
      //Descarga de archivo excel
      $.get('HistorialIndividual/'+id.value+'/'+inicio+'/'+fin, function (Hdeportista){        
-        console.log(Hdeportista);
+ //       console.log(Hdeportista);
     });
 
  }

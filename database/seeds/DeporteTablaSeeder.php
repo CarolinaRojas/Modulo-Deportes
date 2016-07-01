@@ -49,7 +49,7 @@ class DeporteTablaSeeder extends Seeder
             'Badminton',
             'Baloncesto',
             'Balón Mano',
-            'Beisbol',      
+            'Béisbol',      
             'Fútbol',
             'Fútbol de Salón',
             'Rugby',

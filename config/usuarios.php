@@ -12,6 +12,7 @@ return array(
   'modelo_ciudad' => 'App\Ciudad', 
   'modelo_genero' => 'App\Genero', 
   'modelo_etnia' => 'App\Etnia', 
+  'modelo_tipo' => 'App\Tipo', 
    
   //vistas que carga las vistas 
   'vista_lista' => 'list', 

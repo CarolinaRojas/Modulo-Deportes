@@ -16,6 +16,7 @@ use App\DepartamentoModel;
 use App\Pais;
 use App\DeportistaModel;
 use App\Persona;
+use App\Tipo;
 use App\BarrioModel;
 use App\Ciudad;
 use App\Genero;
@@ -34,6 +35,14 @@ use App\DeportistaEstimuloModel;
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
 use App\Http\Requests\EstimuloRequest;
+
+use Maatwebsite\Excel\Facades\Excel;
+
+use Illuminate\Support\Facades\DB;
+
+//use PHPExcel_Worksheet_PageSetup;
+/*use PHPExcel_IOFactory;
+use Maatwebsite\Excel\Classes\PHPExcel;*/
 
 
 class DeportistaController extends Controller{
@@ -136,13 +145,18 @@ class DeportistaController extends Controller{
             $deportista->FK_I_ID_SITUACION_MILITAR = $request->Situacion_Militar;
                         
             if($deportista->save()){
+                $pivotPersona = Persona::find($request->Id_Persona);
+                $pivotPersona->tipo()->attach(47);
+                $pivotPersona->save();
+                
                 $historialEtapa = new HistorialEtapaModel;
                 $historialEtapa->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
                 $historialEtapa->FK_I_ID_ETAPA = $deportista->FK_I_ID_ETAPA;
                 $historialEtapa->I_SMMLV = 689454;                 
-                if($historialEtapa->save()){
+                if($historialEtapa->save()){      
                     return response()->json(["Mensaje" => "Deportista ingresado correctamente."]);
                 }else{
+                    
                     return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);
                 }
             }else{
@@ -278,17 +292,249 @@ class DeportistaController extends Controller{
     }
     
     public function HistorialIndividual(Request $request, $id, $inicio, $fin) {   
+       
+        $datos = array($id, $inicio, $fin);
         
-        $deportista = Persona::with('deportista', 'deportista.historial')->find($id);
-        $historialResolucion = $deportista->deportista->historial()->whereBetween('created_at', array( $inicio.' 00:00:00' , $fin.' 23:59:59'))->get();
-        $historialEstimulos = $deportista->deportista->historialEstimulos()->whereBetween('created_at', array( $inicio.' 00:00:00' , $fin.' 23:59:59'))->get();
+        /*Excel::create('Historial Individual', function($excel) use($datos){
+           $excel->sheet('Sheetname', function($sheet) use ($datos){               
+               $persona = Persona::with('deportista', 'deportista.historial')->find($datos[0]);
+               
+               $historialResolucion = $persona->deportista->historial()
+                                                        ->select('TB_SRD_ETAPA.V_NOMBRE_ETAPA', 'TB_SRD_ETAPA.V_POR_ESTIMULO', 'I_SMMLV', 'created_at')
+                                                        ->whereBetween('created_at', array( $datos[1].' 00:00:00' , $datos[2].' 23:59:59'))
+                                                        ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
+                                                        ->limit('1')
+                                                        ->get();
+               $historialEstimulos = $persona->deportista->historialEstimulos()
+                                                        ->select('TB_SRD_TIPO_ESTIMULO.PK_I_ID_TIPO_ESTIMULO', 'TB_SRD_TIPO_ESTIMULO.V_NOMBRE_ESTIMULO', 'TB_SRD_DEPORTISTA_ESTIMULO.*')
+                                                        ->whereBetween('created_at', array( $datos[1].' 00:00:00' , $datos[2].' 23:59:59'))
+                                                        ->get();
+               $j = 0;
+               $mensual = 0;
+               $educacion = 0;
+               $resultados = 0;
+               $alimenticios = 0;
+               $hidratantes = 0;
+               $multidisciplinarios = 0;
+               $monitorias = 0;
+               for($j = 0; $j < count($historialEstimulos); $j++){
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 1){
+                     $mensual = $mensual + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 2){
+                     $educacion = $educacion + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 3){
+                     $resultados = $resultados + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 4){
+                     $alimenticios = $alimenticios + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 5){
+                     $hidratantes = $hidratantes + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 6){
+                     $multidisciplinarios = $multidisciplinarios + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 6){
+                     $monitorias = $monitorias + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }   
+               }
+               $i = 0; 
+                for($i = 0; $i < count($historialResolucion); $i++){
+                    
+                    $transporte = ($historialResolucion[$i]['I_SMMLV']*$historialResolucion[$i]['V_POR_ESTIMULO']);
+                    $nombre = $persona['Primer_Nombre'].' '.$persona['Segundo_Nombre'].' '.$persona['Primer_Apellido'].' '.$persona['Segundo_Apellido'];
+                    
+                    $mes = explode(' ', $historialResolucion[$i]['created_at']);                    
+                    $fecha = explode('-', $mes[0]);
+                    
+                    
+                    $a[$i] = ['N°' => $i+1,
+                              'ATLETA'=> $nombre,
+                              'MES'=> $fecha[0].'-'.$fecha[1],
+                              'MODALIDAD'=> '',
+                              'ETAPA'=> $historialResolucion[$i]['V_NOMBRE_ETAPA'],
+                              'TRANSPORTE'=> $transporte,
+                              'ESTÍMULO MENSUAL'=> $mensual,
+                              'EDUCACIÓN'=> $educacion,
+                              'ESTÍMULO POR RESULTADOS'=> $resultados,
+                              'ALIMENTACIÓN'=> $alimenticios,
+                              'HIDRATANTES AYUDAS Y COMPLEMENTOS'=> $hidratantes,
+                              'INVERSIÓN MULTIDISCIPLINARIA'=> $multidisciplinarios,
+                              'MONITORIAS'=> $monitorias,
+                              'TOTAL'=> $transporte + $mensual + $educacion + $resultados + $alimenticios + $hidratantes + $multidisciplinarios + $monitorias
+                        ];
+                }                
+                $info = collect($a);
+                $sheet->fromArray($info);
+           });
+        })->download('xls');*/
         
-        $vector[0] = $historialResolucion;
-        $vector[1] = $historialEstimulos;
-        
-        
-        
-        return $vector;
+        Excel::create('Historial Individual', function($excel) use($datos){
+           $excel->sheet('Sheetname', function($sheet) use ($datos){               
+               $persona = Tipo::with('personas', 
+                                     'personas.deportista', 
+                                     'personas.deportista.historial', 
+                                     'personas.deportista.historialEstimulos',
+                                     'personas.deportista.agrupacion',
+                                     'personas.deportista.deporte',
+                                     'personas.deportista.modalidad',
+                                     'personas.deportista.etapa'
+                       )->find(47);            
+               
+               $i = 0;
+               foreach($persona->personas as $p){
+                   $nombre = $p['Primer_Nombre'].' '.$p['Segundo_Nombre'].' '.$p['Primer_Apellido'].' '.$p['Segundo_Apellido'];
+                   $agrupacion = $p->deportista->agrupacion['V_NOMBRE_AGRUPACION'];
+                   $deporte = $p->deportista->deporte['V_NOMBRE_DEPORTE'];
+                   $modalidad = $p->deportista->modalidad['V_NOMBRE_MODALIDAD'];
+                   $etapa = $p->deportista->etapa['V_NOMBRE_ETAPA'];                   
+                   $mensual = 0;
+                   $transporte = 0;
+                   $educacion = 0;
+                   $resultados = 0;
+                   $alimentacion = 0;
+                   $hidratantes = 0;
+                   $multidisciplina =0;
+                   $monitoria = 0;
+                   $Htemp = $p->deportista->historial()->whereBetween('created_at', array( $datos[1].' 00:00:00' , $datos[2].' 23:59:59'))
+                                                        ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
+                                                        ->limit('1')
+                                                        ->get();
+                   
+                   $HEst = $p->deportista->historialEstimulos()->whereBetween('created_at', array( $datos[1].' 00:00:00' , $datos[2].' 23:59:59'))->get();
+                   
+                   foreach($Htemp as  $h){
+                       $transporte = $h->pivot['I_SMMLV'] * $p->deportista->etapa['V_POR_ESTIMULO'];
+                   }
+                   
+                   foreach($HEst as  $hE){
+                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 1){
+                           $mensual = $mensual + $hE->pivot['V_VALOR_ESTIMULO'];
+                       }
+                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
+                           $educacion = $educacion + $hE->pivot['V_VALOR_ESTIMULO'];
+                       }
+                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
+                           $resultados = $resultados + $hE->pivot['V_VALOR_ESTIMULO'];
+                       }
+                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
+                           $alimentacion = $alimentacion + $hE->pivot['V_VALOR_ESTIMULO'];
+                       }
+                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
+                           $hidratantes = $hidratantes + $hE->pivot['V_VALOR_ESTIMULO'];
+                       }
+                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
+                           $multidisciplina = $multidisciplina + $hE->pivot['V_VALOR_ESTIMULO'];
+                       }
+                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 7){
+                           $monitoria = $monitoria + $hE->pivot['V_VALOR_ESTIMULO'];
+                       }
+                   }
+                   $total = $transporte + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;
+                   
+                   $per[$i] = [
+                        'ATLETA' => $nombre,
+                        'AGRUPACIÓN'=> $agrupacion,
+                        'DEPORTE'=> $deporte,
+                        'MODALIDAD'=> $modalidad,
+                        'ETAPA'=> $etapa,
+                        'TRANSPORTE'=> $transporte,
+                        'ESTÍMULO MENSUAL'=> $mensual,
+                        'EDUCACIÓN'=> $educacion,
+                        'ESTÍMULO POR RESULTADOS'=> $resultados,
+                        'ALIMENTACIÓN'=> $alimentacion,
+                        'HIDRATANTES AYUDAS Y COMPLEMENTOS'=> $hidratantes,
+                        'INVERSIÓN MULTIDISCIPLINARIA'=> $multidisciplina,
+                        'MONITORIAS'=> $monitoria,
+                        'TOTAL'=> $total,
+                           ];
+                   $i++;                           
+               }                
+                $sheet->fromArray($per);
+           });
+        })->download('xls');
+           
+            /*   foreach ($persona as $p ){
+                   $per = ($persona->personas);
+                   foreach($per as $d){
+                       dd($d);
+                   }
+                   
+               }*/
+               
+             //  dd($persona);
+               
+               /*$historialResolucion = $persona->deportista->historial()
+                                                        ->select('TB_SRD_ETAPA.V_NOMBRE_ETAPA', 'TB_SRD_ETAPA.V_POR_ESTIMULO', 'I_SMMLV', 'created_at')
+                                                        ->whereBetween('created_at', array( $datos[1].' 00:00:00' , $datos[2].' 23:59:59'))
+                                                        ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
+                                                        ->limit('1')
+                                                        ->get();
+               $historialEstimulos = $persona->deportista->historialEstimulos()
+                                                        ->select('TB_SRD_TIPO_ESTIMULO.PK_I_ID_TIPO_ESTIMULO', 'TB_SRD_TIPO_ESTIMULO.V_NOMBRE_ESTIMULO', 'TB_SRD_DEPORTISTA_ESTIMULO.*')
+                                                        ->whereBetween('created_at', array( $datos[1].' 00:00:00' , $datos[2].' 23:59:59'))
+                                                        ->get();
+               $j = 0;
+               $mensual = 0;
+               $educacion = 0;
+               $resultados = 0;
+               $alimenticios = 0;
+               $hidratantes = 0;
+               $multidisciplinarios = 0;
+               $monitorias = 0;
+               for($j = 0; $j < count($historialEstimulos); $j++){
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 1){
+                     $mensual = $mensual + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 2){
+                     $educacion = $educacion + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 3){
+                     $resultados = $resultados + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 4){
+                     $alimenticios = $alimenticios + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 5){
+                     $hidratantes = $hidratantes + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 6){
+                     $multidisciplinarios = $multidisciplinarios + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }
+                   if($historialEstimulos[$j]['PK_I_ID_TIPO_ESTIMULO'] == 6){
+                     $monitorias = $monitorias + $historialEstimulos[$j]['V_VALOR_ESTIMULO'];
+                   }   
+               }
+               $i = 0; 
+                for($i = 0; $i < count($historialResolucion); $i++){
+                    
+                    $transporte = ($historialResolucion[$i]['I_SMMLV']*$historialResolucion[$i]['V_POR_ESTIMULO']);
+                    $nombre = $persona['Primer_Nombre'].' '.$persona['Segundo_Nombre'].' '.$persona['Primer_Apellido'].' '.$persona['Segundo_Apellido'];
+                    
+                    $mes = explode(' ', $historialResolucion[$i]['created_at']);                    
+                    $fecha = explode('-', $mes[0]);
+                    
+                    
+                    $a[$i] = ['N°' => $i+1,
+                              'ATLETA'=> $nombre,
+                              'MES'=> $fecha[0].'-'.$fecha[1],
+                              'MODALIDAD'=> '',
+                              'ETAPA'=> $historialResolucion[$i]['V_NOMBRE_ETAPA'],
+                              'TRANSPORTE'=> $transporte,
+                              'ESTÍMULO MENSUAL'=> $mensual,
+                              'EDUCACIÓN'=> $educacion,
+                              'ESTÍMULO POR RESULTADOS'=> $resultados,
+                              'ALIMENTACIÓN'=> $alimenticios,
+                              'HIDRATANTES AYUDAS Y COMPLEMENTOS'=> $hidratantes,
+                              'INVERSIÓN MULTIDISCIPLINARIA'=> $multidisciplinarios,
+                              'MONITORIAS'=> $monitorias,
+                              'TOTAL'=> $transporte + $mensual + $educacion + $resultados + $alimenticios + $hidratantes + $multidisciplinarios + $monitorias
+                        ];
+                }                
+                $info = collect($a);*/
+              
     }
     
     public function AgregarEstimulo(EstimuloRequest $request) {
