@@ -18,6 +18,12 @@ class CrearRelacionesSrd extends Migration
                     ->references('PK_I_ID_TIPO_DEPORTISTA')
                     ->on('TB_SRD_TIPO_DEPORTISTA');
         });
+        
+        
+        Schema::table('TB_SRD_DEPORTISTA', function(Blueprint $table){       
+            $table->foreign('FK_I_ID_TIPO_CUENTA')->references('PK_I_ID_TIPO_CUENTA')->on('TB_SRD_TIPO_CUENTA');            
+        });
+        
     }
 
     /**
@@ -27,14 +33,6 @@ class CrearRelacionesSrd extends Migration
      */
     public function down()
     {
-//        Schema::table('TB_SRD_ETAPA', function(Blueprint $table){
-//            $table->dropForeign(['FK_I_ID_TIPO_DEPORTISTA']);
-//        });
-        
-//        Schema::table('posts', function ($table) {
-//    $table->integer('user_id')->unsigned();
-//
-//    $table->foreign('user_id')->references('id')->on('users');
-//});
+        //
     }
 }

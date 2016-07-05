@@ -31,6 +31,7 @@ use App\TallaModel;
 use App\HistorialEtapaModel;
 use App\TipoEstimuloModel;
 use App\DeportistaEstimuloModel;
+use App\TipoCuentaModel;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
@@ -68,6 +69,7 @@ class DeportistaController extends Controller{
         $situacionMilitar = SituacionMilitarModel::all();
         $clubDeportivo = ClubDeportivoModel::all();        
         $tipoEstimulo = TipoEstimuloModel::all();
+        $tipocuenta = TipoCuentaModel::all();
                 
         $QEntrenadores = EntrenadorModel::all();
         $entrenadores = Persona::with('entrenador')->whereIn('Id_Persona', $QEntrenadores->lists('FK_I_ID_PERSONA'))->get();
@@ -100,7 +102,8 @@ class DeportistaController extends Controller{
                 ->with(compact('clubDeportivo'))
                 ->with(compact('entrenadores'))
                 ->with(compact('talla'))
-                ->with(compact('tipoEstimulo'));
+                ->with(compact('tipoEstimulo'))
+                ->with(compact('tipocuenta'));
     }
         
     public function datos($id){
@@ -132,6 +135,7 @@ class DeportistaController extends Controller{
             $deportista->FK_I_ID_ETAPA = $request->Etapa;
             $deportista->FK_I_ID_TIPO_DEPORTISTA = $request->Tipo_Deportista;
             $deportista->FK_I_ID_BANCO = $request->Banco;
+            $deportista->FK_I_ID_TIPO_CUENTA = $request->Tipo_Cuenta;
             $deportista->FK_I_ID_DEPARTAMENTO = $request->Departamento;
             $deportista->FK_I_ID_EPS = $request->Eps;
             $deportista->FK_I_ID_LOCALIDAD = $request->Localidad;
@@ -152,7 +156,7 @@ class DeportistaController extends Controller{
                 $historialEtapa = new HistorialEtapaModel;
                 $historialEtapa->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
                 $historialEtapa->FK_I_ID_ETAPA = $deportista->FK_I_ID_ETAPA;
-                $historialEtapa->I_SMMLV = 689454;                 
+                $historialEtapa->I_SMMLV = $request->SMMLV;                 
                 if($historialEtapa->save()){      
                     return response()->json(["Mensaje" => "Deportista ingresado correctamente."]);
                 }else{
@@ -183,7 +187,7 @@ class DeportistaController extends Controller{
                 $historialEtapa = new HistorialEtapaModel;
                 $historialEtapa->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
                 $historialEtapa->FK_I_ID_ETAPA = $deportista->FK_I_ID_ETAPA;
-                $historialEtapa->I_SMMLV = 689454;                 
+                $historialEtapa->I_SMMLV = $request->SMMLV;                 
                 $historialEtapa->save();
             }
             
@@ -198,6 +202,7 @@ class DeportistaController extends Controller{
             $deportista->FK_I_ID_ETAPA = $request->Etapa;
             $deportista->FK_I_ID_TIPO_DEPORTISTA = $request->Tipo_Deportista;
             $deportista->FK_I_ID_BANCO = $request->Banco;
+            $deportista->FK_I_ID_TIPO_CUENTA = $request->Tipo_Cuenta;
             $deportista->FK_I_ID_DEPARTAMENTO = $request->Departamento;
             $deportista->FK_I_ID_EPS = $request->Eps;
             $deportista->FK_I_ID_LOCALIDAD = $request->Localidad;
@@ -553,3 +558,4 @@ class DeportistaController extends Controller{
         }
     }
 }
+

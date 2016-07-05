@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TallaTablaSeeder::class);
         $this->call(ClubDeportivoSeeder::class);
         $this->call(TipoEstimuloTablaSeeder::class);
+        $this->call(TipoCuentaTablaSeeder::class);
     }
 }

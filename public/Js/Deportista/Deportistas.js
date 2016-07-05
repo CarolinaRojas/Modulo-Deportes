@@ -85,6 +85,7 @@ $(function(e){
         $("#Etapa").val('').change();
         $("#Barrio").val('').change();
         $("#Banco").val('').change();
+        $("#Tipo_Cuenta").val('').change();
         $("#Estrato").val('').change();
         $("#Grupo_Sanguineo").val('').change();
         $("#Tipo_Deportista").val('').change();
@@ -140,9 +141,10 @@ $(function(e){
           $("#Agrupacion").val(persona.deportista['FK_I_ID_AGRUPACION']).change();
           $("#Departamento").val(persona.deportista['FK_I_ID_DEPARTAMENTO']).change();
           
-          $("#Etapa").val(persona.deportista['FK_I_ID_ETAPA']).change();
+          
           $("#Barrio").val(persona.deportista['FK_I_ID_BARRIO']).change();
           $("#Banco").val(persona.deportista['FK_I_ID_BANCO']).change();
+          $("#Tipo_Cuenta").val(persona.deportista['FK_I_ID_TIPO_CUENTA']).change();
           $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
           $("#Estrato").val(persona.deportista['FK_I_ID_ESTRATO']).change();
           $("#Grupo_Sanguineo").val(persona.deportista['FK_I_ID_GRUPO_SANGUINEO']).change();
@@ -152,7 +154,7 @@ $(function(e){
           showDeportes(persona.deportista['FK_I_ID_AGRUPACION'], persona.deportista['FK_I_ID_DEPORTE']);
           
           showModalidades(persona.deportista['FK_I_ID_DEPORTE'], persona.deportista['FK_I_ID_MODALIDAD']);          
-          
+          $("#Etapa").empty();
           showEtapas(persona.deportista['FK_I_ID_TIPO_DEPORTISTA'], persona.deportista['FK_I_ID_ETAPA']);          
           
       }
@@ -183,7 +185,7 @@ $(function(e){
             Normal('Grupo_Sanguineo'); Normal('Eps'); Normal('Estado_Civil'); Normal('Estrato'); Normal('Situacion_Militar');
             Normal('Hijos'); Normal('Departamento'); Normal('Localidad'); Normal('Barrio'); Normal('Direccion_Residencia'); Normal('Telefono_Fijo'); 
             Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Tipo_Deportista'); Normal('Banco'); Normal('Cuenta');
-            Normal('Deporte'); Normal('Modalidad'); Normal('Agrupacion'); Normal('Etapa');
+            Normal('Deporte'); Normal('Modalidad'); Normal('Agrupacion'); Normal('Etapa');Normal('Tipo_Cuenta');
             popular_modal_persona(response);
         });
     });
@@ -191,6 +193,7 @@ $(function(e){
 });
 
 function RegistroDeportista(){
+    
     $('#Enviar').on('click', function () {
         var Id_Persona = $("#Id_Persona").val();
         var Id_Deportista = $("#Id_Deportista").val();
@@ -205,6 +208,7 @@ function RegistroDeportista(){
         var Estado_Civil = $('#Estado_Civil').val();
         var Hijos = $('#Hijos').val();
         var Banco = $('#Banco').val();
+        var Tipo_Cuenta = $('#Tipo_Cuenta').val();
         var Cuenta = $('#Cuenta').val();
         var Deporte = $('#Deporte').val();
         var Modalidad = $('#Modalidad').val();
@@ -214,6 +218,7 @@ function RegistroDeportista(){
         var Grupo_Sanguineo = $('#Grupo_Sanguineo').val();
         var Tipo_Deportista = $('#Tipo_Deportista').val();
         var Situacion_Militar = $('#Situacion_Militar').val();
+        var SMMLV = $('#SMMLV').val();
         
         var datos = {
                     Eps: Eps,
@@ -227,6 +232,7 @@ function RegistroDeportista(){
                     Estado_Civil: Estado_Civil,
                     Hijos: Hijos,
                     Banco: Banco,
+                    Tipo_Cuenta: Tipo_Cuenta,
                     Cuenta: Cuenta,
                     Deporte: Deporte,
                     Modalidad: Modalidad,
@@ -237,7 +243,8 @@ function RegistroDeportista(){
                     Estrato: Estrato,
                     Grupo_Sanguineo: Grupo_Sanguineo,
                     Tipo_Deportista: Tipo_Deportista,
-                    Situacion_Militar: Situacion_Militar
+                    Situacion_Militar: Situacion_Militar,
+                    SMMLV: SMMLV
                 }
                 
         $("#mensajeIncorrecto").html(':');
@@ -303,11 +310,13 @@ function Proceso (tipo, url, datos, token){
             if(xhr.responseJSON.Correo_Electronico){ Validacion('Correo_Electronico', xhr.responseJSON.Correo_Electronico);}else{Normal('Correo_Electronico');}
             if(xhr.responseJSON.Tipo_Deportista){ Validacion('Tipo_Deportista', xhr.responseJSON.Tipo_Deportista);}else{Normal('Tipo_Deportista');}
             if(xhr.responseJSON.Banco){ Validacion('Banco', xhr.responseJSON.Banco);}else{Normal('Banco');}
+            if(xhr.responseJSON.Tipo_Cuenta){ Validacion('Tipo_Cuenta', xhr.responseJSON.Tipo_Cuenta);}else{Normal('Tipo_Cuenta');}
             if(xhr.responseJSON.Cuenta){ Validacion('Cuenta', xhr.responseJSON.Cuenta);}else{Normal('Cuenta');}
             if(xhr.responseJSON.Deporte){ Validacion('Deporte', xhr.responseJSON.Deporte);}else{Normal('Deporte');}
             if(xhr.responseJSON.Modalidad){ Validacion('Modalidad', xhr.responseJSON.Modalidad);}else{Normal('Modalidad');}
             if(xhr.responseJSON.Agrupacion){ Validacion('Agrupacion', xhr.responseJSON.Agrupacion);}else{Normal('Agrupacion');}
             if(xhr.responseJSON.Etapa){ Validacion('Etapa', xhr.responseJSON.Etapa);}else{Normal('Etapa');}
+            if(xhr.responseJSON.SMMLV){ Validacion('SMMLV', xhr.responseJSON.SMMLV);}else{Normal('SMMLV');}
             
             var scrollPos;                    
             scrollPos = $("#mensajeIncorrecto").offset().top;
@@ -347,11 +356,11 @@ function showModalidades(id, seleccion) {
     }
 }
 
-function showEtapas(id, seleccion) {    
+function showEtapas(id, seleccion) {        
     if(id){
-        $("#Etapa").empty();
-        $("#Etapa").append("<option value=''>Seleccionar</option>");
         $.get("getEtapas/" + id + "", function (response) {    
+            $("#Etapa").empty();
+            $("#Etapa").append("<option value=''>Seleccionar</option>");
             $.each(response, function(i, e){
                $('#Etapa').append('<option value="'+ e.PK_I_ID_ETAPA +'">'+ e.V_NOMBRE_ETAPA +'</option>');
             });
@@ -384,7 +393,8 @@ function guardaImagen(idPersona){
 
 $(document).ready(function () {     
     RegistroDeportista();
-    
+     
+     
     $('#Tipo_Deportista').on('change', function(e){
         showEtapas($('#Tipo_Deportista').val());
     });

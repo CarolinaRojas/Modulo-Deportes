@@ -59,7 +59,16 @@ class ReportesController extends Controller
         Excel::create('Historial Deportistas'.$datos[1].'-'.$datos[2], function($excel) use($datos){
            $excel->sheet('Sheetname', function($sheet) use ($datos){               
                $persona = Tipo::with('personas', 
+                                     'personas.genero',
+                                     'personas.pais',
+                                     'personas.tipoDocumento',
                                      'personas.deportista', 
+                                     'personas.deportista.localidad',
+                                     'personas.deportista.barrio',
+                                     'personas.deportista.banco',
+                                     'personas.deportista.tipoCuenta',
+                                     'personas.deportista.situacionMilitar',
+                                     'personas.deportista.departamento',
                                      'personas.deportista.historial', 
                                      'personas.deportista.historialEstimulos',
                                      'personas.deportista.agrupacion',
@@ -67,9 +76,10 @@ class ReportesController extends Controller
                                      'personas.deportista.modalidad',
                                      'personas.deportista.etapa'
                        )->find(47);            
-               
+             
                $i = 0;
-               foreach($persona->personas as $p){
+               foreach($persona->personas as $p){                  
+                   
                    $nombre = $p['Primer_Nombre'].' '.$p['Segundo_Nombre'].' '.$p['Primer_Apellido'].' '.$p['Segundo_Apellido'];
                    $agrupacion = $p->deportista->agrupacion['V_NOMBRE_AGRUPACION'];
                    $deporte = $p->deportista->deporte['V_NOMBRE_DEPORTE'];
@@ -83,6 +93,35 @@ class ReportesController extends Controller
                    $hidratantes = 0;
                    $multidisciplina =0;
                    $monitoria = 0;
+                 
+                   $genero  = $p->genero['Nombre_Genero'];                   
+                   $fecha_nacimiento = $p['Fecha_Nacimiento'];
+                
+                   $edad = date('Y', strtotime($p['Fecha_Nacimiento']));
+                    if (($mes = (date('m') - date('m', strtotime($p['Fecha_Nacimiento'])))) < 0) {
+                     $edad++;
+                    } elseif ($mes == 0 && date('d') - date('d', strtotime($p['Fecha_Nacimiento'])) < 0) {
+                     $edad++;
+                    }
+                    $edad_decimal = date('Y')-$edad;
+                   $municipio = '';
+                   $departamento = $p->deportista->departamento['Nombre_Departamento'];
+                   $pais = $p->pais['Nombre_Pais'];
+                   $tipo_documento = $p->tipoDocumento['Nombre_TipoDocumento'];
+                   $num_documento = $p['Cedula'];
+                   $sit_militar = $p->deportista->situacionMilitar['V_NOMBRE_SITUACION_MILITAR'];
+                   $banco = $p->deportista->banco['V_NOMBRE_BANCO'];
+                   $tipo_cuenta = $p->deportista->tipoCuenta['V_NOMBRE_TIPO_CUENTA'];
+                   $num_cuenta = $p->deportista['V_NUMERO_CUENTA'];
+                   $dir_residencia = $p->deportista['V_DIRECCION_RESIDENCIA'];
+                   $barrio = $p->deportista->barrio['V_NOMBRE_BARRIO'];
+                   $localidad = $p->deportista->localidad['Nombre_Localidad'];
+                   $tel_fijo = $p->deportista['V_TELEFONO_FIJO'];
+                   $tel_celular = $p->deportista['V_TELEFONO_CELULAR'];
+                   $email = $p->deportista['V_CORREO_ELECTRONICO'];
+                   $fecha_ingreso = '';
+                   $fecha_retiro = '';
+                   
                    $Htemp = $p->deportista->historial()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[2].'-31 23:59:59'))
                                                         ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
                                                         ->limit('1')
@@ -93,7 +132,6 @@ class ReportesController extends Controller
                    foreach($Htemp as  $h){
                        $transporte = $h->pivot['I_SMMLV'] * $p->deportista->etapa['V_POR_ESTIMULO'];
                    }
-                   
                    foreach($HEst as  $hE){
                        if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 1){
                            $mensual = $mensual + $hE->pivot['V_VALOR_ESTIMULO'];
@@ -119,12 +157,32 @@ class ReportesController extends Controller
                    }
                    $total = $transporte + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;
                    
-                   $per[$i] = [
-                        'ATLETA' => $nombre,
+                   $per[$i] = [                        
                         'AGRUPACIÓN'=> $agrupacion,
                         'DEPORTE'=> $deporte,
                         'MODALIDAD'=> $modalidad,
                         'ETAPA'=> $etapa,
+                        'ATLETA' => $nombre,
+                        'GENERO' => $genero,
+                        'FECHA DE NACIMIENTO' => $fecha_nacimiento,
+                        'EDAD' => $edad_decimal,
+                        'MUNICIPIO' => $municipio,
+                        'DEPARTAMENTO' => $departamento,
+                        'PAÍS' => $pais,
+                        'TIPO DE DOCUMENTO' => $tipo_documento,
+                        'N° DE DOCUMENTO' => $num_documento,
+                        'SITUACIÓN MILITAR' => $sit_militar,
+                        'BANCO' => $banco,
+                        'TIPO DE CUENTA' => $tipo_cuenta,
+                        'N° DE CUENTA' => $num_cuenta,
+                        'DIRECCIÓN DE RESIDENCIA' => $dir_residencia,
+                        'BARRIO' => $barrio,
+                        'LOCALIDAD' => $localidad,
+                        'TELÉFONO FIJO' => $tel_fijo,
+                        'TELÉFONO CELULAR' => $tel_celular,
+                        'E-MAIL' => $email,
+                        'FECHA DE INGRESO' => $fecha_ingreso,
+                        'FECHA DE RETIRO' => $fecha_retiro,
                         'TRANSPORTE'=> $transporte,
                         'ESTÍMULO MENSUAL'=> $mensual,
                         'EDUCACIÓN'=> $educacion,

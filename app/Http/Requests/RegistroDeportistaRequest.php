@@ -36,6 +36,7 @@ class RegistroDeportistaRequest extends Request
             'Estado_Civil'=> 'required',
             'Hijos'=> 'required|numeric|digits_between:1,3',
             'Banco' => 'required',
+            'Tipo_Cuenta' => 'required',
             'Cuenta' => 'required|numeric|digits_between:1,20',
             'Deporte' => 'required',
             'Modalidad' => 'required',
@@ -45,7 +46,8 @@ class RegistroDeportistaRequest extends Request
             'Estrato'=>'required',
             'Grupo_Sanguineo' =>'required',
             'Tipo_Deportista' => 'required',
-            'Situacion_Militar' => 'required',            
+            'Situacion_Militar' => 'required',  
+            
             ];
         return $validaciones;
     }

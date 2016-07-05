@@ -22,6 +22,7 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_EPS')->unsigned();
             $table->integer('FK_I_ID_GRUPO_SANGUINEO')->unsigned();                        
             $table->integer('FK_I_ID_BANCO')->unsigned();
+            $table->integer('FK_I_ID_TIPO_CUENTA')->unsigned();
             $table->integer('FK_I_ID_DEPARTAMENTO')->unsigned();            
             $table->integer('FK_I_ID_LOCALIDAD')->unsigned();
             $table->integer('FK_I_ID_BARRIO')->unsigned();
@@ -56,7 +57,7 @@ class CrearTablaSrdDeportista extends Migration
             $table->foreign('FK_I_ID_MODALIDAD')->references('PK_I_ID_MODALIDAD')->on('TB_SRD_MODALIDAD');
             $table->foreign('FK_I_ID_ETAPA')->references('PK_I_ID_ETAPA')->on('TB_SRD_ETAPA');
             $table->foreign('FK_I_ID_TIPO_DEPORTISTA')->references('PK_I_ID_TIPO_DEPORTISTA')->on('TB_SRD_TIPO_DEPORTISTA');
-            $table->foreign('FK_I_ID_BANCO')->references('PK_I_ID_BANCO')->on('TB_SRD_BANCO');
+            $table->foreign('FK_I_ID_BANCO')->references('PK_I_ID_BANCO')->on('TB_SRD_BANCO');            
             $table->foreign('FK_I_ID_BARRIO')->references('PK_I_ID_BARRIO')->on('TB_SRD_BARRIO');
             $table->foreign('FK_I_ID_SITUACION_MILITAR')->references('PK_I_ID_SITUACION_MILITAR')->on('TB_SRD_SITUACION_MILITAR');
             $table->foreign('FK_I_ID_CLUB_DEPORTIVO')->references('PK_I_ID_CLUB_DEPORTIVO')->on('TB_SRD_CLUB_DEPORTIVO');

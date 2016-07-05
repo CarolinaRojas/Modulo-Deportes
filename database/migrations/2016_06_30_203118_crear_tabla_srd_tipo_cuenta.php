@@ -14,7 +14,7 @@ class CrearTablaSrdTipoCuenta extends Migration
     {
         Schema::create('TB_SRD_TIPO_CUENTA', function(Blueprint $table){
             $table->increments('PK_I_ID_TIPO_CUENTA');
-            $table->string('V_NOMBRE_CUENTA');
+            $table->string('V_NOMBRE_TIPO_CUENTA');
             
         });
     }

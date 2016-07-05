@@ -24,7 +24,7 @@ class DeportistaModel extends Model
         'FK_I_ID_EPS',
         'FK_I_ID_LOCALIDAD',
         'V_DIRECCION_RESIDENCIA',
-        'V_BARRIO',
+        'FK_I_ID_BARRIO',
         'V_TELEFONO_FIJO',
         'V_TELEFONO_CELULAR',
         'V_CORREO_ELECTRONICO',
@@ -68,5 +68,30 @@ class DeportistaModel extends Model
     
     public function etapa(){
         return $this->belongsTo('App\EtapaModel', 'FK_I_ID_ETAPA');
+    }
+    
+    public function departamento(){        
+        return $this->belongsTo('App\DepartamentoModel', 'FK_I_ID_DEPARTAMENTO');
+    }
+    
+    
+    public function situacionMilitar(){
+        return $this->belongsTo('App\SituacionMilitarModel', 'FK_I_ID_SITUACION_MILITAR');
+    }
+    
+    public function banco(){
+        return $this->belongsTo('App\BancoModel', 'FK_I_ID_BANCO');
+    }
+    
+    public function tipoCuenta(){
+        return $this->belongsTo('App\TipoCuentaModel', 'FK_I_ID_TIPO_CUENTA');
+    }
+    
+    public function barrio(){
+        return $this->belongsTo('App\BarrioModel', 'FK_I_ID_BARRIO');
+    }
+    
+    public function localidad(){
+        return $this->belongsTo('App\LocalidadModel', 'FK_I_ID_LOCALIDAD');
     }
 }
