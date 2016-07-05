@@ -26,7 +26,7 @@
           <script src="{{ asset('public/Js/main.js') }}"></script>
       @show
 
-      <title>Módulo Rendimiento Deportivo</title>
+      <title>Módulo De Deportes</title>
   </head>
 
   <body>
@@ -61,7 +61,7 @@
                   <li><a href="#" style="color:#1995dc">GESTIÓN DEPORTIVA</a></li>
                   <li class="divider"></li>
                   <li><a href="{{URL::to('DatosDeportista')}}">Datos deportista</a></li>
-                  <li><a href="#" style="color:#1995dc">REPORTES</a></li>
+                  <li><a href="{{URL::to('reportes')}}" style="color:#1995dc">REPORTES</a></li>
                   <li><a href="#">Trasporte</a></li>
                 </ul>
               </li>
@@ -90,7 +90,7 @@
           <div class="page-header" id="banner">
             <div class="row">
               <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1>MÓDULO RENDIMIENTO DEPORTIVO</h1>
+                <h1>MÓDULO DE DEPORTES</h1>
                 <p class="lead"><h1>Subdirección de Recreación y Deportes</h1></p>
               </div>
               <div class="col-lg-4 col-md-5 col-sm-6">

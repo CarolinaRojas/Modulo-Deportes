@@ -1,18 +1,32 @@
 $(function(e){ 
     
+    var CurrentDate = new Date();
+    var date = CurrentDate.getDate();
+    CurrentDate.setDate(1);
+    CurrentDate.setMonth(CurrentDate.getMonth());
+    CurrentDate.setDate(date);
+    
     $('#fInicioDate').datepicker({        
-       format: 'yyyy-mm-dd',
+       format: 'yyyy-mm',
+       startView: 'year',
+       minViewMode: 'months',
        autoclose: true,   
+       endDate : CurrentDate.getFullYear()+'-'+CurrentDate.getMonth(),
     });
     
     $('#fFinDate').datepicker({
-       format: 'yyyy-mm-dd',
-       autoclose: true,
+       format: 'yyyy-mm',
+       startView: 'year',
+       minViewMode: 'months',
+       autoclose: true,   
+       endDate : CurrentDate.getFullYear()+'-'+CurrentDate.getMonth(),
     });
     
     $('#personas').delegate('button[data-role="ApoyoServicios"]', 'click', function(e){    
         var id = $(this).data('rel'); 
         $("#mensaje-incorrecto-tres").fadeOut();
+        document.getElementById("fInicio").value = '';
+        /*document.getElementById("fFin").value = '';*/
         Normal('fInicio');
         Normal('fFin');
         $.get("HEtapa/" + id + "", function (deportista) {
@@ -20,25 +34,25 @@ $(function(e){
         })
     });   
     
-    $('#BuscarReporte').click(function (){       
+    $('#BuscarReporte').click(function (){    
         $("#mensajeIncorrectoTres").empty();
+        $("#mensaje-incorrecto-tres").fadeOut();
         Normal('fInicio');
         Normal('fFin');
         
         var id = $('button[data-role="ApoyoServicios"]').data('rel'); 
         var inicio  = document.getElementById("fInicio").value;
-        var fin  = document.getElementById("fFin").value;        
-       //alert(inicio +'----'+fin);
-        if(!id || !inicio || !fin){
+        /*var fin  = document.getElementById("fFin").value;        */
+        if(!id || !inicio /*|| !fin*/){
             if(!inicio){                
                 ValidacionDeportiva("fInicio", 'Ingrese una fecha de inicio para generar el reporte.');
             }
-            if(!fin){
+           /* if(!fin){
                 ValidacionDeportiva("fFin", 'Ingrese una fecha de finalización para generar el reporte.');
-            }
+            }*/
             return false;
         }else{
-            BuscarIndividual(id, inicio, fin) ;
+            BuscarIndividual(id, inicio/*, fin*/) ;
         }
     });
     
@@ -71,48 +85,9 @@ function popular_modal_apoyo(persona){
     
 }
 
-function BuscarIndividual(id, inicio, fin){
-    var personaX;
-    var tabla = '';
-    var nombreDeportista = '';
-    $.get("HEtapa/" + id + "", function (deportista) {            
-            personaX = deportista;
-            nombreDeportista = $.trim(personaX['Primer_Apellido'])+' '+$.trim(personaX['Segundo_Apellido'])+' '+$.trim(personaX['Primer_Nombre'])+' '+$.trim(personaX['Segundo_Nombre']);
-            tabla += '<br>\n\
-             <div class="col-md-12">\n\
-                <table id="ApoyoData"  class="table table-striped table-borderless dt-responsive nowrap " cellspacing="0" width="100%">\n\
-                <thead>\n\
-                   <th>FECHA INICIO</th>\n\
-                   <th>FECHA FIN</th>\n\
-                   <th>NOMBRE</th>\n\
-                   <th>OPCIÓN</th>\n\
-                </thead>\n\
-                <tr>\n\
-                   <td>'+ inicio +'</td>\n\
-                   <td>'+ fin +'</td>\n\
-                   <td>'+nombreDeportista+'</td>\n\
-                   <td>\n\
-                      <button onclick="DescargaHistorial(this, \''+inicio+'\', \''+ fin +'\');" value="'+id+'" id="DescargaExcel" name="DescargaExcel" type="button" class="btn btn-default">\n\
-                      <a href="HistorialIndividual/'+id+'/'+inicio+'/'+fin+'">EXXP</a>\n\
-                        <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>\n\
-                        Descarga Excel\n\
-                      </button>\n\
-                   </td>\n\
-                </tr>\n\
-                </table>\n\
-              </div>';
-    
-        $("#reporteIndividual").append(tabla);
-    });
+function BuscarIndividual(id, inicio/*, fin*/){
+    location.href = 'HistorialIndividual/'+id+'/'+inicio/*+'/'+fin*/;
 }
-
-function DescargaHistorial(id, inicio, fin){
-     //Descarga de archivo excel
-     $.get('HistorialIndividual/'+id.value+'/'+inicio+'/'+fin, function (Hdeportista){        
- //       console.log(Hdeportista);
-    });
-
- }
 
 function AgregarEstimulo(){
     $("#mensaje-incorrecto-tres").fadeOut();

@@ -64,8 +64,13 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::get('HEtapa/{id}','DeportistaController@HistorialEtapa');
     
-    Route::get('HistorialIndividual/{id}/{inicio}/{fin}','DeportistaController@HistorialIndividual');
-    
     Route::resource('AddEstimulo','DeportistaController@AgregarEstimulo');
+    
+    Route::get('HistorialIndividual/{id}/{inicio}','ReportesController@HistorialIndividual');
+    Route::get('HistorialEstimulos/{id}/{inicio}/{fin}','ReportesController@ReporteDeportistaEstimulos');
+    
+
+    
+    Route::resource('reportes','ReportesController');
     
 });

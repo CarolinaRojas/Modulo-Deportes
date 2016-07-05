@@ -294,6 +294,7 @@ class DeportistaController extends Controller{
     public function HistorialIndividual(Request $request, $id, $inicio, $fin) {   
        
         $datos = array($id, $inicio, $fin);
+    //    dd($datos);
         
         /*Excel::create('Historial Individual', function($excel) use($datos){
            $excel->sheet('Sheetname', function($sheet) use ($datos){               
@@ -373,23 +374,22 @@ class DeportistaController extends Controller{
         
         Excel::create('Historial Individual', function($excel) use($datos){
            $excel->sheet('Sheetname', function($sheet) use ($datos){               
-               $persona = Tipo::with('personas', 
-                                     'personas.deportista', 
-                                     'personas.deportista.historial', 
-                                     'personas.deportista.historialEstimulos',
-                                     'personas.deportista.agrupacion',
-                                     'personas.deportista.deporte',
-                                     'personas.deportista.modalidad',
-                                     'personas.deportista.etapa'
-                       )->find(47);            
+               $persona = Persona::with( 
+                                     'deportista', 
+                                     'deportista.historial', 
+                                     'deportista.historialEstimulos',
+                                     'deportista.agrupacion',
+                                     'deportista.deporte',
+                                     'deportista.modalidad',
+                                     'deportista.etapa'
+                       )->find($datos[0]);            
                
-               $i = 0;
-               foreach($persona->personas as $p){
-                   $nombre = $p['Primer_Nombre'].' '.$p['Segundo_Nombre'].' '.$p['Primer_Apellido'].' '.$p['Segundo_Apellido'];
-                   $agrupacion = $p->deportista->agrupacion['V_NOMBRE_AGRUPACION'];
-                   $deporte = $p->deportista->deporte['V_NOMBRE_DEPORTE'];
-                   $modalidad = $p->deportista->modalidad['V_NOMBRE_MODALIDAD'];
-                   $etapa = $p->deportista->etapa['V_NOMBRE_ETAPA'];                   
+                              
+                   $nombre = $persona->Primer_Nombre.' '.$persona->Segundo_Nombre.' '.$persona->Primer_Apellido.' '.$persona->Segundo_Apellido;
+                   $agrupacion = $persona->deportista->agrupacion['V_NOMBRE_AGRUPACION'];
+                   $deporte = $persona->deportista->deporte['V_NOMBRE_DEPORTE'];
+                   $modalidad = $persona->deportista->modalidad['V_NOMBRE_MODALIDAD'];
+                   $etapa = $persona->deportista->etapa['V_NOMBRE_ETAPA'];                   
                    $mensual = 0;
                    $transporte = 0;
                    $educacion = 0;
@@ -398,15 +398,15 @@ class DeportistaController extends Controller{
                    $hidratantes = 0;
                    $multidisciplina =0;
                    $monitoria = 0;
-                   $Htemp = $p->deportista->historial()->whereBetween('created_at', array( $datos[1].' 00:00:00' , $datos[2].' 23:59:59'))
+                   $Htemp = $persona->deportista->historial()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[2].'-31 23:59:59'))
                                                         ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
                                                         ->limit('1')
                                                         ->get();
                    
-                   $HEst = $p->deportista->historialEstimulos()->whereBetween('created_at', array( $datos[1].' 00:00:00' , $datos[2].' 23:59:59'))->get();
+                   $HEst = $persona->deportista->historialEstimulos()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[2].'-31 23:59:59'))->get();
                    
                    foreach($Htemp as  $h){
-                       $transporte = $h->pivot['I_SMMLV'] * $p->deportista->etapa['V_POR_ESTIMULO'];
+                       $transporte = $h->pivot['I_SMMLV'] * $persona->deportista->etapa['V_POR_ESTIMULO'];
                    }
                    
                    foreach($HEst as  $hE){
@@ -434,7 +434,8 @@ class DeportistaController extends Controller{
                    }
                    $total = $transporte + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;
                    
-                   $per[$i] = [
+                   $per[0] = [
+                        'PERÍODO' => 'ASA',
                         'ATLETA' => $nombre,
                         'AGRUPACIÓN'=> $agrupacion,
                         'DEPORTE'=> $deporte,
@@ -450,8 +451,8 @@ class DeportistaController extends Controller{
                         'MONITORIAS'=> $monitoria,
                         'TOTAL'=> $total,
                            ];
-                   $i++;                           
-               }                
+                                       
+                      
                 $sheet->fromArray($per);
            });
         })->download('xls');

@@ -7,13 +7,13 @@
     
     {{Html::script('public/Js/jquery.dataTables.js')}}
     {{Html::script('public/Js/dataTables.responsive.min.js')}}        
-    {{Html::script('public/Js/bootstrap.min.js')}}
+  <!--  {{Html::script('public/Js/bootstrap.min.js')}}
     {{Html::script('public/Js/responsive.bootstrap.min.js')}}        
     {{Html::style('public/Css/bootstrap-theme.css')}}
     {{Html::style('public/Css/bootstrap-theme.min.css')}}
-    {{Html::style('public/Css/bootstrap.min.css') }}
+    {{Html::style('public/Css/bootstrap.min.css') }}-->
     {{Html::style('public/Css/jquery.dataTables.min.css')}}
-    {{Html::style('public/Css/responsive.bootstrap.min.css')}}
+    <!--{{Html::style('public/Css/responsive.bootstrap.min.css')}}-->
     {{Html::style('public/Css/bootstrap.css')}}
     {{Html::script('public/Js/tablesIdioma.js')}}   
     {{Html::style('public/Css/dataTables.bootstrap.min.css')}}
@@ -264,19 +264,7 @@
                             data-date="" data-behavior="fInicio">
                         <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
                         </div>
-                    </div>                   
-                    <div class="col-md-2">
-                        <label for="date-depart" id="fFinL">Fecha Fin:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group date" id="fFinDate">
-                            <input id="fFin" class="form-control datepicker" type="text" value="" 
-                            name="fFin" 
-                            default="" 
-                            data-date="" data-behavior="fFin">
-                        <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
-                        </div>
-                    </div>
+                    </div>                                      
                    <div class="col-md-2">
                        <button type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Buscar Reporte</button>
                    </div>                   
