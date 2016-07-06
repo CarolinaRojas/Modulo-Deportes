@@ -135,8 +135,13 @@ $(function(e){
       $("#SImagen").empty();
                   
       if(persona.deportista){
-          $("#SImagen").append("<img id='Imagen' src=''>");
-          $("#Imagen").attr('src',$("#Imagen").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
+          
+        if(persona.deportista['V_URL_IMG'] != ''){
+            $("#SImagen").append("<img id='Imagen' src=''>");
+            $("#Imagen").attr('src',$("#Imagen").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
+        }else{            
+            $("#SImagen").append('<span class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span><br>No ha ingresado la imágen del deportista.</span>');
+        }
                     
           $('input[name="Direccion_Residencia"]').val($.trim(persona.deportista['V_DIRECCION_RESIDENCIA']));          
           $('input[name="Telefono_Fijo"]').val($.trim(persona.deportista['V_TELEFONO_FIJO']));

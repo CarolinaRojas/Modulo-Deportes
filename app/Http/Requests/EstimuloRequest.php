@@ -26,6 +26,7 @@ class EstimuloRequest extends Request
         $validaciones = [                                    
             'Tipo_Estimulo' => 'required',
             'Valor_Estimulo' => 'required|numeric|digits_between:3,10',
+            'Valor_SMMLV' => 'required|numeric|digits_between:6,7'
             ];
        
         return $validaciones;

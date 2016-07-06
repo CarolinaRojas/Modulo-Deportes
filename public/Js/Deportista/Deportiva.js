@@ -37,9 +37,12 @@ function popular_modal_deportiva(persona){
     $("#SImagen2").empty();
     
     if(persona.deportista){
-        
-        $("#SImagen2").append("<img id='Imagen2' src=''>");
-        $("#Imagen2").attr('src',$("#Imagen2").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
+        if(persona.deportista['V_URL_IMG'] != ''){
+            $("#SImagen2").append("<img id='Imagen2' src=''>");
+            $("#Imagen2").attr('src',$("#Imagen2").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
+        }else{            
+            $("#SImagen2").append('<span class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span><br>No ha ingresado la imágen del deportista.</span>');
+        }
         
         $('#PanelEntrenador').empty(); 
         

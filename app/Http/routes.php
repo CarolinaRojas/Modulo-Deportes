@@ -42,35 +42,24 @@ Route::get('/service/buscar/{key}', '\Idrd\Usuarios\Controllers\PersonaControlle
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web']], function () {    
     
-    Route::resource('AddDatos', 'DeportistaController');
-
     Route::get('DatosDeportista','DeportistaController@index');
     Route::get('deportista/{id}','DeportistaController@datos');
-    Route::get('entrenador/{id}','DeportistaController@datosEntrenador');
-    
-    
+    Route::get('entrenador/{id}','DeportistaController@datosEntrenador');    
+    Route::get('Dentrenadores/{id}','DeportistaController@deportistaEntrenadores');    
     Route::get('getDeportes/{id}', 'DeportistaController@getDeporte');
     Route::get('getModalidades/{id}', 'DeportistaController@getModalidad');
-    Route::get('getEtapas/{id}', 'DeportistaController@getEtapas');
-    
-    Route::resource('AddDeportiva', 'DeportistaController');
-    Route::resource('EditDeportiva', 'DeportistaController@storeDeportiva');
-    
-    Route::get('Dentrenadores/{id}','DeportistaController@deportistaEntrenadores');
-    
-    Route::post('AddImagen/{id}','DeportistaController@AgregarImagen');    
-    
-    Route::get('HEtapa/{id}','DeportistaController@HistorialEtapa');
-    
+    Route::get('getEtapas/{id}', 'DeportistaController@getEtapas');    
+    Route::get('HEtapa/{id}','DeportistaController@HistorialEtapa');    
+    Route::post('AddImagen/{id}','DeportistaController@AgregarImagen'); 
+    Route::resource('AddDatos', 'DeportistaController');
+    Route::resource('AddDeportiva', 'DeportistaController');    
+    Route::resource('EditDeportiva', 'DeportistaController@storeDeportiva');    
     Route::resource('AddEstimulo','DeportistaController@AgregarEstimulo');
     
+    /***************RUTAS PARA REPORTES******************/
     Route::get('HistorialIndividual/{id}/{inicio}','ReportesController@HistorialIndividual');
     Route::get('HistorialEstimulos/{id}/{inicio}/{fin}','ReportesController@ReporteDeportistaEstimulos');
-    
-
-    
-    Route::resource('reportes','ReportesController');
     
 });

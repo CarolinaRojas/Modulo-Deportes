@@ -22,9 +22,7 @@ class DeportistaModel extends Model
         'FK_I_ID_BANCO',
         'FK_I_ID_DEPARTAMENTO',
         'FK_I_ID_EPS',
-      //  'FK_I_ID_LOCALIDAD',
         'V_DIRECCION_RESIDENCIA',
-       // 'FK_I_ID_BARRIO',
         'V_TELEFONO_FIJO',
         'V_TELEFONO_CELULAR',
         'V_CORREO_ELECTRONICO',
@@ -89,11 +87,7 @@ class DeportistaModel extends Model
     
     public function tipoCuenta(){
         return $this->belongsTo('App\TipoCuentaModel', 'FK_I_ID_TIPO_CUENTA');
-    }
-    
-//    public function barrio(){
-//        return $this->belongsTo('App\BarrioModel', 'FK_I_ID_BARRIO');
-//    }
+    }    
     
     public function localidad(){
         return $this->belongsTo('App\LocalidadModel', 'FK_I_ID_LOCALIDAD');

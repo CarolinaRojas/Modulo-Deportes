@@ -236,7 +236,7 @@ class ReportesController extends Controller
                                                         ->get();
                    
                    $HEst = $persona->deportista->historialEstimulos()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[1].'-31 23:59:59'))->get();
-                   //dd($HEst);
+                   
                    foreach($Htemp as  $h){
                        $transporte = $h->pivot['I_SMMLV'] * $persona->deportista->etapa['V_POR_ESTIMULO'];
                    }

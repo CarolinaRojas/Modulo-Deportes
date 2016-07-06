@@ -61,7 +61,7 @@
                   <li><a href="#" style="color:#1995dc">GESTIÓN DEPORTIVA</a></li>
                   <li class="divider"></li>
                   <li><a href="{{URL::to('DatosDeportista')}}">Datos deportista</a></li>
-                  <li><a href="{{URL::to('reportes')}}" style="color:#1995dc">REPORTES</a></li>
+                  <li><a href="{{URL::to('reportes')}}"> <!--style="color:#1995dc"--> Reportes</a></li>
                   <li><a href="#">Trasporte</a></li>
                 </ul>
               </li>

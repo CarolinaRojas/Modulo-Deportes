@@ -69,19 +69,6 @@
                                 </div>         
                             </div>
                         </div>
-                        <!--<div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">
-                            <div class="col-xs-12">
-                                <div class="form-group">                                   
-                                     <button type="button" class="btn btn-default">Estimulos Mensuales</button>
-                                     <button type="button" class="btn btn-primary" name="Enviar" id="Enviar">Reporte Individual</button>                                   
-                                </div>
-                            </div>
-                            <div class="col-xs-12"><br></div>
-                            <div class="col-xs-12">
-                                <ul id="personas"></ul>
-                            </div>
-                            <div id="paginador" class="col-xs-12"></div>                            
-                        </div>-->
                     </div>
                 </div>
             </div>

@@ -7,13 +7,7 @@
     
     {{Html::script('public/Js/jquery.dataTables.js')}}
     {{Html::script('public/Js/dataTables.responsive.min.js')}}        
-  <!--  {{Html::script('public/Js/bootstrap.min.js')}}
-    {{Html::script('public/Js/responsive.bootstrap.min.js')}}        
-    {{Html::style('public/Css/bootstrap-theme.css')}}
-    {{Html::style('public/Css/bootstrap-theme.min.css')}}
-    {{Html::style('public/Css/bootstrap.min.css') }}-->
     {{Html::style('public/Css/jquery.dataTables.min.css')}}
-    <!--{{Html::style('public/Css/responsive.bootstrap.min.css')}}-->
     {{Html::style('public/Css/bootstrap.css')}}
     {{Html::script('public/Js/tablesIdioma.js')}}   
     {{Html::style('public/Css/dataTables.bootstrap.min.css')}}
@@ -252,46 +246,73 @@
                   <strong>Error </strong> <span id="mensajeIncorrectoTres"></span>
               </div>
               <br>
-               <div class="row">
-                    <div class="col-md-2">
-                        <label for="date-depart" id="fInicioL">Fecha Inicio:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group date" id="fInicioDate">
-                            <input id="fInicio" class="form-control datepicker" type="text" value="" 
-                            name="fInicio" 
-                            default="" 
-                            data-date="" data-behavior="fInicio">
-                        <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
-                        </div>
-                    </div>                                      
-                   <div class="col-md-2">
-                       <button type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Descargar Reporte</button>
-                   </div>                   
-              </div>   
-              <br>
-              <div id="AgregarEstimulos" class="row">
-                  <div class="col-md-2">
-                      <label for="date-depart" id="Tipo_EstimuloL">Seleccione un tipo de estímulo:</label>
-                  </div>
-                  <div class="col-md-3">
-                      <select name="Tipo_Estimulo" id="Tipo_Estimulo" class="form-control">
-                            <option value="">Seleccionar</option>
-                            @foreach($tipoEstimulo as $tipoEstimulos)
-                                    <option value="{{ $tipoEstimulos['PK_I_ID_TIPO_ESTIMULO'] }}">{{$tipoEstimulos['V_NOMBRE_ESTIMULO']}}</option>
-                            @endforeach
-                        </select>
-                  </div>
-                  <div class="col-md-2">
-                      <label for="date-depart" id="Valor_EstimuloL">Valor del estímulo:</label>
-                  </div>
-                  <div class="col-md-3">
-                      <input class="form-control" placeholder="Valor de estímulo" type="text" name="Valor_Estimulo" id="Valor_Estimulo">
-                  </div>
-                  <div class="col-md-2 ">   
-                      <button type="button" class="btn btn-primary" name="AgregarEstimulo" id="AgregarEstimulo">Agregar Estímulo</button>
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Reporte de deportista</h3>
                 </div>
-              </div>       
+                  <div class="panel-body">
+                      <div class="row">
+                            <div class="col-md-2">
+                                <label for="date-depart" id="fInicioL">Fecha Inicio:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group date" id="fInicioDate">
+                                    <input id="fInicio" class="form-control datepicker" type="text" value="" 
+                                    name="fInicio" 
+                                    default="" 
+                                    data-date="" data-behavior="fInicio">
+                                <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
+                                </div>
+                            </div>                                      
+                           <div class="col-md-2">
+                               <button type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Descargar Reporte</button>
+                           </div>                   
+                      </div>   
+                  </div>
+              </div>               
+              <br>
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Agregar Estímulos al deportista</h3>
+                </div>
+                  <div class="panel-body">
+                      <div class="row">
+                            <div class="col-md-2">
+                                <label for="date-depart" id="Tipo_EstimuloL">Seleccione un tipo de estímulo:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <select name="Tipo_Estimulo" id="Tipo_Estimulo" class="form-control">
+                                      <option value="">Seleccionar</option>
+                                      @foreach($tipoEstimulo as $tipoEstimulos)
+                                              <option value="{{ $tipoEstimulos['PK_I_ID_TIPO_ESTIMULO'] }}">{{$tipoEstimulos['V_NOMBRE_ESTIMULO']}}</option>
+                                      @endforeach
+                                  </select>
+                            </div> 
+                        </div>
+                       <br>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="date-depart" id="Valor_EstimuloL">Valor del estímulo:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" placeholder="Valor de estímulo" type="text" name="Valor_Estimulo" id="Valor_Estimulo">
+                            </div>                    
+                            <div class="col-md-2">
+                                <label for="date-depart" id="Valor_SMMLVL">Valor del SMMLV:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" placeholder="Salarío Mínimo Mensual Legal Vigente" type="text" name="Valor_SMMLV" id="Valor_SMMLV" value="689454">
+                            </div>                        
+                        </div>
+                       <br>
+                        <div class="row">
+                            <div class="col-md-2 ">   
+                                <button type="button" class="btn btn-primary" name="AgregarEstimulo" id="AgregarEstimulo">Agregar Estímulo</button>
+                            </div>
+                        </div>
+                  </div>
+              </div>                
+                </div>     
               <br><br>
               <div id="reporteIndividual" class="row"></div>
               <br>

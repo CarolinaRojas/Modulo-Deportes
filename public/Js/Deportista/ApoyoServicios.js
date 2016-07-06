@@ -26,9 +26,11 @@ $(function(e){
         var id = $(this).data('rel'); 
         $("#mensaje-incorrecto-tres").fadeOut();
         document.getElementById("fInicio").value = '';
-        /*document.getElementById("fFin").value = '';*/
         Normal('fInicio');
         Normal('fFin');
+        Normal('Tipo_Estimulo');
+        Normal('Valor_Estimulo');
+        Normal('Valor_SMMLV');
         $.get("HEtapa/" + id + "", function (deportista) {
             popular_modal_apoyo(deportista);
         })
@@ -39,20 +41,19 @@ $(function(e){
         $("#mensaje-incorrecto-tres").fadeOut();
         Normal('fInicio');
         Normal('fFin');
+        Normal('Tipo_Estimulo');
+        Normal('Valor_Estimulo');
+        Normal('Valor_SMMLV');
         
         var id = $('button[data-role="ApoyoServicios"]').data('rel'); 
         var inicio  = document.getElementById("fInicio").value;
-        /*var fin  = document.getElementById("fFin").value;        */
         if(!id || !inicio /*|| !fin*/){
             if(!inicio){                
                 ValidacionDeportiva("fInicio", 'Ingrese una fecha de inicio para generar el reporte.');
             }
-           /* if(!fin){
-                ValidacionDeportiva("fFin", 'Ingrese una fecha de finalización para generar el reporte.');
-            }*/
             return false;
         }else{
-            BuscarIndividual(id, inicio/*, fin*/) ;
+            BuscarIndividual(id, inicio) ;
         }
     });
     
@@ -78,28 +79,37 @@ function popular_modal_apoyo(persona){
     
      if(persona.deportista){
          $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
-        $("#SImagen3").append("<img id='Imagen3' src=''>");
-        $("#Imagen3").attr('src',$("#Imagen3").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());        
+         
+        if(persona.deportista['V_URL_IMG'] != ''){
+            $("#SImagen3").append("<img id='Imagen3' src=''>");
+            $("#Imagen3").attr('src',$("#Imagen3").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
+        }else{            
+            $("#SImagen3").append('<span class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span><br>No ha ingresado la imágen del deportista.</span>');
+        }
     }
     $('#modal_form_apoyo').modal('show');
     
 }
 
-function BuscarIndividual(id, inicio/*, fin*/){
-    location.href = 'HistorialIndividual/'+id+'/'+inicio/*+'/'+fin*/;
+function BuscarIndividual(id, inicio){
+    location.href = 'HistorialIndividual/'+id+'/'+inicio;
 }
 
 function AgregarEstimulo(){
     $("#mensaje-incorrecto-tres").fadeOut();
     Normal('Tipo_Estimulo');
     Normal('Valor_Estimulo');
+    Normal('fInicio');
+    Normal('fFin');
+    Normal('Valor_SMMLV');
     
     var Id_Deportista = $("#Id_Deportista").val();
     var Tipo_Estimulo = $('#Tipo_Estimulo').val();
     var Valor_Estimulo = $('#Valor_Estimulo').val();
+    var Valor_SMMLV = $('#Valor_SMMLV').val();    
     var token = $("#token").val();
     
-    var datos = {Tipo_Estimulo:Tipo_Estimulo, Valor_Estimulo: Valor_Estimulo, Id_Deportista: Id_Deportista, tipo: 'estimulos'};
+    var datos = {Tipo_Estimulo:Tipo_Estimulo, Valor_Estimulo: Valor_Estimulo, Id_Deportista: Id_Deportista, tipo: 'estimulos', Valor_SMMLV:Valor_SMMLV};
     
     ProcesoApoyo ('POST', 'AddEstimulo', datos, token);   
 }
@@ -115,13 +125,13 @@ function ProcesoApoyo (tipo, url, datos, token){
             alert(xhr.Mensaje);
             $('#Tipo_Estimulo').val('');
             $('#Valor_Estimulo').val('');
+            //$('#Valor_SMMLV').val('');
         },
         error: function (xhr) {        
-            console.log('err');
-            console.log(xhr);
             $("#mensajeIncorrectoTres").empty();
             if(xhr.responseJSON.Tipo_Estimulo){ ValidacionDeportiva('Tipo_Estimulo', xhr.responseJSON.Tipo_Estimulo);}else{Normal('Tipo_Estimulo');}
             if(xhr.responseJSON.Valor_Estimulo){ ValidacionDeportiva('Valor_Estimulo', xhr.responseJSON.Valor_Estimulo);}else{Normal('Valor_Estimulo');}
+            if(xhr.responseJSON.Valor_SMMLV){ ValidacionDeportiva('Valor_SMMLV', xhr.responseJSON.Valor_SMMLV);}else{Normal('Valor_SMMLV');}
         }
     });
 }
