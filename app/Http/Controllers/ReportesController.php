@@ -63,8 +63,8 @@ class ReportesController extends Controller
                                      'personas.pais',
                                      'personas.tipoDocumento',
                                      'personas.deportista', 
-                                     'personas.deportista.localidad',
-                                     'personas.deportista.barrio',
+                                    // 'personas.deportista.localidad',
+                                     //'personas.deportista.barrio',
                                      'personas.deportista.banco',
                                      'personas.deportista.tipoCuenta',
                                      'personas.deportista.situacionMilitar',
@@ -114,8 +114,8 @@ class ReportesController extends Controller
                    $tipo_cuenta = $p->deportista->tipoCuenta['V_NOMBRE_TIPO_CUENTA'];
                    $num_cuenta = $p->deportista['V_NUMERO_CUENTA'];
                    $dir_residencia = $p->deportista['V_DIRECCION_RESIDENCIA'];
-                   $barrio = $p->deportista->barrio['V_NOMBRE_BARRIO'];
-                   $localidad = $p->deportista->localidad['Nombre_Localidad'];
+                   $barrio = $p->deportista['V_BARRIO'];
+                   $localidad = $p->deportista['V_LOCALIDAD'];
                    $tel_fijo = $p->deportista['V_TELEFONO_FIJO'];
                    $tel_celular = $p->deportista['V_TELEFONO_CELULAR'];
                    $email = $p->deportista['V_CORREO_ELECTRONICO'];

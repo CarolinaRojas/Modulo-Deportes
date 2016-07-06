@@ -1,6 +1,16 @@
 var html;
 $(function(e){ 
     
+    $('#Fecha_Ingreso_Date').datepicker({        
+       format: 'yyyy-mm-dd',
+       autoclose: true,   
+    });
+    $('#Fecha_Retiro_Date').datepicker({        
+       format: 'yyyy-mm-dd',
+       autoclose: true,
+    });
+    
+    
     var $personas_actuales = $('#personas').html();    
     var URL = $('#main_persona').data('url');    
     var buscar = function(e){
@@ -79,17 +89,19 @@ $(function(e){
             
         $("#Eps").val('').change();
         $("#Estado_Civil").val('').change();
-        $("#Localidad").val('').change(); 
+        $('input[name="Localidad"]').val('');
         $("#Agrupacion").val('').change();
         $("#Departamento").val('').change();
         $("#Etapa").val('').change();
-        $("#Barrio").val('').change();
+        $('input[name="Barrio"]').val('');
         $("#Banco").val('').change();
         $("#Tipo_Cuenta").val('').change();
         $("#Estrato").val('').change();
         $("#Grupo_Sanguineo").val('').change();
         $("#Tipo_Deportista").val('').change();
         $("#Situacion_Militar").val('').change();
+        document.getElementById("Fecha_Ingreso").value = '';
+        document.getElementById("Fecha_Retiro").value = '';
       
         $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-search');
         $('#personas').html($personas_actuales);
@@ -136,13 +148,13 @@ $(function(e){
           $('input[name="Cuenta"]').val($.trim(persona.deportista['V_NUMERO_CUENTA']));
           $("#Eps").val(persona.deportista['FK_I_ID_EPS']).change();
           $("#Estado_Civil").val(persona.deportista['FK_I_ID_ESTADO_CIVIL']).change();
-          $("#Localidad").val(persona.deportista['FK_I_ID_LOCALIDAD']).change();
+          $('input[name="Localidad"]').val($.trim(persona.deportista['V_LOCALIDAD']));
           
           $("#Agrupacion").val(persona.deportista['FK_I_ID_AGRUPACION']).change();
           $("#Departamento").val(persona.deportista['FK_I_ID_DEPARTAMENTO']).change();
           
           
-          $("#Barrio").val(persona.deportista['FK_I_ID_BARRIO']).change();
+          $('input[name="Barrio"]').val($.trim(persona.deportista['V_BARRIO']));
           $("#Banco").val(persona.deportista['FK_I_ID_BANCO']).change();
           $("#Tipo_Cuenta").val(persona.deportista['FK_I_ID_TIPO_CUENTA']).change();
           $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
@@ -150,6 +162,12 @@ $(function(e){
           $("#Grupo_Sanguineo").val(persona.deportista['FK_I_ID_GRUPO_SANGUINEO']).change();
           $("#Tipo_Deportista").val(persona.deportista['FK_I_ID_TIPO_DEPORTISTA']).change();
           $("#Situacion_Militar").val(persona.deportista['FK_I_ID_SITUACION_MILITAR']).change();
+          document.getElementById("Fecha_Ingreso").value = persona.deportista['D_FECHA_INGRESO'];
+          
+         if(persona.deportista['D_FECHA_RETIRO'] != '0000-00-00'){
+             alert(persona.deportista['D_FECHA_RETIRO'])
+            document.getElementById("Fecha_Retiro").value = persona.deportista['D_FECHA_RETIRO'];         
+            }
           
           showDeportes(persona.deportista['FK_I_ID_AGRUPACION'], persona.deportista['FK_I_ID_DEPORTE']);
           
@@ -185,7 +203,7 @@ $(function(e){
             Normal('Grupo_Sanguineo'); Normal('Eps'); Normal('Estado_Civil'); Normal('Estrato'); Normal('Situacion_Militar');
             Normal('Hijos'); Normal('Departamento'); Normal('Localidad'); Normal('Barrio'); Normal('Direccion_Residencia'); Normal('Telefono_Fijo'); 
             Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Tipo_Deportista'); Normal('Banco'); Normal('Cuenta');
-            Normal('Deporte'); Normal('Modalidad'); Normal('Agrupacion'); Normal('Etapa');Normal('Tipo_Cuenta');
+            Normal('Deporte'); Normal('Modalidad'); Normal('Agrupacion'); Normal('Etapa');Normal('Tipo_Cuenta'); Normal('Fecha_Ingreso'); Normal('Fecha_Retiro')
             popular_modal_persona(response);
         });
     });
@@ -219,6 +237,8 @@ function RegistroDeportista(){
         var Tipo_Deportista = $('#Tipo_Deportista').val();
         var Situacion_Militar = $('#Situacion_Militar').val();
         var SMMLV = $('#SMMLV').val();
+        var Fecha_Ingreso = document.getElementById("Fecha_Ingreso").value;
+        var Fecha_Retiro= document.getElementById("Fecha_Retiro").value;
         
         var datos = {
                     Eps: Eps,
@@ -244,7 +264,9 @@ function RegistroDeportista(){
                     Grupo_Sanguineo: Grupo_Sanguineo,
                     Tipo_Deportista: Tipo_Deportista,
                     Situacion_Militar: Situacion_Militar,
-                    SMMLV: SMMLV
+                    SMMLV: SMMLV,
+                    Fecha_Ingreso: Fecha_Ingreso,
+                    Fecha_Retiro: Fecha_Retiro,
                 }
                 
         $("#mensajeIncorrecto").html(':');
@@ -253,10 +275,8 @@ function RegistroDeportista(){
                
         if(Id_Deportista){
             Proceso('PUT', 'AddDatos/'+Id_Deportista, datos, token);
-        //    guardaImagen();
         }else{            
             Proceso('POST', 'AddDatos', datos, token);
-          //  guardaImagen();
         }        
     });
 }
@@ -317,6 +337,8 @@ function Proceso (tipo, url, datos, token){
             if(xhr.responseJSON.Agrupacion){ Validacion('Agrupacion', xhr.responseJSON.Agrupacion);}else{Normal('Agrupacion');}
             if(xhr.responseJSON.Etapa){ Validacion('Etapa', xhr.responseJSON.Etapa);}else{Normal('Etapa');}
             if(xhr.responseJSON.SMMLV){ Validacion('SMMLV', xhr.responseJSON.SMMLV);}else{Normal('SMMLV');}
+            if(xhr.responseJSON.Fecha_Ingreso){ Validacion('Fecha_Ingreso', xhr.responseJSON.Fecha_Ingreso);}else{Normal('Fecha_Ingreso');}
+            if(xhr.responseJSON.Fecha_Retiro){ Validacion('Fecha_Retiro', xhr.responseJSON.Fecha_Retiro);}else{Normal('Fecha_Retiro');}
             
             var scrollPos;                    
             scrollPos = $("#mensajeIncorrecto").offset().top;

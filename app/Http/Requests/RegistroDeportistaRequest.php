@@ -23,12 +23,12 @@ class RegistroDeportistaRequest extends Request
      */
     public function rules()
     {
-        $validaciones = [                        
+        if( $this->Fecha_Retiro){
+            $validaciones = [                        
             'Eps' => 'required',
             'Estrato'=> 'required',
-            'Departamento' => 'required',
-            'Localidad' => 'required',
-            'Barrio' => 'required',
+            'Localidad' => 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
+            'Barrio' => 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
             'Direccion_Residencia'=> 'required|min:3|regex:/^[(a-zA-Z0-9\s\#\-\°)]+$/u',
             'Telefono_Fijo'=> 'required|numeric|digits_between:7,10',
             'Telefono_Celular'=> 'required|numeric|digits:10',
@@ -47,8 +47,39 @@ class RegistroDeportistaRequest extends Request
             'Grupo_Sanguineo' =>'required',
             'Tipo_Deportista' => 'required',
             'Situacion_Militar' => 'required',  
+            'Fecha_Ingreso' =>  'required|date',
+            'Fecha_Retiro' => 'date|after:Fecha_Ingreso',
             
             ];
+        }else{
+            $validaciones = [                        
+                'Eps' => 'required',
+                'Estrato'=> 'required',
+                'Localidad' => 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
+                'Barrio' => 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
+                'Direccion_Residencia'=> 'required|min:3|regex:/^[(a-zA-Z0-9\s\#\-\°)]+$/u',
+                'Telefono_Fijo'=> 'required|numeric|digits_between:7,10',
+                'Telefono_Celular'=> 'required|numeric|digits:10',
+                'Correo_Electronico'=> 'required|email|min:7|max:40',
+                'Estado_Civil'=> 'required',
+                'Hijos'=> 'required|numeric|digits_between:1,3',
+                'Banco' => 'required',
+                'Tipo_Cuenta' => 'required',
+                'Cuenta' => 'required|numeric|digits_between:1,20',
+                'Deporte' => 'required',
+                'Modalidad' => 'required',
+                'Agrupacion' => 'required',
+                'Etapa' => 'required',
+                'Id_persona' => 'unique:FK_I_ID_PERSONA',
+                'Estrato'=>'required',
+                'Grupo_Sanguineo' =>'required',
+                'Tipo_Deportista' => 'required',
+                'Situacion_Militar' => 'required',  
+                'Fecha_Ingreso' =>  'required|date',
+                'Fecha_Retiro' => 'date|after:Fecha_Ingreso',
+
+                ];
+        }
         return $validaciones;
     }
 }

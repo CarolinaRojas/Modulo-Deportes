@@ -266,7 +266,7 @@
                         </div>
                     </div>                                      
                    <div class="col-md-2">
-                       <button type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Buscar Reporte</button>
+                       <button type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Descargar Reporte</button>
                    </div>                   
               </div>   
               <br>

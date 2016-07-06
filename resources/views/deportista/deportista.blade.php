@@ -69,28 +69,12 @@
     </div>
 </div>
 <br>
-<div class="row">
-    <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right" id="DepartamentoL">Departamento:</label>
-    </div>
-    <div class="col-md-4">
-      <select name="Departamento" id="Departamento" class="form-control">
-          <option value="">Seleccionar</option>
-          @foreach($departamento as $departamentos)
-                  <option value="{{ $departamentos['Id_Departamento'] }}">{{ $departamentos['Nombre_Departamento'] }}</option>
-          @endforeach
-      </select>
-    </div>  
+<div class="row">   
     <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right" id="LocalidadL">Localidad:</label>
     </div>
     <div class="col-md-4">
-        <select name="Localidad" id="Localidad" class="form-control">
-            <option value="">Seleccionar</option>
-            @foreach($localidad as $localidades)
-                <option value="{{ $localidades['Id_Localidad'] }}">{{ $localidades['Nombre_Localidad'] }}</option>
-            @endforeach
-        </select>
+        <input class="form-control" placeholder="Localidad" type="text" name="Localidad" id="Localidad">      
     </div>
 </div>
 <br>
@@ -99,12 +83,7 @@
         <label for="inputEmail" class="control-label pull-right" id="BarrioL">Barrio:</label>
     </div>
     <div class="col-md-4">
-        <select name="Barrio" id="Barrio" class="form-control">
-            <option value="">Seleccionar</option>
-            @foreach($barrio as $barrios)
-                    <option value="{{ $barrios['PK_I_ID_BARRIO'] }}">{{ $barrios['V_NOMBRE_BARRIO'] }}</option>
-            @endforeach
-        </select>
+        <input class="form-control" placeholder="Barrio" type="text" name="Barrio" id="Barrio">
     </div>
     <div class="col-md-2">
         <label for="inputEmail" class="control-label pull-right" id="Direccion_ResidenciaL">Dirección Residencia:</label>
@@ -239,5 +218,26 @@
     </div>
     <div class="col-md-4">
         <input class="form-control" placeholder="Salario Mínimo" type="text" name="SMMLV" id="SMMLV" value="689454">
+    </div>    
+</div>
+<br>
+<div class="row">    
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="Fecha_IngresoL">Fecha Ingreso:</label>
+    </div>
+    <div class="col-md-4">
+        <div class="input-group date form-control" id="Fecha_Ingreso_Date" style="border: none;">
+            <input id="Fecha_Ingreso" class="form-control datepicker" type="text" value="" name="Fecha_IngresoL" default="" data-date="" data-behavior="Fecha_Ingreso">
+        <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
+    </div>    
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="Fecha_RetiroL">Fecha Retiro</label>
+    </div>
+    <div class="col-md-4">
+        <div class="input-group date form-control" id="Fecha_Retiro_Date" style="border: none;">
+            <input id="Fecha_Retiro" class="form-control datepicker" type="text" value="" name="Fecha_RetiroL" default="" data-date="" data-behavior="Fecha_Retiro">
+        <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
     </div>    
 </div>
