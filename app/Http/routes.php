@@ -61,5 +61,6 @@ Route::group(['middleware' => ['web']], function () {
     /***************RUTAS PARA REPORTES******************/
     Route::get('HistorialIndividual/{id}/{inicio}','ReportesController@HistorialIndividual');
     Route::get('HistorialEstimulos/{id}/{inicio}/{fin}','ReportesController@ReporteDeportistaEstimulos');
+    Route::resource('reportes','ReportesController');
     
 });

@@ -56,15 +56,13 @@ class ReportesController extends Controller
        
         $datos = array($id, $inicio, $fin);     
         
-        Excel::create('Historial Deportistas'.$datos[1].'-'.$datos[2], function($excel) use($datos){
+        Excel::create('Historial Deportistas('.$datos[1].'&'.$datos[2].')', function($excel) use($datos){
            $excel->sheet('Sheetname', function($sheet) use ($datos){               
                $persona = Tipo::with('personas', 
                                      'personas.genero',
                                      'personas.pais',
                                      'personas.tipoDocumento',
                                      'personas.deportista', 
-                                    // 'personas.deportista.localidad',
-                                     //'personas.deportista.barrio',
                                      'personas.deportista.banco',
                                      'personas.deportista.tipoCuenta',
                                      'personas.deportista.situacionMilitar',
@@ -103,9 +101,7 @@ class ReportesController extends Controller
                     } elseif ($mes == 0 && date('d') - date('d', strtotime($p['Fecha_Nacimiento'])) < 0) {
                      $edad++;
                     }
-                    $edad_decimal = date('Y')-$edad;
-                   $municipio = '';
-                   $departamento = $p->deportista->departamento['Nombre_Departamento'];
+                   $edad_decimal = date('Y')-$edad;                   
                    $pais = $p->pais['Nombre_Pais'];
                    $tipo_documento = $p->tipoDocumento['Nombre_TipoDocumento'];
                    $num_documento = $p['Cedula'];
@@ -119,20 +115,24 @@ class ReportesController extends Controller
                    $tel_fijo = $p->deportista['V_TELEFONO_FIJO'];
                    $tel_celular = $p->deportista['V_TELEFONO_CELULAR'];
                    $email = $p->deportista['V_CORREO_ELECTRONICO'];
-                   $fecha_ingreso = '';
-                   $fecha_retiro = '';
+                   $fecha_ingreso = $p->deportista['D_FECHA_INGRESO'];
+                   $fecha_retiro = $p->deportista['D_FECHA_RETIRO'];
                    
                    $Htemp = $p->deportista->historial()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[2].'-31 23:59:59'))
                                                         ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
                                                         ->limit('1')
                                                         ->get();
                    
+                  
+                   
                    $HEst = $p->deportista->historialEstimulos()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[2].'-31 23:59:59'))->get();
                    
-                   foreach($Htemp as  $h){
-                       $transporte = $h->pivot['I_SMMLV'] * $p->deportista->etapa['V_POR_ESTIMULO'];
+                   foreach($Htemp as  $h){                  
+                       $transporte = $h->pivot['I_SMMLV'] * $h['V_POR_ESTIMULO'];
                    }
+                   
                    foreach($HEst as  $hE){
+                       
                        if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 1){
                            $mensual = $mensual + $hE->pivot['V_VALOR_ESTIMULO'];
                        }
@@ -157,7 +157,8 @@ class ReportesController extends Controller
                    }
                    $total = $transporte + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;
                    
-                   $per[$i] = [                        
+                   $per[$i] = [ 
+                        'N°' => $i+1,
                         'AGRUPACIÓN'=> $agrupacion,
                         'DEPORTE'=> $deporte,
                         'MODALIDAD'=> $modalidad,
@@ -165,9 +166,7 @@ class ReportesController extends Controller
                         'ATLETA' => $nombre,
                         'GENERO' => $genero,
                         'FECHA DE NACIMIENTO' => $fecha_nacimiento,
-                        'EDAD' => $edad_decimal,
-                        'MUNICIPIO' => $municipio,
-                        'DEPARTAMENTO' => $departamento,
+                        'EDAD' => $edad_decimal,                        
                         'PAÍS' => $pais,
                         'TIPO DE DOCUMENTO' => $tipo_documento,
                         'N° DE DOCUMENTO' => $num_documento,
@@ -194,7 +193,38 @@ class ReportesController extends Controller
                         'TOTAL'=> $total,
                            ];
                    $i++;                           
-               }                
+               }    
+               $sheet->setColumnFormat(array(
+                   'y' => '$0,0',
+                   'Z' => '$0,0',
+                   'A' => '$0,0',
+                   'AA' => '$0,0',
+                   'AB' => '$0,0',
+                   'AC' => '$0,0',
+                   'AD' => '$0,0',
+                   'AE' => '$0,0',
+                   'AF' => '$0,0',
+                ));
+               
+               $sheet->freezeFirstRow();
+               $sheet->setAllBorders('thin');
+               $sheet->setHeight(1, 50); 
+               
+                $sheet->cells('A1:AF1', function($cells) {
+                    
+                    $cells->setBackground('#CCFFFF');
+                    $cells->setFont(array(
+                        'family'     => 'Arial',
+                        'size'       => '14',
+                        'bold'       =>  true
+                    ));
+                    $cells->setBorder(array(
+                        'top'   => array(
+                            'style' => 'solid'
+                        ),
+                    ));
+                    $cells->setAlignment('center');
+                }); 
                 $sheet->fromArray($per);
            });
         })->download('xls');              
@@ -230,6 +260,33 @@ class ReportesController extends Controller
                    $hidratantes = 0;
                    $multidisciplina =0;
                    $monitoria = 0;
+                   
+                   $genero  = $persona->genero['Nombre_Genero'];                   
+                   $fecha_nacimiento = $persona['Fecha_Nacimiento'];
+                
+                   $edad = date('Y', strtotime($persona['Fecha_Nacimiento']));
+                    if (($mes = (date('m') - date('m', strtotime($persona['Fecha_Nacimiento'])))) < 0) {
+                     $edad++;
+                    } elseif ($mes == 0 && date('d') - date('d', strtotime($persona['Fecha_Nacimiento'])) < 0) {
+                     $edad++;
+                    }
+                   $edad_decimal = date('Y')-$edad;                   
+                   $pais = $persona->pais['Nombre_Pais'];
+                   $tipo_documento = $persona->tipoDocumento['Nombre_TipoDocumento'];
+                   $num_documento = $persona['Cedula'];
+                   $sit_militar = $persona->deportista->situacionMilitar['V_NOMBRE_SITUACION_MILITAR'];
+                   $banco = $persona->deportista->banco['V_NOMBRE_BANCO'];
+                   $tipo_cuenta = $persona->deportista->tipoCuenta['V_NOMBRE_TIPO_CUENTA'];
+                   $num_cuenta = $persona->deportista['V_NUMERO_CUENTA'];
+                   $dir_residencia = $persona->deportista['V_DIRECCION_RESIDENCIA'];
+                   $barrio = $persona->deportista['V_BARRIO'];
+                   $localidad = $persona->deportista['V_LOCALIDAD'];
+                   $tel_fijo = $persona->deportista['V_TELEFONO_FIJO'];
+                   $tel_celular = $persona->deportista['V_TELEFONO_CELULAR'];
+                   $email = $persona->deportista['V_CORREO_ELECTRONICO'];
+                   $fecha_ingreso = $persona->deportista['D_FECHA_INGRESO'];
+                   $fecha_retiro = $persona->deportista['D_FECHA_RETIRO'];
+                   
                    $Htemp = $persona->deportista->historial()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[1].'-31 23:59:59'))
                                                         ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
                                                         ->limit('1')
@@ -268,11 +325,29 @@ class ReportesController extends Controller
                    
                    $per[0] = [
                         'PERÍODO' => $datos[1],
-                        'ATLETA' => $nombre,
                         'AGRUPACIÓN'=> $agrupacion,
                         'DEPORTE'=> $deporte,
                         'MODALIDAD'=> $modalidad,
                         'ETAPA'=> $etapa,
+                        'ATLETA' => $nombre,
+                        'GENERO' => $genero,
+                        'FECHA DE NACIMIENTO' => $fecha_nacimiento,
+                        'EDAD' => $edad_decimal,
+                        'PAÍS' => $pais,
+                        'TIPO DE DOCUMENTO' => $tipo_documento,
+                        'N° DE DOCUMENTO' => $num_documento,
+                        'SITUACIÓN MILITAR' => $sit_militar,
+                        'BANCO' => $banco,
+                        'TIPO DE CUENTA' => $tipo_cuenta,
+                        'N° DE CUENTA' => $num_cuenta,
+                        'DIRECCIÓN DE RESIDENCIA' => $dir_residencia,
+                        'BARRIO' => $barrio,
+                        'LOCALIDAD' => $localidad,
+                        'TELÉFONO FIJO' => $tel_fijo,
+                        'TELÉFONO CELULAR' => $tel_celular,
+                        'E-MAIL' => $email,
+                        'FECHA DE INGRESO' => $fecha_ingreso,
+                        'FECHA DE RETIRO' => $fecha_retiro,
                         'TRANSPORTE'=> $transporte,
                         'ESTÍMULO MENSUAL'=> $mensual,
                         'EDUCACIÓN'=> $educacion,
@@ -283,8 +358,38 @@ class ReportesController extends Controller
                         'MONITORIAS'=> $monitoria,
                         'TOTAL'=> $total,
                            ];
-                                       
-                      
+                 $sheet->setColumnFormat(array(
+                   'y' => '$0,0',
+                   'Z' => '$0,0',
+                   'A' => '$0,0',
+                   'AA' => '$0,0',
+                   'AB' => '$0,0',
+                   'AC' => '$0,0',
+                   'AD' => '$0,0',
+                   'AE' => '$0,0',
+                   'AF' => '$0,0',
+                   'AG' => '$0,0',
+                ));
+               
+               $sheet->freezeFirstRow();
+               $sheet->setAllBorders('thin');
+               $sheet->setHeight(1, 50); 
+               
+                $sheet->cells('A1:AF1', function($cells) {
+                    
+                    $cells->setBackground('#CCFFFF');
+                    $cells->setFont(array(
+                        'family'     => 'Arial',
+                        'size'       => '14',
+                        'bold'       =>  true
+                    ));
+                    $cells->setBorder(array(
+                        'top'   => array(
+                            'style' => 'solid'
+                        ),
+                    ));
+                    $cells->setAlignment('center');
+                }); 
                 $sheet->fromArray($per);
            });
         })->download('xls');
