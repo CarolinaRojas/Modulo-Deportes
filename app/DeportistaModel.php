@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DeportistaModel extends Model
 {
-    protected $table = 'TB_SRD_DEPORTISTA';
+    protected $table = 'tb_srd_deportista';
     protected $primaryKey = 'PK_I_ID_DEPORTISTA';
     protected $fillable = [
         'FK_I_ID_PERSONA',
@@ -44,15 +44,15 @@ class DeportistaModel extends Model
 
     public function entrenadores()
     {
-        return $this->belongsToMany('App\EntrenadorModel', 'TB_SRD_DEPORTISTA_ENTRENADOR', 'FK_I_ID_DEPORTISTA', 'FK_I_ID_ENTRENADOR')->withTimestamps();
+        return $this->belongsToMany('App\EntrenadorModel', 'tb_srd_deportista_entrenador', 'FK_I_ID_DEPORTISTA', 'FK_I_ID_ENTRENADOR')->withTimestamps();
     }    
     
     public function historial() {
-        return $this->belongsToMany('App\EtapaModel', 'TB_SRD_HISTORIAL_ETAPA', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps()->withPivot('I_SMMLV');
+        return $this->belongsToMany('App\EtapaModel', 'tb_srd_historial_etapa', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps()->withPivot('I_SMMLV');
     }
     
     public function historialEstimulos() {
-        return $this->belongsToMany('App\TipoEstimuloModel', 'TB_SRD_DEPORTISTA_ESTIMULO', 'FK_I_ID_DEPORTISTA_E', 'FK_I_ID_TIPO_ESTIMULO')->withTimestamps()
+        return $this->belongsToMany('App\TipoEstimuloModel', 'tb_srd_deportista_estimulo', 'FK_I_ID_DEPORTISTA_E', 'FK_I_ID_TIPO_ESTIMULO')->withTimestamps()
                 ->withPivot('V_VALOR_ESTIMULO', 'I_SMMLV');
     }
     

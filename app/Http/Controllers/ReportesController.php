@@ -119,7 +119,7 @@ class ReportesController extends Controller
                    $fecha_retiro = $p->deportista['D_FECHA_RETIRO'];
                    
                    $Htemp = $p->deportista->historial()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[2].'-31 23:59:59'))
-                                                        ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
+                                                        ->orderBy('tb_srd_historial_etapa.created_at', 'desc')
                                                         ->limit('1')
                                                         ->get();
                    
@@ -288,7 +288,7 @@ class ReportesController extends Controller
                    $fecha_retiro = $persona->deportista['D_FECHA_RETIRO'];
                    
                    $Htemp = $persona->deportista->historial()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[1].'-31 23:59:59'))
-                                                        ->orderBy('TB_SRD_HISTORIAL_ETAPA.created_at', 'desc')
+                                                        ->orderBy('tb_srd_historial_etapa.created_at', 'desc')
                                                         ->limit('1')
                                                         ->get();
                    

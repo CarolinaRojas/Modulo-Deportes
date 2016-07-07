@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TallaModel extends Model
 {
-    protected $table = 'TB_SRD_TALLA';
+    protected $table = 'tb_srd_talla';
     protected $primaryKey = 'PK_I_ID_TALLA';
     protected $fillable = ['V_NOMBRE_TALLA'];
 }
