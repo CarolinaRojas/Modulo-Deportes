@@ -29,7 +29,8 @@ Route::get('/personas', '\Idrd\Usuarios\Controllers\PersonaController@index');
 Route::get('/personas/service/obtener/{id}', '\Idrd\Usuarios\Controllers\PersonaController@obtener');
 Route::get('/personas/service/ciudad/{id_pais}', 'Controllers\LocalizacionController@buscarCiudades');
 Route::post('/personas/service/procesar/', '\Idrd\Usuarios\Controllers\PersonaController@procesar');
-Route::get('/service/buscar/{key}', '\Idrd\Usuarios\Controllers\PersonaController@buscar');
+Route::get('/personas/service/buscar/{key}', '\Idrd\Usuarios\Controllers\PersonaController@buscar');
+
 
 /*
 |--------------------------------------------------------------------------

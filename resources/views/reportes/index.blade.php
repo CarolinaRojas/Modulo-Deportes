@@ -23,7 +23,7 @@
         <div class="content">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                  <h3 class="panel-title">Reportes Módulo de deportes</h3>
+                  <h3 class="panel-title">Reportes Módulo de Deportes</h3>
                 </div>
                 <div class="panel-body">
                     <div tabindex="-1" id="mensaje-incorrecto-reporte" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
