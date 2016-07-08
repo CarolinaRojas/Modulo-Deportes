@@ -174,7 +174,7 @@ class DeportistaController extends Controller{
                         
             if($deportista->save()){
                 $pivotPersona = Persona::find($request->Id_Persona);
-                $pivotPersona->tipo()->attach(47);
+                $pivotPersona->tipo()->attach(49);
                 $pivotPersona->save();
                 
                 $historialEtapa = new HistorialEtapaModel;
