@@ -134,7 +134,6 @@ class DeportistaController extends Controller{
         if ($_SESSION['Usuario'] == '')
             return redirect()->away('http://www.idrd.gov.co/SIM_Prueba/Presentacion/');
 
-        //dd($_SESSION['Usuario']['Persona']->Primer_Nombre);
 
         $deportista = $_SESSION['Usuario']['Persona'];
 
@@ -337,6 +336,13 @@ class DeportistaController extends Controller{
                 return response()->json(["Mensaje" => "No se ha actualizado correctamente el estímulo, por favor inténtelo más tarde."]);
             }
         }
+    }
+
+    public function logout()
+    {
+        $_SESSION['Usuario'] = '';
+        Session::set('Usuario', ''); 
+        return redirect()->to('/');
     }
 }
 

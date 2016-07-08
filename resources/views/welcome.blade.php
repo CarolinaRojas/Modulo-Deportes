@@ -7,7 +7,10 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                  <center><h2>Funcionario....</h2></center>
+                    <center>
+                        <h2> {{$deportista->Primer_Nombre}} {{$deportista->Segundo_Nombre}} {{$deportista->Primer_Apellido}} {{$deportista->Segundo_Apellido}}
+                        </h2>
+                    </center>                  
                 </div>
             </div>
         </div>		    

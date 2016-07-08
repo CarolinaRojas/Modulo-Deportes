@@ -43,7 +43,7 @@ Route::get('/personas/service/buscar/{key}', '\Idrd\Usuarios\Controllers\Persona
 |
 */
 Route::any('/', 'DeportistaController@show');
-//Route::any('/logout', 'Planilla\PlanillasController@logout');
+Route::any('/logout', 'DeportistaController@logout');
 
 Route::group(['middleware' => ['web']], function () {    
     

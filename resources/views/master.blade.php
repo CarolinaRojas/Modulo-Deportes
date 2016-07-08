@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
   <head>
       <meta charset="utf-8">
@@ -36,7 +37,6 @@
   </head>
 
   <body>
-      
        <!-- Menu Módulo -->
        <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -51,12 +51,14 @@
           <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Administración<span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Administración <span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="themes">
                   
                   <li ><a href="#" style="color:#1995dc">GESTIÓN USUARIO</a></li>
                   <li class="divider"></li>
-                  <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( 'personas') }}">Gestión de personas</a></li>
+                  @if($_SESSION['Usuario'][1] == 1)                  
+                    <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( 'personas') }}">Gestión de personas</a></li>
+                  @endif
                   
                 </ul>
               </li>
@@ -66,8 +68,12 @@
                 <ul class="dropdown-menu" aria-labelledby="download">
                   <li><a href="#" style="color:#1995dc">GESTIÓN DEPORTIVA</a></li>
                   <li class="divider"></li>
-                  <li><a href="{{URL::to('DatosDeportista')}}">Gestión de deportistas</a></li>
-                  <li><a href="{{URL::to('reportes')}}"> <!--style="color:#1995dc"--> Reportes de deportistas</a></li>                  
+                  @if($_SESSION['Usuario'][2] == 1)
+                    <li><a href="{{URL::to('DatosDeportista')}}">Gestión de deportistas</a></li>
+                  @endif
+                  @if($_SESSION['Usuario'][3] == 1)
+                    <li><a href="{{URL::to('reportes')}}"> <!--style="color:#1995dc"--> Reportes de deportistas</a></li>                  
+                  @endif
                 </ul>
               </li>
             </ul>
@@ -81,7 +87,7 @@
 
             <ul class="nav navbar-nav navbar-right">
               <li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>
-              <li><a href="#" target="_blank">Cerrar Sesión</a></li>
+              <li><a href="logout">Cerrar Sesión</a></li>
             </ul>
 
           </div>
