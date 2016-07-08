@@ -21,6 +21,15 @@
           <script src="{{ asset('public/Js/jquery-ui.js') }}"></script>
           <script src="{{ asset('public/Js/bootstrap.min.js') }}"></script>
           <script src="{{ asset('public/Js/main.js') }}"></script>
+
+          <meta name="csrf-token" content="{{ csrf_token() }}" />
+          <script type="text/javascript">
+              $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+          </script>
       @show
 
       <title>Módulo De Deportes</title>

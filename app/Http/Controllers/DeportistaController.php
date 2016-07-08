@@ -37,8 +37,20 @@ use App\Http\Requests\EstimuloRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 
+use Idrd\Usuarios\Repo\PersonaInterface;
+use Session;
 
 class DeportistaController extends Controller{
+
+    protected $Usuario;
+    protected $repositorio_personas;
+    public function __construct(PersonaInterface $repositorio_personas)
+    {
+        if (isset($_SESSION['Usuario']))
+            $this->Usuario = $_SESSION['Usuario'];
+            $this->repositorio_personas = $repositorio_personas;
+    }
+
     
     public function index(){
         $eps = EpsModel::all();
@@ -102,8 +114,34 @@ class DeportistaController extends Controller{
         return $entrenador;
     }
 
-    public function show() {
-        return response()->json(["Mensaje" => 'SHOW']);
+    public function show(Request $request) {
+
+        if ($request->has('vector_modulo'))
+        {   
+            $vector = urldecode($request->input('vector_modulo'));
+            $user_array = unserialize($vector);
+
+        
+            $_SESSION['Usuario'] = $user_array;
+            $persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
+            $_SESSION['Usuario']['Persona'] = $persona;
+            $this->Usuario = $_SESSION['Usuario'];
+        } else {
+            if(!isset($_SESSION['Usuario']))
+                $_SESSION['Usuario'] = '';
+        }
+        
+        if ($_SESSION['Usuario'] == '')
+            return redirect()->away('http://www.idrd.gov.co/SIM_Prueba/Presentacion/');
+
+        //dd($_SESSION['Usuario']['Persona']->Primer_Nombre);
+
+        $deportista = $_SESSION['Usuario']['Persona'];
+
+        return view('welcome' 
+               , ['deportista' => $deportista])
+                ->with(compact('selected'));
+        
     }
     
     public function store(RegistroDeportistaRequest $request) {       
@@ -165,8 +203,6 @@ class DeportistaController extends Controller{
     }
     
     public function update(RegistroDeportistaRequest $request, $id) {     
-        //return response()->json(["Mensaje" => 'DESTROY']);
-      //  dd('hola');
         if ($request->ajax()){
             $deportista = DeportistaModel::find($id);
             

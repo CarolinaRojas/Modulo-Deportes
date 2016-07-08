@@ -117,6 +117,7 @@ function SeleccionEntrenador(id){
 
 function RegistroDeportiva(){
     $('#EnviarDeportiva').on('click', function () {
+        alert('deportiva');
         var Id_Persona = $("#Id_Persona").val();
         var Id_Deportista = $("#Id_Deportista").val();
         var Club_Deportivo = $("#Club_Deportivo").val();
@@ -147,7 +148,7 @@ function RegistroDeportiva(){
         var token = $("#token").val();
                 
         if(Id_Deportista){
-            ProcesoDeportiva ('PUT', 'EditDeportiva/'+Id_Deportista, datos, token);
+            ProcesoDeportiva ('POST', 'EditDeportiva/'+Id_Deportista, datos, token);
         }     
     });
 }
@@ -168,7 +169,7 @@ function ProcesoDeportiva (tipo, url, datos, token){
             $("#Botonera").append(botonera);
             $('#modal_form_deportiva').modal('hide');
         },
-        error: function (xhr) {          
+        error: function (xhr) {    
             $("#mensajeIncorrectoDos").empty();
             if(xhr.responseJSON.Club_Deportivo){ ValidacionDeportiva('Club_Deportivo', xhr.responseJSON.Club_Deportivo);}else{Normal('Club_Deportivo');}
             if(xhr.responseJSON.Talla_Camisa){ ValidacionDeportiva('Talla_Camisa', xhr.responseJSON.Talla_Camisa);}else{Normal('Talla_Camisa');}

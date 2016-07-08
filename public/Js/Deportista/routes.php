@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -42,8 +42,6 @@ Route::get('/personas/service/buscar/{key}', '\Idrd\Usuarios\Controllers\Persona
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-Route::any('/', 'DeportistaController@show');
-//Route::any('/logout', 'Planilla\PlanillasController@logout');
 
 Route::group(['middleware' => ['web']], function () {    
     
@@ -57,9 +55,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('HEtapa/{id}','DeportistaController@HistorialEtapa');    
     Route::post('AddImagen/{id}','DeportistaController@AgregarImagen'); 
     Route::resource('AddDatos', 'DeportistaController');
-    Route::post('EditDatos/{id}', 'DeportistaController@update');
+    Route::resource('EditDatos/{id}', 'DeportistaController@update');
     Route::resource('AddDeportiva', 'DeportistaController');    
-    Route::post('EditDeportiva/{id}', 'DeportistaController@storeDeportiva');    
+    Route::resource('EditDeportiva', 'DeportistaController@storeDeportiva');    
     Route::resource('AddEstimulo','DeportistaController@AgregarEstimulo');
     
     /***************RUTAS PARA REPORTES******************/
