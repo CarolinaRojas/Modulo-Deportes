@@ -232,7 +232,7 @@
           </p> 
         </div>
           <div class="modal-body">
-              <h4 class="modal-title text-uppercase">Datos Deportivos:</h4>
+              <h4 class="modal-title text-uppercase">Apoyo y servicios:</h4>
               <div class="row">                  
                     <div class="col-md-4 text-center"></div>
                     <div class="col-md-4 text-center">

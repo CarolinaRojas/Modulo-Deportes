@@ -221,7 +221,7 @@ function RegistroDeportista(){
         var Id_Persona = $("#Id_Persona").val();
         var Id_Deportista = $("#Id_Deportista").val();
         var Eps = $('#Eps').val();
-        var Departamento = $('#Departamento').val();
+        
         var Localidad = $('#Localidad').val();
         var Barrio = $('#Barrio').val();
         var Direccion_Residencia = $('#Direccion_Residencia').val();
@@ -247,7 +247,7 @@ function RegistroDeportista(){
         
         var datos = {
                     Eps: Eps,
-                    Departamento: Departamento,
+                    
                     Localidad: Localidad,
                     Barrio: Barrio,
                     Direccion_Residencia: Direccion_Residencia,
@@ -279,7 +279,7 @@ function RegistroDeportista(){
         var token = $("#token").val();
                
         if(Id_Deportista){
-            Proceso('PUT', 'AddDatos/'+Id_Deportista, datos, token);
+            Proceso('POST', 'EditDatos/'+ Id_Deportista, datos, token);
         }else{            
             Proceso('POST', 'AddDatos', datos, token);
         }        

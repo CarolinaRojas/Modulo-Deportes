@@ -164,7 +164,9 @@ class DeportistaController extends Controller{
         return response()->json(["Mensaje" => 'EDIT']);
     }
     
-    public function update(RegistroDeportistaRequest $request, $id) {        
+    public function update(RegistroDeportistaRequest $request, $id) {     
+        //return response()->json(["Mensaje" => 'DESTROY']);
+      //  dd('hola');
         if ($request->ajax()){
             $deportista = DeportistaModel::find($id);
             
@@ -259,7 +261,10 @@ class DeportistaController extends Controller{
         if ($request->ajax()) {
             $etapas = EtapaModel::getEtapasJSON($id);            
         }
-        return response()->json($etapas);
+
+        //return response()->json($etapas);
+        return($etapas);
+
     }
         
     public function AgregarImagen(Request $request, $idPersona){

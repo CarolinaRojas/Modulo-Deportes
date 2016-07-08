@@ -169,7 +169,7 @@ class ReportesController extends Controller
                         'EDAD' => $edad_decimal,                        
                         'PAÍS' => $pais,
                         'TIPO DE DOCUMENTO' => $tipo_documento,
-                        'N° DE DOCUMENTO' => $num_documento,
+                        'N° DE DOCUMENTO' =>  (int)$num_documento,
                         'SITUACIÓN MILITAR' => $sit_militar,
                         'BANCO' => $banco,
                         'TIPO DE CUENTA' => $tipo_cuenta,
@@ -194,23 +194,24 @@ class ReportesController extends Controller
                            ];
                    $i++;                           
                }    
+               $sheet->freezeFirstRow();
+               $sheet->setAllBorders('thin');
+               $sheet->setHeight(1, 50); 
+               
                $sheet->setColumnFormat(array(
+                   'L' => '0,0',
                    'y' => '$0,0',
                    'Z' => '$0,0',
-                   'A' => '$0,0',
                    'AA' => '$0,0',
                    'AB' => '$0,0',
                    'AC' => '$0,0',
                    'AD' => '$0,0',
                    'AE' => '$0,0',
                    'AF' => '$0,0',
+                   'AG' => '$0,0',                   
                 ));
                
-               $sheet->freezeFirstRow();
-               $sheet->setAllBorders('thin');
-               $sheet->setHeight(1, 50); 
-               
-                $sheet->cells('A1:AF1', function($cells) {
+                $sheet->cells('A1:AG1', function($cells) {
                     
                     $cells->setBackground('#CCFFFF');
                     $cells->setFont(array(
@@ -225,6 +226,9 @@ class ReportesController extends Controller
                     ));
                     $cells->setAlignment('center');
                 }); 
+                $sheet->cells('AG1:AG1', function($cells) {
+                    $cells->setBackground('#FF0000');
+               });
                 $sheet->fromArray($per);
            });
         })->download('xls');              
@@ -335,7 +339,7 @@ class ReportesController extends Controller
                         'EDAD' => $edad_decimal,
                         'PAÍS' => $pais,
                         'TIPO DE DOCUMENTO' => $tipo_documento,
-                        'N° DE DOCUMENTO' => $num_documento,
+                        'N° DE DOCUMENTO' => (int)$num_documento,
                         'SITUACIÓN MILITAR' => $sit_militar,
                         'BANCO' => $banco,
                         'TIPO DE CUENTA' => $tipo_cuenta,
@@ -358,38 +362,42 @@ class ReportesController extends Controller
                         'MONITORIAS'=> $monitoria,
                         'TOTAL'=> $total,
                            ];
-                 $sheet->setColumnFormat(array(
-                   'y' => '$0,0',
-                   'Z' => '$0,0',
-                   'A' => '$0,0',
-                   'AA' => '$0,0',
-                   'AB' => '$0,0',
-                   'AC' => '$0,0',
-                   'AD' => '$0,0',
-                   'AE' => '$0,0',
-                   'AF' => '$0,0',
-                   'AG' => '$0,0',
-                ));
+                   
+                    $sheet->freezeFirstRow();
+                    $sheet->setAllBorders('thin');
+                    $sheet->setHeight(1, 50); 
+                    $sheet->setColumnFormat(array(
+                        'L' => '0,0',
+                        'y' => '$0,0',
+                        'Z' => '$0,0',
+                        'A' => '$0,0',
+                        'AA' => '$0,0',
+                        'AB' => '$0,0',
+                        'AC' => '$0,0',
+                        'AD' => '$0,0',
+                        'AE' => '$0,0',
+                        'AF' => '$0,0',
+                        'AG' => '$0,0',
+                     ));
                
-               $sheet->freezeFirstRow();
-               $sheet->setAllBorders('thin');
-               $sheet->setHeight(1, 50); 
-               
-                $sheet->cells('A1:AF1', function($cells) {
-                    
-                    $cells->setBackground('#CCFFFF');
-                    $cells->setFont(array(
-                        'family'     => 'Arial',
-                        'size'       => '14',
-                        'bold'       =>  true
-                    ));
-                    $cells->setBorder(array(
-                        'top'   => array(
-                            'style' => 'solid'
-                        ),
-                    ));
-                    $cells->setAlignment('center');
-                }); 
+                    $sheet->cells('A1:AG1', function($cells) {
+
+                         $cells->setBackground('#CCFFFF');
+                         $cells->setFont(array(
+                             'family'     => 'Arial',
+                             'size'       => '14',
+                             'bold'       =>  true
+                         ));
+                         $cells->setBorder(array(
+                             'top'   => array(
+                                 'style' => 'solid'
+                             ),
+                         ));
+                         $cells->setAlignment('center');
+                     }); 
+                     $sheet->cells('AG1:AG1', function($cells) {
+                         $cells->setBackground('#FF0000');
+                    });
                 $sheet->fromArray($per);
            });
         })->download('xls');

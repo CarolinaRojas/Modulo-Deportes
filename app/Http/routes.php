@@ -55,6 +55,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('HEtapa/{id}','DeportistaController@HistorialEtapa');    
     Route::post('AddImagen/{id}','DeportistaController@AgregarImagen'); 
     Route::resource('AddDatos', 'DeportistaController');
+    Route::resource('EditDatos/{id}', 'DeportistaController@update');
     Route::resource('AddDeportiva', 'DeportistaController');    
     Route::resource('EditDeportiva', 'DeportistaController@storeDeportiva');    
     Route::resource('AddEstimulo','DeportistaController@AgregarEstimulo');

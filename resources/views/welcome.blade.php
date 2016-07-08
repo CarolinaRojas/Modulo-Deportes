@@ -7,7 +7,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                  <center><h2>Esteven Hernandez Rios</h2></center>
+                  <center><h2>Funcionario....</h2></center>
                 </div>
             </div>
         </div>		    
