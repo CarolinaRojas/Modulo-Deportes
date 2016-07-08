@@ -117,6 +117,7 @@ function SeleccionEntrenador(id){
 
 function RegistroDeportiva(){
     $('#EnviarDeportiva').on('click', function () {
+        alert('deportiva');
         var Id_Persona = $("#Id_Persona").val();
         var Id_Deportista = $("#Id_Deportista").val();
         var Club_Deportivo = $("#Club_Deportivo").val();
