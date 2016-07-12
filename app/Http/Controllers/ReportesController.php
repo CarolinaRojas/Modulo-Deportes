@@ -73,7 +73,7 @@ class ReportesController extends Controller
                                      'personas.deportista.deporte',
                                      'personas.deportista.modalidad',
                                      'personas.deportista.etapa'
-                       )->find(47);            
+                       )->find(49);            
              
                $i = 0;
                foreach($persona->personas as $p){                  

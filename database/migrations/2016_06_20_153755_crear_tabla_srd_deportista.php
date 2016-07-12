@@ -23,11 +23,11 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_GRUPO_SANGUINEO')->unsigned();                        
             $table->integer('FK_I_ID_BANCO')->unsigned();
             $table->integer('FK_I_ID_TIPO_CUENTA')->unsigned();
-            $table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
+            //$table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
             $table->integer('FK_I_ID_AGRUPACION')->unsigned();
             $table->integer('FK_I_ID_DEPORTE')->unsigned();
             $table->integer('FK_I_ID_MODALIDAD')->unsigned();
-            $table->integer('FK_I_ID_ETAPA')->unsigned();
+       //     $table->integer('FK_I_ID_ETAPA')->unsigned();
             $table->integer('FK_I_ID_CLUB_DEPORTIVO')->unsigned()->nullable();
             $table->integer('FK_I_ID_TALLA_CAMISA')->unsigned()->nullable();
             $table->integer('FK_I_ID_TALLA_ZAPATOS')->unsigned()->nullable();
@@ -52,8 +52,8 @@ class CrearTablaSrdDeportista extends Migration
             $table->foreign('FK_I_ID_ESTRATO')->references('PK_I_ID_ESTRATO')->on('TB_SRD_ESTRATO');
             $table->foreign('FK_I_ID_AGRUPACION')->references('PK_I_ID_AGRUPACION')->on('TB_SRD_AGRUPACION');
             $table->foreign('FK_I_ID_MODALIDAD')->references('PK_I_ID_MODALIDAD')->on('TB_SRD_MODALIDAD');
-            $table->foreign('FK_I_ID_ETAPA')->references('PK_I_ID_ETAPA')->on('TB_SRD_ETAPA');
-            $table->foreign('FK_I_ID_TIPO_DEPORTISTA')->references('PK_I_ID_TIPO_DEPORTISTA')->on('TB_SRD_TIPO_DEPORTISTA');
+            //$table->foreign('FK_I_ID_ETAPA')->references('PK_I_ID_ETAPA')->on('TB_SRD_ETAPA');
+            //$table->foreign('FK_I_ID_TIPO_DEPORTISTA')->references('PK_I_ID_TIPO_DEPORTISTA')->on('TB_SRD_TIPO_DEPORTISTA');
             $table->foreign('FK_I_ID_BANCO')->references('PK_I_ID_BANCO')->on('TB_SRD_BANCO');     
             $table->foreign('FK_I_ID_SITUACION_MILITAR')->references('PK_I_ID_SITUACION_MILITAR')->on('TB_SRD_SITUACION_MILITAR');
             $table->foreign('FK_I_ID_CLUB_DEPORTIVO')->references('PK_I_ID_CLUB_DEPORTIVO')->on('TB_SRD_CLUB_DEPORTIVO');
@@ -77,7 +77,7 @@ class CrearTablaSrdDeportista extends Migration
             $table->dropForeign(['FK_I_ID_ESTRATO']);
             $table->dropForeign(['FK_I_ID_AGRUPACION']);
             $table->dropForeign(['FK_I_ID_MODALIDAD']);
-            $table->dropForeign(['FK_I_ID_ETAPA']);
+         //   $table->dropForeign(['FK_I_ID_ETAPA']);
             $table->dropForeign(['FK_I_ID_TIPO_DEPORTISTA']);
             $table->dropForeign(['FK_I_ID_BANCO']);
             $table->dropForeign(['FK_I_ID_SITUACION_MILITAR']);

@@ -14,16 +14,15 @@ class CrearRelacionesSrd extends Migration
     {
          Schema::table('TB_SRD_ETAPA', function(Blueprint $table){       
           
-            $table->foreign('FK_I_ID_TIPO_DEPORTISTA')
-                    ->references('PK_I_ID_TIPO_DEPORTISTA')
-                    ->on('TB_SRD_TIPO_DEPORTISTA');
+            $table->foreign('FK_I_ID_TIPO_ETAPA')
+                    ->references('PK_I_ID_TIPO_ETAPA')
+                    ->on('TB_SRD_TIPO_ETAPA');
         });
         
         
         Schema::table('TB_SRD_DEPORTISTA', function(Blueprint $table){       
             $table->foreign('FK_I_ID_TIPO_CUENTA')->references('PK_I_ID_TIPO_CUENTA')->on('TB_SRD_TIPO_CUENTA');            
         });
-        
     }
 
     /**

@@ -16,13 +16,14 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadoCivilTablaSeeder::class);
         $this->call(EstratoTablaSeeder::class);                   
         $this->call(TipoDeportistaTablaSeeder::class);       
-        $this->call(DeporteTablaSeeder::class);       
-        $this->call(EtapaTablaSeeder::class);       
+        $this->call(DeporteTablaSeeder::class);     
         $this->call(ModalidadTablaSeeder::class);      
         $this->call(SituacionMilitarTablaSeeder::class);
         $this->call(TallaTablaSeeder::class);
         $this->call(ClubDeportivoSeeder::class);
         $this->call(TipoEstimuloTablaSeeder::class);
         $this->call(TipoCuentaTablaSeeder::class);
+        $this->call(TipoEtapaTablaSeeder::class);
+        $this->call(EtapaTablaSeeder::class);       
     }
 }

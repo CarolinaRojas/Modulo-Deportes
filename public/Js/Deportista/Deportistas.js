@@ -29,30 +29,29 @@ $(function(e){
               $.each(data, function(i, e){                                          
                      $.get("deportista/" + e['Id_Persona'] + "", function (response) {
                          html += '<li class="list-group-item" style="border:0">'+
-                            '<br>'+                                                     
-                                  '<div class="row">'+
-                                      '<div class="col-xs-12">'+
-                                          '<div class="row">'+
-                                              '<div class="col-xs-6">'+
-                                                        '<h4 class="list-group-item-heading">'+
-                                                            ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
-                                                        '<p class="list-group-item-text">'+
-                                                        '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
-                                              '</div>';
+                                    '<br>'+                                                     
+                                      '<div class="row">'+
+                                          '<h4 class="list-group-item-heading">'+
+                                              ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
+                                          '<p class="list-group-item-text">'+
+                                          '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
+                                      '</dvi><br><br><br>';
                         if(response.deportista){
-                           html +=  '<div class="col-xs-6 ">'+
-                                       '<div class="pull-right btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
-                                       '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary">Información Basica</button>'+
-                                       '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default">Información Deportiva</button>'+
-                                       '<button type="button" data-role="ApoyoServicios" data-rel="'+e['Id_Persona']+'" class="btn btn-primary">Apoyos y servicios</button>'+
-                                    '</div>';
+                                   html +=  '<div class="row">'+
+                                                '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
+                                                     '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
+                                                     '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default btn-sm">Información Deportiva</button>'+
+                                                     '<button type="button" data-role="ApoyoServicios" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>'+
+                                                '</div>'+
+                                            '</div>';
                         }else{
-                            html +=  '<div class="col-xs-6 ">'+
-                                       '<div class="pull-right btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
-                                       '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary">Información Basica</button>'+
-                                    '</div>';
+                            html +=   '<div class="row">'+
+                                          '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
+                                              '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
+                                          '</div>'+
+                                      '</div>';
                         }
-                        html += '</div> </div> </div> </div> </li>';
+                        html += /*'</div>'+'</div>'+'</div>'+'</div>'+*/'</li>';
                         
                         $('#personas').html(html);
                         $('#paginador').fadeOut();

@@ -114,11 +114,26 @@ class DeportistaController extends Controller{
         return $entrenador;
     }
 
-    public function show(Request $request) {
+      public function show(Request $request) {
 
-        if ($request->has('vector_modulo'))
-        {   
-            $vector = urldecode($request->input('vector_modulo'));
+//        if ($request->has('vector_modulo'))
+//        {   
+//            $vector = urldecode($request->input('vector_modulo'));
+//            $user_array = unserialize($vector);
+//
+//        
+//            $_SESSION['Usuario'] = $user_array;
+//            $persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
+//            $_SESSION['Usuario']['Persona'] = $persona;
+//            $this->Usuario = $_SESSION['Usuario'];
+//        } else {
+//            if(!isset($_SESSION['Usuario']))
+//                $_SESSION['Usuario'] = '';
+//        }
+        
+        //////////////////////////////////////
+            $vector = urldecode("a%3A4%3A%7Bi%3A0%3Bs%3A4%3A%221307%22%3Bi%3A1%3Bs%3A1%3A%221%22%3Bi%3A2%3Bs%3A1%3A%221%22%3Bi%3A3%3Bs%3A1%3A%221%22%3B%7D");
+            
             $user_array = unserialize($vector);
 
         
@@ -126,10 +141,7 @@ class DeportistaController extends Controller{
             $persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
             $_SESSION['Usuario']['Persona'] = $persona;
             $this->Usuario = $_SESSION['Usuario'];
-        } else {
-            if(!isset($_SESSION['Usuario']))
-                $_SESSION['Usuario'] = '';
-        }
+      ///////////////////////
         
         if ($_SESSION['Usuario'] == '')
             return redirect()->away('http://www.idrd.gov.co/SIM_Prueba/Presentacion/');
