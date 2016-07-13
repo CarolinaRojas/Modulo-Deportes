@@ -26,6 +26,7 @@ class EtapaTablaSeeder extends Seeder
             ['V_NOMBRE_ETAPA' => 'ÉLITE NACIONAL VII', 'V_POR_ESTIMULO'=>'2.5', 'FK_I_ID_TIPO_ETAPA' => 1],
             ['V_NOMBRE_ETAPA' => 'ÉLITE NACIONAL VIII', 'V_POR_ESTIMULO'=>'3.0', 'FK_I_ID_TIPO_ETAPA' => 1],
             ['V_NOMBRE_ETAPA' => 'RETIRADO', 'V_POR_ESTIMULO'=>'0', 'FK_I_ID_TIPO_ETAPA' => 1],
+            ['V_NOMBRE_ETAPA' => 'NO APLICA', 'V_POR_ESTIMULO'=>'0', 'FK_I_ID_TIPO_ETAPA' => 1],
             
             /************CONVENCIONAL INTERNACIONAL************/            
             ['V_NOMBRE_ETAPA' => 'ÉLITE INTERNACIONAL I', 'V_POR_ESTIMULO'=>'0.5', 'FK_I_ID_TIPO_ETAPA' => 2],
@@ -36,6 +37,7 @@ class EtapaTablaSeeder extends Seeder
             ['V_NOMBRE_ETAPA' => 'ÉLITE INTERNACIONAL VI', 'V_POR_ESTIMULO'=>'2.0', 'FK_I_ID_TIPO_ETAPA' => 2],
             ['V_NOMBRE_ETAPA' => 'ÉLITE INTERNACIONAL VII', 'V_POR_ESTIMULO'=>'3.0', 'FK_I_ID_TIPO_ETAPA' => 2],
             ['V_NOMBRE_ETAPA' => 'RETIRADO', 'V_POR_ESTIMULO'=>'0', 'FK_I_ID_TIPO_ETAPA' => 2],
+            ['V_NOMBRE_ETAPA' => 'NO APLICA', 'V_POR_ESTIMULO'=>'0', 'FK_I_ID_TIPO_ETAPA' => 2],
             
             /*****PARALIMPICO NACIONAL*******/            
             ['V_NOMBRE_ETAPA' => 'ÉLITE PARANACIONAL I', 'V_POR_ESTIMULO'=>'1.0', 'FK_I_ID_TIPO_ETAPA' => 3],
@@ -45,6 +47,7 @@ class EtapaTablaSeeder extends Seeder
             ['V_NOMBRE_ETAPA' => 'ÉLITE PARANACIONAL V', 'V_POR_ESTIMULO'=>'2.5', 'FK_I_ID_TIPO_ETAPA' => 3],
             ['V_NOMBRE_ETAPA' => 'ÉLITE PARANACIONAL VI', 'V_POR_ESTIMULO'=>'3.0', 'FK_I_ID_TIPO_ETAPA' => 3],
             ['V_NOMBRE_ETAPA' => 'RETIRADO', 'V_POR_ESTIMULO'=>'0', 'FK_I_ID_TIPO_ETAPA' => 3],
+            ['V_NOMBRE_ETAPA' => 'NO APLICA', 'V_POR_ESTIMULO'=>'0', 'FK_I_ID_TIPO_ETAPA' => 3],
             
             /*****PARALIMPICO INTERNACIONAL*******/            
             ['V_NOMBRE_ETAPA' => 'ÉLITE INTERNACIONAL I', 'V_POR_ESTIMULO'=>'0.5', 'FK_I_ID_TIPO_ETAPA' => 4],
@@ -53,6 +56,7 @@ class EtapaTablaSeeder extends Seeder
             ['V_NOMBRE_ETAPA' => 'ÉLITE INTERNACIONAL IV', 'V_POR_ESTIMULO'=>'2.0', 'FK_I_ID_TIPO_ETAPA' => 4],
             ['V_NOMBRE_ETAPA' => 'ÉLITE INTERNACIONAL V', 'V_POR_ESTIMULO'=>'3.0', 'FK_I_ID_TIPO_ETAPA' => 4],
             ['V_NOMBRE_ETAPA' => 'RETIRADO', 'V_POR_ESTIMULO'=>'0', 'FK_I_ID_TIPO_ETAPA' => 4],
+            ['V_NOMBRE_ETAPA' => 'NO APLICA', 'V_POR_ESTIMULO'=>'0', 'FK_I_ID_TIPO_ETAPA' => 4],
     
         ]);
     }

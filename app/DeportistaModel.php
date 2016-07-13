@@ -16,8 +16,7 @@ class DeportistaModel extends Model
         'FK_I_ID_GRUPO',
         'FK_I_ID_AGRUPACION',
         'FK_I_ID_DEPORTE',
-        'FK_I_ID_MODALIDAD',
-        'FK_I_ID_ETAPA',
+        'FK_I_ID_MODALIDAD',        
         'FK_I_ID_TIPO_DEPORTISTA',
         'FK_I_ID_BANCO',
         'FK_I_ID_DEPARTAMENTO',
@@ -47,7 +46,7 @@ class DeportistaModel extends Model
         return $this->belongsToMany('App\EntrenadorModel', 'tb_srd_deportista_entrenador', 'FK_I_ID_DEPORTISTA', 'FK_I_ID_ENTRENADOR')->withTimestamps();
     }    
     
-    public function historial() {
+    public function historialEtapas() {
         return $this->belongsToMany('App\EtapaModel', 'tb_srd_historial_etapa', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps()->withPivot('I_SMMLV');
     }
     
@@ -68,10 +67,11 @@ class DeportistaModel extends Model
         return $this->belongsTo('App\ModalidadModel', 'FK_I_ID_MODALIDAD');
     }
     
-    public function etapa(){
+    
+    /*public function etapa(){
         return $this->belongsTo('App\EtapaModel', 'FK_I_ID_ETAPA');
     }
-    
+    */
     public function departamento(){        
         return $this->belongsTo('App\DepartamentoModel', 'FK_I_ID_DEPARTAMENTO');
     }

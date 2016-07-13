@@ -162,15 +162,29 @@
                 <option value="{{ $tipoDeportistas['PK_I_ID_TIPO_DEPORTISTA'] }}">{{ $tipoDeportistas['V_NOMBRE_TIPO_DEPORTISTA'] }}</option>
         @endforeach
     </select>
-  </div>
+  </div>    
+</div>
+<br>
+<div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right" id="EtapaL">Etapa:</label>
+        <label for="inputEmail" class="control-label pull-right" id="EtapaNacionalL">Etapa Nacional:</label>
     </div>
     <div class="col-md-4">
-        <select name="Etapa" id="Etapa" class="form-control">
+        <select name="EtapaNacional" id="EtapaNacional" class="form-control">
             <option value="">Seleccionar</option>
-            @foreach($etapa as $etapas)
-                <option value="{{ $etapas['PK_I_ID_ETAPA'] }}">{{ $etapas['V_NOMBRE_ETAPA'] }}</option>
+            @foreach($etapaNacional as $etapaNacionales)
+                <option value="{{ $etapaNacionales['PK_I_ID_ETAPA'] }}">{{ $etapaNacionales['V_NOMBRE_ETAPA'] }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label pull-right" id="EtapaInternacionalL">Etapa Internacional:</label>
+    </div>
+    <div class="col-md-4">
+        <select name="EtapaInternacional" id="EtapaInternacional" class="form-control">
+            <option value="">Seleccionar</option>
+            @foreach($etapaInternacional as $etapaInternacionales)
+                <option value="{{ $etapaInternacionales['PK_I_ID_ETAPA'] }}">{{ $etapaInternacionales['V_NOMBRE_ETAPA'] }}</option>
             @endforeach
         </select>
     </div>

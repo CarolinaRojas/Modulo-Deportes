@@ -53,7 +53,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('Dentrenadores/{id}','DeportistaController@deportistaEntrenadores');    
     Route::get('getDeportes/{id}', 'DeportistaController@getDeporte');
     Route::get('getModalidades/{id}', 'DeportistaController@getModalidad');
-    Route::get('getEtapas/{id}', 'DeportistaController@getEtapas');    
+    
+    
+    Route::get('getEtapasNac/{id_tipo_etapa_nac}', 'DeportistaController@getEtapasNac');    
+    Route::get('getEtapasInter/{id_tipo_etapa_inter}', 'DeportistaController@getEtapasInter');    
+    
     Route::get('HEtapa/{id}','DeportistaController@HistorialEtapa');    
     Route::post('AddImagen/{id}','DeportistaController@AgregarImagen'); 
     Route::resource('AddDatos', 'DeportistaController');

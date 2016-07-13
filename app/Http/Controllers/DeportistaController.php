@@ -30,6 +30,10 @@ use App\TipoEstimuloModel;
 use App\DeportistaEstimuloModel;
 use App\TipoCuentaModel;
 
+use App\TipoEtapaModel;
+
+
+
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
 use App\Http\Requests\EstimuloRequest;
@@ -44,13 +48,12 @@ class DeportistaController extends Controller{
 
     protected $Usuario;
     protected $repositorio_personas;
-    public function __construct(PersonaInterface $repositorio_personas)
-    {
+    
+    public function __construct(PersonaInterface $repositorio_personas){
         if (isset($_SESSION['Usuario']))
             $this->Usuario = $_SESSION['Usuario'];
             $this->repositorio_personas = $repositorio_personas;
     }
-
     
     public function index(){
         $eps = EpsModel::all();
@@ -58,7 +61,8 @@ class DeportistaController extends Controller{
         $agrupacion = AgrupacionModel::all();
         $deporte = DeporteModel::all();
         $modalidad = ModalidadModel::all();
-        $etapa = EtapaModel::all();
+        $etapaNacional = array();
+        $etapaInternacional = array();
         $estadoCivil = EstadoCivilModel::all();
         $pais = Pais::all();
         $estrato = EstratoModel::all();
@@ -87,7 +91,8 @@ class DeportistaController extends Controller{
                 ->with(compact('agrupacion'))
                 ->with(compact('deporte'))
                 ->with(compact('modalidad'))
-                ->with(compact('etapa'))
+                ->with(compact('etapaNacional'))
+                ->with(compact('etapaInternacional'))
                 ->with(compact('estadoCivil'))
                 ->with(compact('pais'))
                 ->with(compact('ciudad'))
@@ -114,7 +119,7 @@ class DeportistaController extends Controller{
         return $entrenador;
     }
 
-      public function show(Request $request) {
+    public function show(Request $request) {
 
 //        if ($request->has('vector_modulo'))
 //        {   
@@ -167,7 +172,8 @@ class DeportistaController extends Controller{
             $deportista->FK_I_ID_AGRUPACION = $request->Agrupacion;            
             $deportista->FK_I_ID_DEPORTE = $request->Deporte;
             $deportista->FK_I_ID_MODALIDAD = $request->Modalidad;
-            $deportista->FK_I_ID_ETAPA = $request->Etapa;
+            $deportista->FK_I_ID_ETAPA_NACIONAL = $request->EtapaNacional;
+            $deportista->FK_I_ID_ETAPA_INTERNACIONAL = $request->EtapaInternacional;
             $deportista->FK_I_ID_TIPO_DEPORTISTA = $request->Tipo_Deportista;
             $deportista->FK_I_ID_BANCO = $request->Banco;
             $deportista->FK_I_ID_TIPO_CUENTA = $request->Tipo_Cuenta;
@@ -189,16 +195,27 @@ class DeportistaController extends Controller{
                 $pivotPersona->tipo()->attach(49);
                 $pivotPersona->save();
                 
-                $historialEtapa = new HistorialEtapaModel;
-                $historialEtapa->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
-                $historialEtapa->FK_I_ID_ETAPA = $deportista->FK_I_ID_ETAPA;
-                $historialEtapa->I_SMMLV = $request->SMMLV;                 
-                if($historialEtapa->save()){      
-                    return response()->json(["Mensaje" => "Deportista ingresado correctamente."]);
-                }else{
-                    
-                    return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);
+                if($request->EtapaNacional){
+                    $historialEtapaNacional = new HistorialEtapaModel;
+                    $historialEtapaNacional->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
+                    $historialEtapaNacional->FK_I_ID_ETAPA = $request->EtapaNacional;
+                    $historialEtapaNacional->I_SMMLV = $request->SMMLV;      
+                    if(!$historialEtapaNacional->save()){      
+                        return response()->json(["Mensaje" => "La etapa nacional del deportista no se ha ingresado correctamente, intentelo más tarde."]);
+                    }
                 }
+                if($request->EtapaInternacional){
+                    $historialEtapaInternacional  = new HistorialEtapaModel;
+                    $historialEtapaInternacional->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
+                    $historialEtapaInternacional->FK_I_ID_ETAPA = $request->EtapaInternacional;
+                    $historialEtapaInternacional->I_SMMLV = $request->SMMLV;             
+                    if(!$historialEtapaInternacional->save()){      
+                        return response()->json(["Mensaje" => "La etapa nacional del deportista no se ha ingresado correctamente, intentelo más tarde."]);
+                    }
+                }
+                
+                return response()->json(["Mensaje" => "Deportista ingresado correctamente!!."]);                
+               
             }else{
                 return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);
             }
@@ -217,15 +234,22 @@ class DeportistaController extends Controller{
         if ($request->ajax()){
             $deportista = DeportistaModel::find($id);
             
-            if((int)$deportista->FK_I_ID_ETAPA == (int)$request->Etapa){
-            }else{
-                $historialEtapa = new HistorialEtapaModel;
-                $historialEtapa->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
-                $historialEtapa->FK_I_ID_ETAPA = $deportista->FK_I_ID_ETAPA;
-                $historialEtapa->I_SMMLV = $request->SMMLV;                 
-                $historialEtapa->save();
+             if((int)$deportista->FK_I_ID_ETAPA_NACIONAL != (int)$request->EtapaNacional){
+                $historialEtapaNal = new HistorialEtapaModel;
+                $historialEtapaNal->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
+                $historialEtapaNal->FK_I_ID_ETAPA = $request->EtapaNacional;
+                $historialEtapaNal->I_SMMLV = $request->SMMLV;                 
+                $historialEtapaNal->save();
             }
-            
+
+            if((int)$deportista->FK_I_ID_ETAPA_INTERNACIONAL != (int)$request->EtapaInternacional){
+
+                $historialEtapaInter = new HistorialEtapaModel;
+                $historialEtapaInter->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
+                $historialEtapaInter->FK_I_ID_ETAPA = $request->EtapaInternacional;
+                $historialEtapaInter->I_SMMLV = $request->SMMLV;                 
+                $historialEtapaInter->save();
+            }
             
             $deportista->FK_I_ID_PERSONA = $request->Id_Persona;
             $deportista->FK_I_ID_ESTADO_CIVIL = $request->Estado_Civil;
@@ -234,7 +258,8 @@ class DeportistaController extends Controller{
             $deportista->FK_I_ID_AGRUPACION = $request->Agrupacion;            
             $deportista->FK_I_ID_DEPORTE = $request->Deporte;
             $deportista->FK_I_ID_MODALIDAD = $request->Modalidad;
-            $deportista->FK_I_ID_ETAPA = $request->Etapa;
+            $deportista->FK_I_ID_ETAPA_NACIONAL = $request->EtapaNacional;
+            $deportista->FK_I_ID_ETAPA_INTERNACIONAL = $request->EtapaInternacional;
             $deportista->FK_I_ID_TIPO_DEPORTISTA = $request->Tipo_Deportista;
             $deportista->FK_I_ID_BANCO = $request->Banco;
             $deportista->FK_I_ID_TIPO_CUENTA = $request->Tipo_Cuenta;
@@ -252,6 +277,7 @@ class DeportistaController extends Controller{
             $deportista->D_FECHA_RETIRO = $request->Fecha_Retiro;
                         
             if($deportista->save()){   
+                
                 return response()->json(["Mensaje" => "Deportista actualizado correctamente!!."]);
             }else{
                 return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
@@ -304,14 +330,18 @@ class DeportistaController extends Controller{
         return $deportistaE;
     }
     
-    public static function getEtapas(Request $request, $id) {      
+    public static function getEtapasNac(Request $request, $id_tipo_etapa) {
         if ($request->ajax()) {
-            $etapas = EtapaModel::getEtapasJSON($id);            
+            $etapas = TipoEtapaModel::with('etapas')->find($id_tipo_etapa);
         }
-
-        //return response()->json($etapas);
-        return($etapas);
-
+        return($etapas->etapas);
+    }
+    
+    public static function getEtapasInter(Request $request, $id_tipo_etapa) {      
+        if ($request->ajax()) {
+            $etapas = TipoEtapaModel::with('etapas')->find($id_tipo_etapa);
+        }
+        return($etapas->etapas);
     }
         
     public function AgregarImagen(Request $request, $idPersona){
@@ -350,8 +380,7 @@ class DeportistaController extends Controller{
         }
     }
 
-    public function logout()
-    {
+    public function logout(){
         $_SESSION['Usuario'] = '';
         Session::set('Usuario', ''); 
         return redirect()->to('/');
