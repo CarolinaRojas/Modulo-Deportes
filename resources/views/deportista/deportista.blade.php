@@ -74,7 +74,13 @@
         <label for="inputEmail" class="control-label pull-right" id="LocalidadL">Localidad:</label>
     </div>
     <div class="col-md-4">
-        <input class="form-control" placeholder="Localidad" type="text" name="Localidad" id="Localidad">      
+        <!--<input class="form-control" placeholder="Localidad" type="text" name="Localidad" id="Localidad">      -->
+        <select name="Localidad" id="Localidad" class="form-control">
+            <option value="">Seleccionar</option>
+            @foreach($localidad as $localidades)
+                    <option value="{{ $localidades['Id_Localidad'] }}">{{ $localidades['Nombre_Localidad'] }}</option>
+            @endforeach
+        </select>
     </div>
 </div>
 <br>

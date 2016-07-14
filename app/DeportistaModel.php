@@ -12,27 +12,35 @@ class DeportistaModel extends Model
     protected $fillable = [
         'FK_I_ID_PERSONA',
         'FK_I_ID_ESTADO_CIVIL',
+        'FK_I_ID_SITUACION_MILITAR',
         'FK_I_ID_ESTRATO',
-        'FK_I_ID_GRUPO',
+        'FK_I_ID_EPS',
+        'FK_I_ID_GRUPO_SANGUINEO',
+        'FK_I_ID_BANCO',
+        'FK_I_ID_TIPO_CUENTA',
+        'FK_I_ID_TIPO_DEPORTISTA',
         'FK_I_ID_AGRUPACION',
         'FK_I_ID_DEPORTE',
-        'FK_I_ID_MODALIDAD',        
-        'FK_I_ID_TIPO_DEPORTISTA',
-        'FK_I_ID_BANCO',
-        'FK_I_ID_DEPARTAMENTO',
-        'FK_I_ID_EPS',
+        'FK_I_ID_MODALIDAD',       
+        'FK_I_ID_ETAPA_NACIONAL',   
+        'FK_I_ID_ETAPA_INTERNACIONAL',  
+        'FK_I_ID_CLUB_DEPORTIVO',   
+        'FK_I_ID_TALLA_CAMISA',   
+        'FK_I_ID_TALLA_ZAPATOS',   
+        'FK_I_ID_TALLA_PANTALON',   
+        'FK_I_ID_TALLA_CHAQUETA',   
+        'V_LOCALIDAD',
+        'V_BARRIO',
         'V_DIRECCION_RESIDENCIA',
         'V_TELEFONO_FIJO',
         'V_TELEFONO_CELULAR',
         'V_CORREO_ELECTRONICO',
-        'B_SITUACION_MILITAR',
         'V_CANTIDAD_HIJOS',
         'V_NUMERO_CUENTA',
         'V_URL_IMG',
         'D_FECHA_INGRESO',
-        'D_FECHA_RETIRO',
-        'V_LOCALIDAD',
-        'V_BARRIO',
+        'D_FECHA_RETIRO',        
+        
         ];
     
     public function persona()
@@ -47,11 +55,7 @@ class DeportistaModel extends Model
     }    
     
     public function historialEtapas() {
-        return $this->belongsToMany('App\EtapaModel', 'tb_srd_historial_etapa', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')
-                    ->withTimestamps()
-                    ->withPivot('I_SMMLV')
-                    //->with('FK_I_ID_TIPO_ETAPA');
-                ;
+        return $this->belongsToMany('App\EtapaModel', 'tb_srd_historial_etapa', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps()->withPivot('I_SMMLV');
     }
     
     
@@ -59,15 +63,7 @@ class DeportistaModel extends Model
         return $this->belongsToMany('App\TipoEstimuloModel', 'tb_srd_deportista_estimulo', 'FK_I_ID_DEPORTISTA_E', 'FK_I_ID_TIPO_ESTIMULO')->withTimestamps()
                 ->withPivot('V_VALOR_ESTIMULO', 'I_SMMLV');
     }
-    
-    
-    /*public function historialEtapas() {
-        return $this->belongsToMany('App\EtapaModel', 'tb_srd_etapa', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps()
-     //           ->withPivot('V_VALOR_ESTIMULO', 'I_SMMLV');
-                ;
-    }*/
-    
-    
+        
     public function agrupacion(){
         return $this->belongsTo('App\AgrupacionModel', 'FK_I_ID_AGRUPACION');
     }
@@ -87,12 +83,7 @@ class DeportistaModel extends Model
     public function etapa_inter(){
         return $this->belongsTo('App\EtapaModel', 'FK_I_ID_ETAPA_INTERNACIONAL');
     }
-    
-    
-    /*public function etapa(){
-        return $this->belongsTo('App\EtapaModel', 'FK_I_ID_ETAPA');
-    }
-    */
+ 
     public function departamento(){        
         return $this->belongsTo('App\DepartamentoModel', 'FK_I_ID_DEPARTAMENTO');
     }
@@ -111,6 +102,6 @@ class DeportistaModel extends Model
     }    
     
     public function localidad(){
-        return $this->belongsTo('App\LocalidadModel', 'FK_I_ID_LOCALIDAD');
+        return $this->belongsTo('App\Localidad', 'FK_I_ID_LOCALIDAD');
     }
 }

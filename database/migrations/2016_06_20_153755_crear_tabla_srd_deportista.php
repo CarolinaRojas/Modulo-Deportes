@@ -34,8 +34,8 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_TALLA_ZAPATOS')->unsigned()->nullable();
             $table->integer('FK_I_ID_TALLA_PANTALON')->unsigned()->nullable();
             $table->integer('FK_I_ID_TALLA_CHAQUETA')->unsigned()->nullable();            
+            $table->integer('FK_I_ID_LOCALIDAD')->unsigned();                        
             
-            $table->string('V_LOCALIDAD');
             $table->string('V_BARRIO');
             $table->string('V_DIRECCION_RESIDENCIA');
             $table->string('V_TELEFONO_FIJO');

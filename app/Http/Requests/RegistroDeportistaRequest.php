@@ -27,7 +27,7 @@ class RegistroDeportistaRequest extends Request
             $validaciones = [                        
             'Eps' => 'required',
             'Estrato'=> 'required',
-            'Localidad' => 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
+            'Localidad' => 'required',
             'Barrio' => 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
             'Direccion_Residencia'=> 'required|min:3|regex:/^[(a-zA-Z0-9\s\#\-\°)]+$/u',
             'Telefono_Fijo'=> 'required|numeric|digits_between:7,10',
@@ -56,7 +56,7 @@ class RegistroDeportistaRequest extends Request
             $validaciones = [                        
                 'Eps' => 'required',
                 'Estrato'=> 'required',
-                'Localidad' => 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
+                'Localidad' => 'required',
                 'Barrio' => 'required|min:3|regex:/^[(a-zA-Z\s)]+$/u',
                 'Direccion_Residencia'=> 'required|min:3|regex:/^[(a-zA-Z0-9\s\#\-\°)]+$/u',
                 'Telefono_Fijo'=> 'required|numeric|digits_between:7,10',

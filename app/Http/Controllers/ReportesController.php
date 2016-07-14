@@ -64,17 +64,15 @@ class ReportesController extends Controller
                                      'personas.deportista', 
                                      'personas.deportista.banco',
                                      'personas.deportista.tipoCuenta',
-                                     'personas.deportista.situacionMilitar',
-                                     //'personas.deportista.departamento',                                     
+                                     'personas.deportista.situacionMilitar',                                   
                                      'personas.deportista.agrupacion',
                                      'personas.deportista.deporte',
                                      'personas.deportista.modalidad',
-                                     /*'personas.deportista.etapa_nal',
-                                     'personas.deportista.etapa_inter',*/
                                      'personas.deportista.historialEstimulos',
-                                     'personas.deportista.historialEtapas'
+                                     'personas.deportista.historialEtapas',
+                                     'personas.deportista.localidad'
       
-                       )->find(49);            
+                       )->find(49);  
                $y = 0;
                foreach($persona->personas as $p){                  
                    
@@ -113,7 +111,7 @@ class ReportesController extends Controller
                    $num_cuenta = $p->deportista['V_NUMERO_CUENTA'];
                    $dir_residencia = $p->deportista['V_DIRECCION_RESIDENCIA'];
                    $barrio = $p->deportista['V_BARRIO'];
-                   $localidad = $p->deportista['V_LOCALIDAD'];
+                   $localidad = $p->deportista->localidad['Nombre_Localidad'];
                    $tel_fijo = $p->deportista['V_TELEFONO_FIJO'];
                    $tel_celular = $p->deportista['V_TELEFONO_CELULAR'];
                    $email = $p->deportista['V_CORREO_ELECTRONICO'];
@@ -266,7 +264,8 @@ class ReportesController extends Controller
                                      'deportista.historialEstimulos',
                                      'deportista.agrupacion',
                                      'deportista.deporte',
-                                     'deportista.modalidad'
+                                     'deportista.modalidad',
+                                     'deportista.localidad'
                        )->find($datos[0]);            
                
                 $nombre = $persona->Primer_Nombre.' '.$persona->Segundo_Nombre.' '.$persona->Primer_Apellido.' '.$persona->Segundo_Apellido;
@@ -303,7 +302,7 @@ class ReportesController extends Controller
                 $num_cuenta = $persona->deportista['V_NUMERO_CUENTA'];
                 $dir_residencia = $persona->deportista['V_DIRECCION_RESIDENCIA'];
                 $barrio = $persona->deportista['V_BARRIO'];
-                $localidad = $persona->deportista['V_LOCALIDAD'];
+                $localidad = $persona->deportista->localidad['Nombre_Localidad'];
                 $tel_fijo = $persona->deportista['V_TELEFONO_FIJO'];
                 $tel_celular = $persona->deportista['V_TELEFONO_CELULAR'];
                 $email = $persona->deportista['V_CORREO_ELECTRONICO'];

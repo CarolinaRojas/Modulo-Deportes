@@ -29,10 +29,8 @@ use App\HistorialEtapaModel;
 use App\TipoEstimuloModel;
 use App\DeportistaEstimuloModel;
 use App\TipoCuentaModel;
-
 use App\TipoEtapaModel;
-
-
+use App\Localidad;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
@@ -75,6 +73,7 @@ class DeportistaController extends Controller{
         $clubDeportivo = ClubDeportivoModel::all();        
         $tipoEstimulo = TipoEstimuloModel::all();
         $tipocuenta = TipoCuentaModel::all();
+        $localidad = Localidad::all();
                 
         $QEntrenadores = EntrenadorModel::all();
         $entrenadores = Persona::with('entrenador')->whereIn('Id_Persona', $QEntrenadores->lists('FK_I_ID_PERSONA'))->get();
@@ -106,7 +105,8 @@ class DeportistaController extends Controller{
                 ->with(compact('entrenadores'))
                 ->with(compact('talla'))
                 ->with(compact('tipoEstimulo'))
-                ->with(compact('tipocuenta'));
+                ->with(compact('tipocuenta'))
+                ->with(compact('localidad'));
     }
         
     public function datos($id){
@@ -178,7 +178,7 @@ class DeportistaController extends Controller{
             $deportista->FK_I_ID_BANCO = $request->Banco;
             $deportista->FK_I_ID_TIPO_CUENTA = $request->Tipo_Cuenta;
             $deportista->FK_I_ID_EPS = $request->Eps;
-            $deportista->V_LOCALIDAD = $request->Localidad;
+            $deportista->FK_I_ID_LOCALIDAD = $request->Localidad;
             $deportista->V_BARRIO = $request->Barrio;
             $deportista->V_DIRECCION_RESIDENCIA = $request->Direccion_Residencia;
             $deportista->V_TELEFONO_FIJO = $request->Telefono_Fijo;
@@ -264,7 +264,7 @@ class DeportistaController extends Controller{
             $deportista->FK_I_ID_BANCO = $request->Banco;
             $deportista->FK_I_ID_TIPO_CUENTA = $request->Tipo_Cuenta;
             $deportista->FK_I_ID_EPS = $request->Eps;
-            $deportista->V_LOCALIDAD = $request->Localidad;
+            $deportista->FK_I_ID_LOCALIDAD = $request->Localidad;
             $deportista->V_BARRIO = $request->Barrio;
             $deportista->V_DIRECCION_RESIDENCIA = $request->Direccion_Residencia;
             $deportista->V_TELEFONO_FIJO = $request->Telefono_Fijo;
