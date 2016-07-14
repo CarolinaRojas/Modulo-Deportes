@@ -361,7 +361,7 @@ class DeportistaController extends Controller{
     
     public function HistorialEtapa($id) {
         
-        $deportistaH = Persona::with('deportista', 'deportista.historial')->find($id);          
+        $deportistaH = Persona::with('deportista', 'deportista.historialEtapas')->find($id);          
         return $deportistaH;
     }
        

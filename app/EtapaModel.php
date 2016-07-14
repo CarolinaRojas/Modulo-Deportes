@@ -17,12 +17,12 @@ class EtapaModel extends Model
         return $this->hasMany('App\TipoEtapaModel', 'PK_I_ID_TIPO_ETAPA');
     }
     
-    /*public function etapas()
+    public function etapas()
     {
-        return $this->hasMany('App\EtapaModel', 'FK_I_ID_TIPO_DEPORTISTA');
-         //return $this->belongsTo('App\EtapaModel', 'FK_I_ID_TIPO_DEPORTISTA');
+    //    return $this->hasMany('App\EtapaModel', 'FK_I_ID_TIPO_DEPORTISTA');
+         return $this->belongsTo('App\EtapaModel', 'FK_I_ID_TIPO_DEPORTISTA');
     }
-    */
+    
     public static function getEtapasJSON($id_tipo_etapa){
         //$tipo_etapa = TipoEtapaModel::with('tipoDeportista')->find($id_tipo_deportista);
         $etapas = EtapaModel::with('tipoEtapa')->find($id_tipo_etapa)->get();

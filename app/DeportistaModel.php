@@ -47,13 +47,26 @@ class DeportistaModel extends Model
     }    
     
     public function historialEtapas() {
-        return $this->belongsToMany('App\EtapaModel', 'tb_srd_historial_etapa', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps()->withPivot('I_SMMLV');
+        return $this->belongsToMany('App\EtapaModel', 'tb_srd_historial_etapa', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')
+                    ->withTimestamps()
+                    ->withPivot('I_SMMLV')
+                    //->with('FK_I_ID_TIPO_ETAPA');
+                ;
     }
+    
     
     public function historialEstimulos() {
         return $this->belongsToMany('App\TipoEstimuloModel', 'tb_srd_deportista_estimulo', 'FK_I_ID_DEPORTISTA_E', 'FK_I_ID_TIPO_ESTIMULO')->withTimestamps()
                 ->withPivot('V_VALOR_ESTIMULO', 'I_SMMLV');
     }
+    
+    
+    /*public function historialEtapas() {
+        return $this->belongsToMany('App\EtapaModel', 'tb_srd_etapa', 'FK_I_ID_DEPORTISTA_H', 'FK_I_ID_ETAPA')->withTimestamps()
+     //           ->withPivot('V_VALOR_ESTIMULO', 'I_SMMLV');
+                ;
+    }*/
+    
     
     public function agrupacion(){
         return $this->belongsTo('App\AgrupacionModel', 'FK_I_ID_AGRUPACION');
@@ -65,6 +78,14 @@ class DeportistaModel extends Model
     
     public function modalidad(){
         return $this->belongsTo('App\ModalidadModel', 'FK_I_ID_MODALIDAD');
+    }
+    
+    public function etapa_nal(){
+        return $this->belongsTo('App\EtapaModel', 'FK_I_ID_ETAPA_NACIONAL');
+    }
+    
+    public function etapa_inter(){
+        return $this->belongsTo('App\EtapaModel', 'FK_I_ID_ETAPA_INTERNACIONAL');
     }
     
     

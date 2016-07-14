@@ -66,32 +66,35 @@ class ReportesController extends Controller
                                      'personas.deportista.banco',
                                      'personas.deportista.tipoCuenta',
                                      'personas.deportista.situacionMilitar',
-                                     'personas.deportista.departamento',
-                                     'personas.deportista.historial', 
-                                     'personas.deportista.historialEstimulos',
+                                     'personas.deportista.departamento',                                     
                                      'personas.deportista.agrupacion',
                                      'personas.deportista.deporte',
                                      'personas.deportista.modalidad',
-                                     'personas.deportista.etapa'
+                                     'personas.deportista.etapa_nal',
+                                     'personas.deportista.etapa_inter',
+                                     'personas.deportista.historialEstimulos',
+                                     'personas.deportista.historialEtapas'
+      
                        )->find(49);            
-             
-               $i = 0;
+               $y = 0;
                foreach($persona->personas as $p){                  
                    
                    $nombre = $p['Primer_Nombre'].' '.$p['Segundo_Nombre'].' '.$p['Primer_Apellido'].' '.$p['Segundo_Apellido'];
                    $agrupacion = $p->deportista->agrupacion['V_NOMBRE_AGRUPACION'];
                    $deporte = $p->deportista->deporte['V_NOMBRE_DEPORTE'];
                    $modalidad = $p->deportista->modalidad['V_NOMBRE_MODALIDAD'];
-                   $etapa = $p->deportista->etapa['V_NOMBRE_ETAPA'];                   
+                   $etapa_nal = $p->deportista->etapa_nal['V_NOMBRE_ETAPA'];
+                   $etapa_inter = $p->deportista->etapa_inter['V_NOMBRE_ETAPA'];                   
+                   $sumaEtapas = 0;                   
                    $mensual = 0;
-                   $transporte = 0;
                    $educacion = 0;
                    $resultados = 0;
                    $alimentacion = 0;
                    $hidratantes = 0;
                    $multidisciplina =0;
                    $monitoria = 0;
-                 
+                   $total = 0;
+                                    
                    $genero  = $p->genero['Nombre_Genero'];                   
                    $fecha_nacimiento = $p['Fecha_Nacimiento'];
                 
@@ -118,51 +121,68 @@ class ReportesController extends Controller
                    $fecha_ingreso = $p->deportista['D_FECHA_INGRESO'];
                    $fecha_retiro = $p->deportista['D_FECHA_RETIRO'];
                    
-                   $Htemp = $p->deportista->historial()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[2].'-31 23:59:59'))
-                                                        ->orderBy('tb_srd_historial_etapa.created_at', 'desc')
-                                                        ->limit('1')
-                                                        ->get();
+                   $d1 = explode('-', $datos[1]);
+                   $d2 = explode('-', $datos[2]);
                    
-                  
+                   $sd = $d2[1] - $d1[1];
+                   $fecha = date($datos[1]);  
                    
-                   $HEst = $p->deportista->historialEstimulos()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[2].'-31 23:59:59'))->get();
                    
-                   foreach($Htemp as  $h){                  
-                       $transporte = $h->pivot['I_SMMLV'] * $h['V_POR_ESTIMULO'];
-                   }
-                   
-                   foreach($HEst as  $hE){
+                   for($i = 0; $i <= $sd; $i++){                       
                        
-                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 1){
-                           $mensual = $mensual + $hE->pivot['V_VALOR_ESTIMULO'];
-                       }
-                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
-                           $educacion = $educacion + $hE->pivot['V_VALOR_ESTIMULO'];
-                       }
-                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
-                           $resultados = $resultados + $hE->pivot['V_VALOR_ESTIMULO'];
-                       }
-                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
-                           $alimentacion = $alimentacion + $hE->pivot['V_VALOR_ESTIMULO'];
-                       }
-                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
-                           $hidratantes = $hidratantes + $hE->pivot['V_VALOR_ESTIMULO'];
-                       }
-                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
-                           $multidisciplina = $multidisciplina + $hE->pivot['V_VALOR_ESTIMULO'];
-                       }
-                       if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 7){
-                           $monitoria = $monitoria + $hE->pivot['V_VALOR_ESTIMULO'];
-                       }
-                   }
-                   $total = $transporte + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;
-                   
-                   $per[$i] = [ 
-                        'N°' => $i+1,
+                        $nuevafecha = date('Y-m', strtotime ( '+'.($i).' month' , strtotime ( $fecha ) ) );
+                        
+                        $historialEtapas = $p->deportista->historialEtapas()->whereBetween('created_at', array( $nuevafecha.'-01 00:00:00' , $nuevafecha.'-31 23:59:59'))->orderBy('tb_srd_historial_etapa.created_at', 'desc')->get();
+                        
+                        $EtapaInternacional = $historialEtapas->whereIn('FK_I_ID_TIPO_ETAPA', [2, 4])->first();
+                        $EtapaNacional = $historialEtapas->whereIn('FK_I_ID_TIPO_ETAPA', [1, 3])->first();
+                        if($EtapaNacional){
+                            $Nacional = ($EtapaNacional->pivot['I_SMMLV']* $EtapaNacional['V_POR_ESTIMULO']);
+                        }else{
+                            $Nacional = 0;
+                        }
+                                                
+                        if($EtapaInternacional){
+                            $Internacional = ($EtapaInternacional->pivot['I_SMMLV']* $EtapaInternacional['V_POR_ESTIMULO']); 
+                        }else{
+                            $Internacional = 0;
+                        }
+                        $sumaEtapas = $sumaEtapas + $Nacional + $Internacional;
+                        
+                        $Estimulos = $p->deportista->historialEstimulos()->whereBetween('created_at', array( $nuevafecha.'-01 00:00:00' , $nuevafecha.'-31 23:59:59'))->get();                        
+                        foreach($Estimulos as  $hE){                       
+                            if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 1){
+                                $mensual = $mensual + $hE->pivot['V_VALOR_ESTIMULO'];
+                            }
+                            if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
+                                $educacion = $educacion + $hE->pivot['V_VALOR_ESTIMULO'];
+                            }
+                            if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
+                                $resultados = $resultados + $hE->pivot['V_VALOR_ESTIMULO'];
+                            }
+                            if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
+                                $alimentacion = $alimentacion + $hE->pivot['V_VALOR_ESTIMULO'];
+                            }
+                            if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
+                                $hidratantes = $hidratantes + $hE->pivot['V_VALOR_ESTIMULO'];
+                            }
+                            if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
+                                $multidisciplina = $multidisciplina + $hE->pivot['V_VALOR_ESTIMULO'];
+                            }
+                            if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 7){
+                                $monitoria = $monitoria + $hE->pivot['V_VALOR_ESTIMULO'];
+                            }
+                        }
+                    }                 
+                    $total = $sumaEtapas + $mensual + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;               
+                 
+                    $per[$y] = [ 
+                        'N°' => $y+1,
                         'AGRUPACIÓN'=> $agrupacion,
                         'DEPORTE'=> $deporte,
                         'MODALIDAD'=> $modalidad,
-                        'ETAPA'=> $etapa,
+                        'ETAPA NACIONAL (Actual)'=> $etapa_nal,
+                        'ETAPA INTERNACIONAL  (Actual)'=> $etapa_inter,
                         'ATLETA' => $nombre,
                         'GENERO' => $genero,
                         'FECHA DE NACIMIENTO' => $fecha_nacimiento,
@@ -182,7 +202,7 @@ class ReportesController extends Controller
                         'E-MAIL' => $email,
                         'FECHA DE INGRESO' => $fecha_ingreso,
                         'FECHA DE RETIRO' => $fecha_retiro,
-                        'TRANSPORTE'=> $transporte,
+                        'TRANSPORTE'=> $sumaEtapas,
                         'ESTÍMULO MENSUAL'=> $mensual,
                         'EDUCACIÓN'=> $educacion,
                         'ESTÍMULO POR RESULTADOS'=> $resultados,
@@ -192,8 +212,9 @@ class ReportesController extends Controller
                         'MONITORIAS'=> $monitoria,
                         'TOTAL'=> $total,
                            ];
-                   $i++;                           
-               }    
+                   $y++;            
+               }
+               
                $sheet->freezeFirstRow();
                $sheet->setAllBorders('thin');
                $sheet->setHeight(1, 50); 
@@ -209,9 +230,10 @@ class ReportesController extends Controller
                    'AE' => '$0,0',
                    'AF' => '$0,0',
                    'AG' => '$0,0',                   
+                   'AH' => '$0,0',                   
                 ));
                
-                $sheet->cells('A1:AG1', function($cells) {
+                $sheet->cells('A1:AH1', function($cells) {
                     
                     $cells->setBackground('#CCFFFF');
                     $cells->setFont(array(
@@ -226,14 +248,13 @@ class ReportesController extends Controller
                     ));
                     $cells->setAlignment('center');
                 }); 
-                $sheet->cells('AG1:AG1', function($cells) {
+                $sheet->cells('AH1:AH1', function($cells) {
                     $cells->setBackground('#FF0000');
                });
                 $sheet->fromArray($per);
            });
         })->download('xls');              
-    }    
-    
+    }        
     
     public function HistorialIndividual(Request $request, $id, $inicio) {   
        
