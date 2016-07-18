@@ -31,6 +31,7 @@ use App\DeportistaEstimuloModel;
 use App\TipoCuentaModel;
 use App\TipoEtapaModel;
 use App\Localidad;
+use App\TipoTallaModel;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
@@ -77,7 +78,6 @@ class DeportistaController extends Controller{
                 
         $QEntrenadores = EntrenadorModel::all();
         $entrenadores = Persona::with('entrenador')->whereIn('Id_Persona', $QEntrenadores->lists('FK_I_ID_PERSONA'))->get();
-        $talla = TallaModel::all();
                 
         $selected = array();
         $deportista = array();
@@ -103,7 +103,6 @@ class DeportistaController extends Controller{
                 ->with(compact('situacionMilitar'))
                 ->with(compact('clubDeportivo'))
                 ->with(compact('entrenadores'))
-                ->with(compact('talla'))
                 ->with(compact('tipoEstimulo'))
                 ->with(compact('tipocuenta'))
                 ->with(compact('localidad'));
@@ -385,5 +384,19 @@ class DeportistaController extends Controller{
         Session::set('Usuario', ''); 
         return redirect()->to('/');
     }
+    
+    public function getTallas(Request $request, $id_genero, $id_tipo) {
+        if ($request->ajax()) {
+            $tallas = TipoTallaModel::with('tipo_talla', 'tipo_talla.genero')->find($id_tipo);
+            $talla_genero = $tallas->tipo_talla->whereIn('FK_I_ID_GENERO', [(int)$id_genero]);
+        }
+        return($talla_genero);
+    }
+    
+    public function getOnlyTalla(Request $request, $id) {
+        if ($request->ajax()) {
+            $talla = TallaModel::find($id);
+        }
+        return($talla);
+    }
 }
-

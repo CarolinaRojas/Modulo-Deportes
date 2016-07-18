@@ -49,7 +49,7 @@ $(function(e){
         var inicio  = document.getElementById("fInicio").value;
         if(!id || !inicio /*|| !fin*/){
             if(!inicio){                
-                ValidacionDeportiva("fInicio", 'Ingrese una fecha de inicio para generar el reporte.');
+                ValidacionApoyo("fInicio", 'Ingrese una fecha de inicio para generar el reporte.');
             }
             return false;
         }else{
@@ -129,14 +129,14 @@ function ProcesoApoyo (tipo, url, datos, token){
         },
         error: function (xhr) {        
             $("#mensajeIncorrectoTres").empty();
-            if(xhr.responseJSON.Tipo_Estimulo){ ValidacionDeportiva('Tipo_Estimulo', xhr.responseJSON.Tipo_Estimulo);}else{Normal('Tipo_Estimulo');}
-            if(xhr.responseJSON.Valor_Estimulo){ ValidacionDeportiva('Valor_Estimulo', xhr.responseJSON.Valor_Estimulo);}else{Normal('Valor_Estimulo');}
-            if(xhr.responseJSON.Valor_SMMLV){ ValidacionDeportiva('Valor_SMMLV', xhr.responseJSON.Valor_SMMLV);}else{Normal('Valor_SMMLV');}
+            if(xhr.responseJSON.Tipo_Estimulo){ ValidacionApoyo('Tipo_Estimulo', xhr.responseJSON.Tipo_Estimulo);}else{Normal('Tipo_Estimulo');}
+            if(xhr.responseJSON.Valor_Estimulo){ ValidacionApoyo('Valor_Estimulo', xhr.responseJSON.Valor_Estimulo);}else{Normal('Valor_Estimulo');}
+            if(xhr.responseJSON.Valor_SMMLV){ ValidacionApoyo('Valor_SMMLV', xhr.responseJSON.Valor_SMMLV);}else{Normal('Valor_SMMLV');}
         }
     });
 }
 
-function ValidacionDeportiva(campo, mensaje){
+function ValidacionApoyo(campo, mensaje){
     $("#"+campo).css({ 'border-color': '#B94A48' });    
     $("#"+campo+"L").css({ 'color': '#B94A48' });    
     

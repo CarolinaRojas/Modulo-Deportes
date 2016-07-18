@@ -166,6 +166,7 @@ $(function(e){
           $("#Tipo_Cuenta").val(persona.deportista['FK_I_ID_TIPO_CUENTA']).change();
           $('input[name="Id_Deportista"]').val($.trim(persona.deportista['PK_I_ID_DEPORTISTA']));
           $("#Estrato").val(persona.deportista['FK_I_ID_ESTRATO']).change();
+          $("#Localidad").val(persona.deportista['FK_I_ID_LOCALIDAD']).change();
           $("#Grupo_Sanguineo").val(persona.deportista['FK_I_ID_GRUPO_SANGUINEO']).change();
           $("#Tipo_Deportista").val(persona.deportista['FK_I_ID_TIPO_DEPORTISTA']).change();
           $("#Situacion_Militar").val(persona.deportista['FK_I_ID_SITUACION_MILITAR']).change();

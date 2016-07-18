@@ -154,43 +154,26 @@
                     <div class="row" id="PanelEntrenador">                             
 
                     </div>
-                    <br>
+                    <br>                    
                     <div class="row">                          
-                           <div class="col-md-2">
-                              <label for="inputEmail" class="control-label pull-right" id="Talla_CamisaL">Talla Camisa:</label>
-                          </div>
-                          <div class="col-md-4">
-                                <select name="Talla_Camisa" id="Talla_Camisa" class="form-control">
-                                    <option value="">Seleccionar</option>
-                                    @foreach($talla as $tallas)
-                                            <option value="{{ $tallas['PK_I_ID_TALLA'] }}">{{$tallas['V_NOMBRE_TALLA']}}</option>
-                                    @endforeach
-                                </select>
-                          </div>
-                          <div class="col-md-2">
-                              <label for="inputEmail" class="control-label pull-right" id="Talla_ZapatosL">Talla Zapatos:</label>
-                          </div>
-                          <div class="col-md-4">
-                              <select name="Talla_Zapatos" id="Talla_Zapatos" class="form-control">
-                                    <option value="">Seleccionar</option>
-                                    @foreach($talla as $tallas)
-                                            <option value="{{ $tallas['PK_I_ID_TALLA'] }}">{{$tallas['V_NOMBRE_TALLA']}}</option>
-                                    @endforeach
-                                </select>
-                          </div>
-                      </div>
-                      <br>
-                      <div class="row">
+                        <div class="col-md-2">
+                            <label for="inputEmail" class="control-label pull-right" id="Talla_CamisaL">Talla Camisa:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="Talla_Camisa" id="Talla_Camisa" class="form-control">
+                                <option value="">Seleccionar</option>                                
+                            </select>
+                        </div>
+                    </div>                    
+                    <br>
+                    <div class="row">
                            
                           <div class="col-md-2">
                               <label for="inputEmail" class="control-label pull-right" id="Talla_ChaquetaL">Talla Cahqueta:</label>
                           </div>
                           <div class="col-md-4">
                                 <select name="Talla_Chaqueta" id="Talla_Chaqueta" class="form-control">
-                                    <option value="">Seleccionar</option>
-                                    @foreach($talla as $tallas)
-                                            <option value="{{ $tallas['PK_I_ID_TALLA'] }}">{{$tallas['V_NOMBRE_TALLA']}}</option>
-                                    @endforeach
+                                    <option value="">Seleccionar</option>                                    
                                 </select>
                           </div>
                           <div class="col-md-2">
@@ -198,11 +181,29 @@
                           </div>
                           <div class="col-md-4">
                                 <select name="Talla_Pantalon" id="Talla_Pantalon" class="form-control">
-                                    <option value="">Seleccionar</option>
-                                    @foreach($talla as $tallas)
-                                            <option value="{{ $tallas['PK_I_ID_TALLA'] }}">{{$tallas['V_NOMBRE_TALLA']}}</option>
-                                    @endforeach
+                                    <option value="">Seleccionar</option>                                    
                                 </select>
+                          </div>
+                      </div>
+                      <br>
+                      <div class="row">                                                     
+                        <div class="col-md-2">
+                            <label for="inputEmail" class="control-label pull-right" id="Talla_ZapatosL">Talla Zapatos (Nacional):</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="Talla_Zapatos" id="Talla_Zapatos" class="form-control" onchange="tallaZapatosInter(this.value);">
+                                <option value="">Seleccionar</option>
+                               
+                            </select>
+                        </div>
+                          <div id="ZapatoInter" >
+                            <div class="col-md-2">
+                                <label for="inputEmail" class="control-label pull-right" id="Talla_ZapatosInterL">Talla Zapatos (Internacional):</label>
+                            </div>
+                            <div class="col-md-4">
+                                <h4>Talla Reino Unido: <span class="label label-default" id="TUK"></span></h4>
+                                <h4>Talla Estados Unidos:  <span class="label label-default" id="TUSA"></span></h4>
+                            </div>
                           </div>
                       </div>
                       <br>
