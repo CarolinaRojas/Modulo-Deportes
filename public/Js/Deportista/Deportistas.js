@@ -185,6 +185,8 @@ $(function(e){
           
           showEtapas(persona.deportista['FK_I_ID_TIPO_DEPORTISTA'], persona.deportista['FK_I_ID_ETAPA_NACIONAL'], persona.deportista['FK_I_ID_ETAPA_INTERNACIONAL']);          
           
+      }else{            
+         $("#SImagen").append('<span class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span><br>No ha ingresado la imágen del deportista.</span>');
       }
       
     $('#modal_form_persona').modal('show');
@@ -206,7 +208,7 @@ $(function(e){
       }
     });
     
-    $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){        
+    $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){
         var id = $(this).data('rel');
         $.get("deportista/" + id + "", function (response) {            
             $("#mensaje-incorrecto").fadeOut();
@@ -367,8 +369,10 @@ function showDeportes(id, sel) {
     
     if(id){
         $.get("getDeportes/" + id + "", function (response) {            
-            $("#Deporte").empty();
+           /*$("#Deporte").empty();
+            $("#Modalidad").empty();
             $("#Deporte").append("<option value=''>Seleccionar</option>");
+            $("#Modalidad").append("<option value=''>Seleccionar</option>");*/
             $.each(response, function(i, e){
                 $("#Deporte").append("<option value='" +e.PK_I_ID_DEPORTE + "'>" + e.V_NOMBRE_DEPORTE + "</option>");
             });

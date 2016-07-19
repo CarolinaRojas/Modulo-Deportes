@@ -77,6 +77,9 @@ Route::group(['middleware' => ['web']], function () {
     
     /************RUTAS PARA ENTRENADORES*********************/
     Route::get('GestionEntrenador','EntrenadorController@index');
-    Route::get('entrenadir/{id}','EntrenadorController@datos');
+    Route::get('entrenador/{id}','EntrenadorController@datos');
+    
+    Route::post('AddEntrenador', 'EntrenadorController@store');
+    Route::post('EditEntrenador/{id}', 'EntrenadorController@update');
     
 });
