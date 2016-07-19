@@ -81,7 +81,6 @@ class CrearTablaSrdDeportista extends Migration
             $table->dropForeign(['FK_I_ID_ESTRATO']);
             $table->dropForeign(['FK_I_ID_AGRUPACION']);
             $table->dropForeign(['FK_I_ID_MODALIDAD']);
-         //   $table->dropForeign(['FK_I_ID_ETAPA']);
             $table->dropForeign(['FK_I_ID_TIPO_DEPORTISTA']);
             $table->dropForeign(['FK_I_ID_BANCO']);
             $table->dropForeign(['FK_I_ID_SITUACION_MILITAR']);

@@ -75,4 +75,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('HistorialEstimulos/{id}/{inicio}/{fin}','ReportesController@ReporteDeportistaEstimulos');
     Route::resource('reportes','ReportesController');
     
+    /************RUTAS PARA ENTRENADORES*********************/
+    Route::get('GestionEntrenador','EntrenadorController@index');
+    Route::get('entrenadir/{id}','EntrenadorController@datos');
+    
 });

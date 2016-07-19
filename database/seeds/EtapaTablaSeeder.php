@@ -11,7 +11,7 @@ class EtapaTablaSeeder extends Seeder
      */
     public function run()
     {
-         DB::table('TB_SRD_ETAPA')->delete();
+        DB::table('TB_SRD_ETAPA')->delete();
         DB::table('TB_SRD_ETAPA')->insert([
             
             /************CONVENCIONAL NACIONAL************/

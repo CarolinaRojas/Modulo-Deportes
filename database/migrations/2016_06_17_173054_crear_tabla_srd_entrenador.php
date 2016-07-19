@@ -12,10 +12,13 @@ class CrearTablaSrdEntrenador extends Migration
      */
     public function up()
     {
-         Schema::create('TB_SRD_ENTRENADOR', function (Blueprint $table) {
+        Schema::create('TB_SRD_ENTRENADOR', function (Blueprint $table) {
             $table->increments('PK_I_ID_ENTRENADOR');
             $table->integer('FK_I_ID_PERSONA');
-            $table->string('V_TELEFONO');
+            $table->string('V_TELEFONO_FIJO');
+            $table->string('V_TELEFONO_CELULAR');
+            $table->string('V_CORREO_ELECTRONICO');
+            $table->string('V_URL_IMG');
             
             $table->timestamps();
         });

@@ -76,6 +76,16 @@
                   @endif
                 </ul>
               </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Entrenador<span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="download">
+                  <li><a href="#" style="color:#1995dc">GESTIÓN DEPORTIVA</a></li>
+                  <li class="divider"></li>
+                 <!-- @if($_SESSION['Usuario'][2] == 1)-->
+                    <li><a href="{{URL::to('GestionEntrenador')}}">Gestión de entrenadores</a></li>
+                  <!--@endif-->
+                </ul>
+              </li>
             </ul>
 
             <form class="navbar-form navbar-left" role="search">
