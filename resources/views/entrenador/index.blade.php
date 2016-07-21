@@ -179,16 +179,15 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label for="inputEmail" class="control-label pull-right" id="Etapa_EntrenamientorL">Etapas de entrenamiento:</label>
+                                    <label for="inputEmail" class="control-label pull-right" id="Etapa_EntrenamientoL">Etapas de entrenamiento:</label>
                                 </div>
                                 <br>
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="Etapa_Entrenamiento">
                                     @foreach($etapasEntrenamiento as $etapasEntrenamientos)
                                         <div class="col-md-12">                                            
-                                            <input type="checkbox"  name="etapa{{$etapasEntrenamientos['PK_I_ID_ETAPA_ENTRENAMIENTO']}}" id="{{$etapasEntrenamientos['PK_I_ID_ETAPA_ENTRENAMIENTO']}}" />
-                                            <small>{{$etapasEntrenamientos['V_NOMBRE_ETAPA_ENTRENAMIENTO']}}</small>
+                                            <input type="checkbox"  name="etapa{{$etapasEntrenamientos['PK_I_ID_ETAPA_ENTRENAMIENTO']}}" id="etapa{{$etapasEntrenamientos['PK_I_ID_ETAPA_ENTRENAMIENTO']}}" />
+                                            <small >{{$etapasEntrenamientos['V_NOMBRE_ETAPA_ENTRENAMIENTO']}}</small>
                                         </div>
-                                        <br>
                                     @endforeach                                    
                                 </div>
                             </div>
@@ -214,14 +213,23 @@
                                     </select>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
                                 <div class="col-md-2">
                                     <label for="inputEmail" class="control-label pull-right" id="ModalidadL">Modalidades:</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <select name="Modalidad" id="Modalidad" class="form-control">
+                                    <div class="col-md-12" id="Modalidad">
+                                        <!--@foreach($etapasEntrenamiento as $etapasEntrenamientos)
+                                        <div class="col-md-12">                                            
+                                            <input type="checkbox"  name="etapa{{$etapasEntrenamientos['PK_I_ID_ETAPA_ENTRENAMIENTO']}}" id="etapa{{$etapasEntrenamientos['PK_I_ID_ETAPA_ENTRENAMIENTO']}}" />
+                                            <small >{{$etapasEntrenamientos['V_NOMBRE_ETAPA_ENTRENAMIENTO']}}</small>
+                                        </div>
+                                    @endforeach                                    -->
+                                    </div>
+                                  <!--  <select name="Modalidad" id="Modalidad" class="form-control">
                                         <option value="">Seleccionar</option>                                        
-                                    </select>
+                                    </select>-->
                                 </div>                                
                             </div>
                             <br><br>

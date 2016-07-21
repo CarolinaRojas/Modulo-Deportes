@@ -23,12 +23,15 @@ class RegistroEntrenadorRequest extends Request
      */
     public function rules()
     {
-            $validaciones = [                                    
+        $validaciones = [                                    
             'Telefono_Fijo'=> 'required|numeric|digits_between:7,10',
             'Telefono_Celular'=> 'required|numeric|digits:10',
             'Correo_Electronico'=> 'required|email|min:7|max:40',
+            'Agrupacion' => 'required',
+            'Deporte' => 'required',
+            'Etapa_Entrenamiento' => 'required|array',
+            'Modalidad' => 'required'
             ];
-            
         return $validaciones;
     }
 }

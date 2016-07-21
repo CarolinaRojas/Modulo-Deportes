@@ -82,4 +82,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('AddEntrenador', 'EntrenadorController@store');
     Route::post('EditEntrenador/{id}', 'EntrenadorController@update');
     
+    Route::get('getEtapasEntrenamiento', 'EntrenadorController@getEtapasEntrenamiento');
+    
 });

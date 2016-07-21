@@ -15,7 +15,8 @@ use App\EntrenadorModel;
 use App\EtapaEntrenamientoModel;
 use App\DeporteModel;
 use App\AgrupacionModel;
-
+use App\EntrenadorEtapaModel;
+use App\EntrenadorModalidadModel;
 
 class EntrenadorController extends Controller
 {
@@ -40,7 +41,6 @@ class EntrenadorController extends Controller
                 ->with(compact('genero'))
                 ->with(compact('etapasEntrenamiento'))
                 ->with(compact('agrupacion'));
-                //->with(compact('deporte'));
     }
 
     /**
@@ -60,22 +60,30 @@ class EntrenadorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(RegistroEntrenadorRequest $request)
-    {
+    {        
         if ($request->ajax()){
             $entrenador = new EntrenadorModel;
             $entrenador->FK_I_ID_PERSONA = $request->Id_Persona;
             $entrenador->V_TELEFONO_FIJO = $request->Telefono_Fijo;
             $entrenador->V_TELEFONO_CELULAR = $request->Telefono_Celular;
             $entrenador->V_CORREO_ELECTRONICO = $request->Correo_Electronico;
+            
             if($entrenador->save()){
+                
+                $entrenador->EntrenadorEtapaEnt()->sync($request->Etapa_Entrenamiento);
+                $entrenador->EntrenadorModalidad()->sync($request->Modalidad);
+                
                 $pivotPersona = Persona::find($request->Id_Persona);
                 $pivotPersona->tipo()->attach(51);
-                $pivotPersona->save();
+                $pivotPersona->save();                
+          
                 return response()->json(["Mensaje" => "Entrenador ingresado correctamente!!."]);                               
             }else{
                 return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);            
             }
-        }       
+        }else{
+            return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);            
+        }
     }
 
     /**
@@ -107,9 +115,9 @@ class EntrenadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RegistroEntrenadorRequest $request, $id)
     {
-        //
+        return response()->json(["Mensaje" => "UPDATE"]);            
     }
 
     /**
@@ -142,4 +150,12 @@ class EntrenadorController extends Controller
             return "No se encontro archivo.";
         }*/
     }
+    
+    public function getEtapasEntrenamiento(Request $request){
+        if ($request->ajax()) {
+            $etapas = EtapaEntrenamientoModel::all();
+        }
+        return($etapas);
+    }
+    
 }

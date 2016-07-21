@@ -296,9 +296,9 @@ class DeportistaController extends Controller{
     }
     
     public static function getModalidad(Request $request, $id) {      
-        if ($request->ajax()) {
+      //  if ($request->ajax()) {
             $modalidad = ModalidadModel::getModalidadesJSON($id);            
-        }
+    //    }
         return response()->json($modalidad);
     }
     
