@@ -64,6 +64,8 @@ class EntrenadorController extends Controller
         if ($request->ajax()){
             $entrenador = new EntrenadorModel;
             $entrenador->FK_I_ID_PERSONA = $request->Id_Persona;
+            $entrenador->FK_I_ID_AGRUPACION = $request->Agrupacion;
+            $entrenador->FK_I_ID_DEPORTE = $request->Deporte;
             $entrenador->V_TELEFONO_FIJO = $request->Telefono_Fijo;
             $entrenador->V_TELEFONO_CELULAR = $request->Telefono_Celular;
             $entrenador->V_CORREO_ELECTRONICO = $request->Correo_Electronico;
@@ -117,7 +119,26 @@ class EntrenadorController extends Controller
      */
     public function update(RegistroEntrenadorRequest $request, $id)
     {
-        return response()->json(["Mensaje" => "UPDATE"]);            
+        if ($request->ajax()){
+            
+            $entrenador = EntrenadorModel::find($id);
+            $entrenador->FK_I_ID_PERSONA = $request->Id_Persona;
+            $entrenador->FK_I_ID_AGRUPACION = $request->Agrupacion;
+            $entrenador->FK_I_ID_DEPORTE = $request->Deporte;
+            $entrenador->V_TELEFONO_FIJO = $request->Telefono_Fijo;
+            $entrenador->V_TELEFONO_CELULAR = $request->Telefono_Celular;
+            $entrenador->V_CORREO_ELECTRONICO = $request->Correo_Electronico;
+            
+            if($entrenador->save()){
+                $entrenador->EntrenadorEtapaEnt()->sync($request->Etapa_Entrenamiento);
+                $entrenador->EntrenadorModalidad()->sync($request->Modalidad);                
+                return response()->json(["Mensaje" => "Entrenador actualizado correctamente!!."]);
+            }else{
+                return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);            
+            }
+        }else{
+            return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);            
+        }
     }
 
     /**
@@ -132,7 +153,7 @@ class EntrenadorController extends Controller
     }
     
     public function datos($id){
-        $persona = Persona::with('entrenador')->find($id);        
+        $persona = Persona::with('entrenador', 'entrenador.etapasEntrenador', 'entrenador.modalidadesEntrenador')->find($id);        
         return $persona;
     }
     
@@ -158,4 +179,10 @@ class EntrenadorController extends Controller
         return($etapas);
     }
     
+    /*public function getEntrenadorEtapas(Request $request, $id) {        
+        if ($request->ajax()) {
+            $entrenadorEtapas = EntrenadorModel::with('etapasEntrenador')->find($id);
+            return $entrenadorEtapas;
+        }
+    }*/
 }

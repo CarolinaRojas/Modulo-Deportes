@@ -38,4 +38,11 @@ class EntrenadorModel extends Model
     public function Deporte(){
         return $this->belongsTo('App\DeporteModel', 'FK_I_ID_DEPORTE');
     }
+    public function etapasEntrenador() {
+        return $this->belongsToMany('App\EtapaEntrenamientoModel', 'tb_srd_entrenador_etapa', 'FK_I_ID_ENTRENADOR_E', 'FK_I_ID_ETAPA_ENTRENAMIENTO');
+    }
+    
+    public function modalidadesEntrenador() {
+        return $this->belongsToMany('App\ModalidadModel', 'tb_srd_entrenador_modalidad', 'FK_I_ID_ENTRENADOR_M', 'FK_I_ID_MODALIDAD_E');
+    }
 }
