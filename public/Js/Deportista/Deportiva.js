@@ -1,6 +1,7 @@
 var contador = 0;
 var conEnt =[];
-$(function(e){   
+$(function(e){       
+    
     RegistroDeportiva();
     
     $('#AgregarEntrenador').on('click', function(e){ SeleccionEntrenador($('#Entrenador').val()); });   
@@ -35,7 +36,11 @@ function popular_modal_deportiva(persona){
     $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
     $("#SImagen2").empty();
     
+    
+    ShowEntrenadores(persona.deportista['FK_I_ID_DEPORTE']);
+    
     if(persona.deportista){
+        
         if(persona.deportista['V_URL_IMG'] != ''){
             $("#SImagen2").append("<img id='Imagen2' src=''>");
             $("#Imagen2").attr('src',$("#Imagen2").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
@@ -50,15 +55,16 @@ function popular_modal_deportiva(persona){
         
         ShowRopa(persona['Id_Genero'], 1, persona.deportista['FK_I_ID_TALLA_CAMISA'], persona.deportista['FK_I_ID_TALLA_CHAQUETA'], persona.deportista['FK_I_ID_TALLA_PANTALON']);
         ShowZapatos(persona['Id_Genero'], 2, persona.deportista['FK_I_ID_TALLA_ZAPATOS']);
-        
+       
         contador = 0;
         conEnt =[];
         
         $.get("Dentrenadores/"+persona.deportista['PK_I_ID_DEPORTISTA'], function (persona) {
               if(persona){
+                  console.log(persona.entrenadores);
                   $.each(persona.entrenadores, function(i, e){
                       var Nombre = e.persona['Primer_Nombre']+' '+e.persona['Segundo_Nombre']+' '+e.persona['Primer_Apellido']+' '+e.persona['Segundo_Apellido'];
-                      var Telefono = e.V_TELEFONO
+                      var Telefono = 'Telefóno fijo: '+e.V_TELEFONO_FIJO+' - '+'Telefóno celular: '+e.V_TELEFONO_CELULAR;
                       var id = e.FK_I_ID_PERSONA;
                       var id_entrenador = e.PK_I_ID_ENTRENADOR
                       var campos = '<div class="panel panel-default" id="DivEntrenador'+id+'" name="DivEntrenador'+id+'" >\n\
@@ -112,7 +118,7 @@ function SeleccionEntrenador(id){
             $('#PanelEntrenador').append(campos);            
             document.getElementById("Entrenador").remove(document.getElementById("Entrenador").selectedIndex);
             contador = contador + 1;
-            conEnt[id] = persona.entrenador['PK_I_ID_ENTRENADOR'];          
+            conEnt[(conEnt.length)+1] = persona.entrenador['PK_I_ID_ENTRENADOR'];          
         }
     });
 }
@@ -127,13 +133,7 @@ function RegistroDeportiva(){
         var Talla_Zapatos = $("#Talla_Zapatos").val();
         var Talla_Chaqueta = $("#Talla_Chaqueta").val();
         var Talla_Pantalon = $("#Talla_Pantalon").val();
-        var ArrayEntrenador = conEnt;
-        
-        if(ArrayEntrenador.length == 0){
-            $("#mensajeIncorrectoDos").empty();
-            ValidacionDeportiva('Entrenador', 'Primero debe escoger uno o más entrenadores.');
-            return false;
-        }else{Normal('Entrenador');}
+        var ArrayEntrenador = conEnt;        
         
         var datos = {                    
                     Id_Persona: Id_Persona,
@@ -174,6 +174,7 @@ function ProcesoDeportiva (tipo, url, datos, token){
         error: function (xhr) {    
             $("#mensajeIncorrectoDos").empty();
             if(xhr.responseJSON.Club_Deportivo){ ValidacionDeportiva('Club_Deportivo', xhr.responseJSON.Club_Deportivo);}else{Normal('Club_Deportivo');}
+            if(xhr.responseJSON.ArrayEntrenador){ ValidacionDeportiva('Entrenador', xhr.responseJSON.ArrayEntrenador);}else{Normal('Entrenador');}
             if(xhr.responseJSON.Talla_Camisa){ ValidacionDeportiva('Talla_Camisa', xhr.responseJSON.Talla_Camisa);}else{Normal('Talla_Camisa');}
             if(xhr.responseJSON.Talla_Zapatos){ ValidacionDeportiva('Talla_Zapatos', xhr.responseJSON.Talla_Zapatos);}else{Normal('Talla_Zapatos');}
             if(xhr.responseJSON.Talla_Chaqueta){ ValidacionDeportiva('Talla_Chaqueta', xhr.responseJSON.Talla_Chaqueta);}else{Normal('Talla_Chaqueta');}
@@ -262,5 +263,19 @@ function ShowZapatos(id_genero, id_tipo, seleccion){
     }).done(function(e){
             $('#Talla_Zapatos').val(seleccion);
             tallaZapatosInter(seleccion);
+    });
+}
+
+function ShowEntrenadores(id, seleccion){    
+    $.get("EntrenadorDeporte/"+id, function(entrenadores){
+        if(entrenadores){
+            $("#Entrenador").empty();
+            $("#Entrenador").append("<option value=''>Seleccionar</option>");        
+            $.each(entrenadores, function(i, e){                
+                $('#Entrenador').append('<option value="'+ e.persona['Id_Persona'] +'">'+ e.persona['Primer_Nombre']+' '+e.persona['Segundo_Nombre']+' '+e.persona['Primer_Apellido']+' '+e.persona['Segundo_Apellido']+'</option>');
+            });       
+        }else{
+            alert('No hay entrenadores registrados para el deporte que practica esta persona.');
+        }
     });
 }

@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
+//use App\Http\Requests;
 use App\EpsModel;
 use App\Etnia;
 use App\AgrupacionModel;
 use App\DeporteModel;
 use App\ModalidadModel;
-use App\EtapaModel;
+//use App\EtapaModel;
 use App\EstadoCivilModel;
 use App\Pais;
 use App\DeportistaModel;
 use App\Persona;
-use App\Tipo;
+//use App\Tipo;
 use App\Ciudad;
 use App\Genero;
 use App\BancoModel;
@@ -32,13 +32,14 @@ use App\TipoCuentaModel;
 use App\TipoEtapaModel;
 use App\Localidad;
 use App\TipoTallaModel;
+use App\EntrenadorModalidadModel;
 
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
 use App\Http\Requests\EstimuloRequest;
-
+/*
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;*/
 
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Session;
@@ -229,7 +230,7 @@ class DeportistaController extends Controller{
         return response()->json(["Mensaje" => 'EDIT']);
     }
     
-    public function update(RegistroDeportistaRequest $request, $id) {     
+    public function update(RegistroDeportistaRequest $request, $id) {  
         if ($request->ajax()){
             $deportista = DeportistaModel::find($id);
             
@@ -296,14 +297,13 @@ class DeportistaController extends Controller{
     }
     
     public static function getModalidad(Request $request, $id) {      
-      //  if ($request->ajax()) {
+        if ($request->ajax()) {
             $modalidad = ModalidadModel::getModalidadesJSON($id);            
-    //    }
+        }
         return response()->json($modalidad);
     }
     
-    public function storeDeportiva(DeportivaRequest $request, $id) {          
-        
+    public function storeDeportiva(DeportivaRequest $request, $id) {        
         if ($request->ajax()){
             
             $ArrayEntrenadores=array_values(array_diff($request->ArrayEntrenador, array('')));
@@ -398,5 +398,10 @@ class DeportistaController extends Controller{
             $talla = TallaModel::find($id);
         }
         return($talla);
+    }
+    
+    public function EntrenadorDeporte(Request $request, $id){
+    $entrenadoresDeporte = EntrenadorModel::with('deporte', 'persona')->where('FK_I_ID_DEPORTE', '=', $id)->get();    
+    return $entrenadoresDeporte;
     }
 }

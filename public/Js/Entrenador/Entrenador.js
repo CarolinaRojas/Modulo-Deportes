@@ -269,10 +269,13 @@ function Proceso (tipo, url, datos, token){
 }
 
 function showDeportes(id, sel) {      
-    $("#Deporte").empty();
-    $("#Deporte").append("<option value=''>Seleccionar</option>");
-    if(id){        
+    if(!sel){
+        $("#Modalidad").empty();
+    }
+    if(id){                
         $.get("getDeportes/" + id + "", function (response) {            
+            $("#Deporte").empty();
+            $("#Deporte").append("<option value=''>Seleccionar</option>");
             $.each(response, function(i, e){
                 $("#Deporte").append("<option value='" +e.PK_I_ID_DEPORTE + "'>" + e.V_NOMBRE_DEPORTE + "</option>");
             });

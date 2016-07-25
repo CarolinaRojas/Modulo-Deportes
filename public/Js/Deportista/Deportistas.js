@@ -25,43 +25,7 @@ $(function(e){
           function(data){
               
             if(data.length > 0){
-              var html = '';
-              /*$.each(data, function(i, e){                                          
-                     $.get("deportista/" + e['Id_Persona'] + "", function (response) {
-                         
-                        if(response.deportista){
-                            html += '<li class="list-group-item" style="border:0">'+
-                                      '<div class="row">'+
-                                          '<span class="label label-warning glyphicon-class">Esta persona ya se encuentra registrada como deportista.   '+
-                                          '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'+
-                                          '</span>'+
-                                          '<br><br>'+
-                                          '<h4 class="list-group-item-heading">'+                                              
-                                              ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
-                                          '<p class="list-group-item-text"> '+
-                                          '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
-                                      '</dvi><br>';
-                        }else{
-                            html += '<li class="list-group-item" style="border:0">'+
-                                    '<br>'+                                                     
-                                      '<div class="row">'+
-                                          '<h4 class="list-group-item-heading">'+
-                                              ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
-                                          '<p class="list-group-item-text">'+
-                                          '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
-                                      '</dvi><br><br><br>'+
-                                      '<div class="row">'+
-                                          '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
-                                              '<button type="button" data-role="InformacionEntrenador" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
-                                          '</div>'+
-                                      '</div>';
-                        }
-                        html += '</li>';
-                        
-                        $('#personas').html(html);
-                        $('#paginador').fadeOut();
-                    });
-              });  */
+              var html = '';      
               $.each(data, function(i, e){                                          
                 $.get("entrenador/" + e['Id_Persona'] + "", function (response) {
                     if(response.entrenador){
@@ -233,8 +197,7 @@ $(function(e){
             document.getElementById("Fecha_Retiro").value = persona.deportista['D_FECHA_RETIRO'];         
             }
           
-          showDeportes(persona.deportista['FK_I_ID_AGRUPACION'], persona.deportista['FK_I_ID_DEPORTE']);
-          
+          showDeportes(persona.deportista['FK_I_ID_AGRUPACION'], persona.deportista['FK_I_ID_DEPORTE']);          
           showModalidades(persona.deportista['FK_I_ID_DEPORTE'], persona.deportista['FK_I_ID_MODALIDAD']);          
           $("#EtapaNacional").empty();
           $("#EtapaInternacional").empty();
@@ -424,11 +387,13 @@ function Proceso (tipo, url, datos, token){
 function showDeportes(id, sel) {  
     
     if(id){
-        $.get("getDeportes/" + id + "", function (response) {            
-           /*$("#Deporte").empty();
+        if(!sel){
             $("#Modalidad").empty();
-            $("#Deporte").append("<option value=''>Seleccionar</option>");
-            $("#Modalidad").append("<option value=''>Seleccionar</option>");*/
+            $("#Modalidad").append("<option value=''>Seleccionar</option>");
+        }
+        $.get("getDeportes/" + id + "", function (response) {            
+           $("#Deporte").empty();            
+            $("#Deporte").append("<option value=''>Seleccionar</option>");            
             $.each(response, function(i, e){
                 $("#Deporte").append("<option value='" +e.PK_I_ID_DEPORTE + "'>" + e.V_NOMBRE_DEPORTE + "</option>");
             });
