@@ -122,6 +122,19 @@ $(function(e){
         $("#Situacion_Militar").val('').change();
         document.getElementById("Fecha_Ingreso").value = '';
         document.getElementById("Fecha_Retiro").value = '';
+                
+        $('Tipo_Estimulo').val('').change();
+        $('Valor_Estimulo').val('').change();
+        $('Valor_SMMLV').val('');
+        
+        $('Club_Deportivo').val('').change();
+        $('Entrenador').val('').change();
+        $('Talla_Camisa').val('').change();
+        $('Talla_Zapatos').val('').change();
+        $('Talla_Chaqueta').val('').change();
+        $('Talla_Pantalon').val('').change();
+        $("#PanelEntrenador").empty();
+        
       
         $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-search');
         $('#personas').html($personas_actuales);

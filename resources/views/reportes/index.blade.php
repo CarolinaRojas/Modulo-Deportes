@@ -18,7 +18,8 @@
     
 @stop  
 @section('content') 
-    <input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
+<center><h3>GESTIÓN DE REPORTES</h3></center>
+  <input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
     <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">  
         <div class="content">
             <div class="panel panel-primary">

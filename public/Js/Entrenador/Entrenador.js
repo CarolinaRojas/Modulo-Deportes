@@ -13,10 +13,11 @@ $(function(e){
         $('input[name="Telefono_Fijo"]').val('');     
         $('input[name="Telefono_Celular"]').val('');     
         $('input[name="Correo_Electronico"]').val('');     
-        $('input[name="Agrupacion"]').val('');     
-        $('input[name="Deporte"]').val('');     
-        $('input[name="Etapa_Entrenamiento"]').val('');     
+        $('input[name="Agrupacion"]').val('').change();     
+        $('input[name="Deporte"]').val('').change();     
+        $('input[name="Etapa_Entrenamiento"]').val('').change();     
         $('input[name="Modalidad"]').val('');
+        $('Modalidad').empty();
         
         $("input[type=checkbox]").prop('checked', false);
         Normal('Telefono_Fijo'); Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Agrupacion'); Normal('Deporte'); Normal('Etapa_Entrenamiento'); Normal('Modalidad');        
@@ -156,7 +157,7 @@ function popular_modal_entrenador(persona){
         if(persona.entrenador){      
             if(persona.entrenador['V_URL_IMG'] != ''){
                 $("#SImagen").append("<img id='Imagen' src=''>");
-                $("#Imagen").attr('src',$("#Imagen").attr('src')+persona.deportista['V_URL_IMG']+'?' + (new Date()).getTime());
+                $("#Imagen").attr('src',$("#Imagen").attr('src')+persona.entrenador['V_URL_IMG']+'?' + (new Date()).getTime());
             }else{            
                 $("#SImagen").append('<span class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span><br>No ha ingresado la imágen del deportista.</span>');
             }
@@ -241,7 +242,9 @@ function Proceso (tipo, url, datos, token){
         dataType: 'json',
         data: datos,        
         success: function (xhr) {
+            guardaImagen(datos['Id_Persona']);
             console.log(xhr.Mensaje);
+            
             alert(xhr.Mensaje);
           /*  $("#Botonera").empty();
             var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>\
@@ -317,10 +320,10 @@ function getModalidades(id){
 
 
 
-/*function guardaImagen(idPersona){
+function guardaImagen(idPersona){
     var token = $("#token").val();
     $.ajax({
-        url: 'AddImagen/'+idPersona,
+        url: 'AddImagenEnt/'+idPersona,
         type: 'POST',
         data:  new FormData($("#Formulario_Imagen")[0]),
         mimeType:"multipart/form-data",
@@ -336,4 +339,4 @@ function getModalidades(id){
             $("#errores").html(errorThrown);
         }        
     });
-}*/
+}

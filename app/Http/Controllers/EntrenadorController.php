@@ -31,7 +31,6 @@ class EntrenadorController extends Controller
         $pais = Pais::all();        
         $genero = Genero::all();
         $etapasEntrenamiento = EtapaEntrenamientoModel::all();
-        //$deporte = DeporteModel::all();
         $agrupacion = AgrupacionModel::all();
      
         $entrenador = array();
@@ -158,18 +157,18 @@ class EntrenadorController extends Controller
     }
     
     public function AgregarImagen(Request $request, $idPersona){
-        /*if ($request->hasFile('Fotografia')){            
-            $persona = Persona::with('deportista')->find($idPersona);
-            $persona->deportista['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_deportista.png';
-            $persona->deportista->save();
+        if ($request->hasFile('Fotografia')){            
+            $persona = Persona::with('entrenador')->find($idPersona);
+            $persona->entrenador['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_entrenador.png';
+            $persona->entrenador->save();
             $file = $request->file('Fotografia'); 
-            $nombre = $idPersona.'_deportista.png';         
+            $nombre = $idPersona.'_entrenador.png';         
             \Storage::disk('fotografias')->put($nombre,  \File::get($file));
             return "Archivo almacenado correctamente";
         }
         else{
             return "No se encontro archivo.";
-        }*/
+        }
     }
     
     public function getEtapasEntrenamiento(Request $request){
@@ -177,6 +176,13 @@ class EntrenadorController extends Controller
             $etapas = EtapaEntrenamientoModel::all();
         }
         return($etapas);
+    }
+    
+    
+    public function conteoDeportistas(){
+        $conteo = EntrenadorModel::with('')->find(2);
+        dd($conteo);
+        return $conteo;
     }
     
     /*public function getEntrenadorEtapas(Request $request, $id) {        

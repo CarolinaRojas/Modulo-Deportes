@@ -85,6 +85,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('EditEntrenador/{id}', 'EntrenadorController@update');
     
     Route::get('getEtapasEntrenamiento', 'EntrenadorController@getEtapasEntrenamiento');
+    Route::post('AddImagenEnt/{id}','EntrenadorController@AgregarImagen'); 
+    Route::get('conteoDeportistas', 'EntrenadorController@conteoDeportistas');
     //Route::get('getEntrenadorEtapas/{id}', 'EntrenadorController@getEntrenadorEtapas');
     
 });

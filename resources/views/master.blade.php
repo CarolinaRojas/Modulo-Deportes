@@ -106,17 +106,18 @@
       <!-- FIN Menu Módulo -->
         
       <!-- Contenedor información módulo -->
-      </br></br>
+      </br></br>      
       <div class="container">
-          <div class="page-header" id="banner">
+          <br>
+          <div class="page-header" id="banner">   
             <div class="row">
-              <div class="col-lg-8 col-md-7 col-sm-6">
+                <div class="col-md-10 col-xs-8">
                 <h1>MÓDULO DE DEPORTES</h1>
                 <p class="lead"><h1>Subdirección de Recreación y Deportes</h1></p>
               </div>
-              <div class="col-lg-4 col-md-5 col-sm-6">
+              <div class="col-md-2 col-xs-4">
                  <div align="right"> 
-                    <img src="public/Img/IDRD.JPG" width="50%" heigth="40%"/>
+                     <img src="public/Img/IDRD.JPG" class="img-responsive"/>
                  </div>                    
               </div>
             </div>
