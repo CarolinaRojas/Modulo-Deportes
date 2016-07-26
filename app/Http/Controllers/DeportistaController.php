@@ -37,9 +37,8 @@ use App\EntrenadorModalidadModel;
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
 use App\Http\Requests\EstimuloRequest;
-/*
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\DB;*/
+
+use Validator;
 
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Session;
@@ -214,10 +213,10 @@ class DeportistaController extends Controller{
                     }
                 }
                 
-                return response()->json(["Mensaje" => "Deportista ingresado correctamente!!."]);                
+                return response()->json(["Mensaje" => "Deportista ingresado correctamente"]);                
                
             }else{
-                return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);
+                return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde"]);
             }
         }
     }
@@ -230,7 +229,8 @@ class DeportistaController extends Controller{
         return response()->json(["Mensaje" => 'EDIT']);
     }
     
-    public function update(RegistroDeportistaRequest $request, $id) {  
+    public function update(RegistroDeportistaRequest $request, $id) {
+        
         if ($request->ajax()){
             $deportista = DeportistaModel::find($id);
             
@@ -278,9 +278,9 @@ class DeportistaController extends Controller{
                         
             if($deportista->save()){   
                 
-                return response()->json(["Mensaje" => "Deportista actualizado correctamente!!."]);
+                return response()->json(["Mensaje" => "Deportista actualizado correctamente"]);
             }else{
-                return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
+                return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde"]);
             }
         }        
     }
@@ -343,7 +343,7 @@ class DeportistaController extends Controller{
         return($etapas->etapas);
     }
         
-    public function AgregarImagen(Request $request, $idPersona){
+    /*public function AgregarImagen(Request $request, $idPersona){
         if ($request->hasFile('Fotografia')){            
             $persona = Persona::with('deportista')->find($idPersona);
             $persona->deportista['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_deportista.png';
@@ -355,6 +355,27 @@ class DeportistaController extends Controller{
         }
         else{
             return "No se encontro archivo.";
+        }
+    }*/
+    public function AgregarImagen(Request $request, $idPersona){
+        $validator = Validator:: make($request->all(),[
+            'Fotografia' => 'image|mimes:jpeg,png,bmp|max:1000',
+        ]);
+        if ($validator->fails()) {
+            return ", pero ocurrio un error en la validación de la imagen o su tamaño.";
+        }else{        
+            if ($request->hasFile('Fotografia')){            
+                $persona = Persona::with('deportista')->find($idPersona);
+                $persona->deportista['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_deportista.png';
+                $persona->deportista->save();
+                $file = $request->file('Fotografia'); 
+                $nombre = $idPersona.'_deportista.png';         
+                \Storage::disk('fotografias')->put($nombre,  \File::get($file));
+                return " y la imagen ha sido actualizada correctamente.";
+            }
+            else{
+                return ", la imagen no ha sido actualizada.";
+            }
         }
     }
     

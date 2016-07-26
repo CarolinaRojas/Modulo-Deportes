@@ -9,7 +9,7 @@ $(function(e){
     var URL = $('#main_persona').data('url');    
     
     var reset = function(e){       
-        
+        $('input[name="buscador"]').val('');
         $('input[name="Telefono_Fijo"]').val('');     
         $('input[name="Telefono_Celular"]').val('');     
         $('input[name="Correo_Electronico"]').val('');     
@@ -17,6 +17,7 @@ $(function(e){
         $('input[name="Deporte"]').val('').change();     
         $('input[name="Etapa_Entrenamiento"]').val('').change();     
         $('input[name="Modalidad"]').val('');
+        $('#Fotografia').val('');
         $('Modalidad').empty();
         
         $("input[type=checkbox]").prop('checked', false);
@@ -52,9 +53,8 @@ $(function(e){
     
     $('#Deporte').on('change', function(e){ showModalidades($('#Deporte').val()); });
     
-});
-
-function buscar(e){
+    
+    function buscar(e){
     var key = $('input[name="buscador"]').val();
     if (key.length > 2){
         $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-remove');
@@ -110,32 +110,32 @@ function buscar(e){
       }
     };
     
-function Validacion(campo, mensaje){
-    $("#"+campo).css({ 'border-color': '#B94A48' });    
-    $("#"+campo+"L").css({ 'color': '#B94A48' });    
-    
-    var texto = $("#mensajeIncorrecto").html();
-    
-    $("#mensajeIncorrecto").html(texto + '<br>' + mensaje);
-    $("#mensaje-incorrecto").fadeIn();
-    $('#mensaje-incorrecto').focus();
-}
+    function Validacion(campo, mensaje){
+        $("#"+campo).css({ 'border-color': '#B94A48' });    
+        $("#"+campo+"L").css({ 'color': '#B94A48' });    
 
-function Normal(campo){
-    $("#"+campo).css({ 'border-color': '#CCCCCC' });    
-    $("#"+campo+"L").css({ 'color': '#555555' });    
-}
-    
-function InfoBasica(id){    
-        $.get("entrenador/" + id + "", function (response) {            
-            popular_modal_entrenador(response);
-        });
-        $("#mensaje-incorrecto").fadeOut();
-        //$("input[type=checkbox]").prop('checked', false);
-        Normal('Telefono_Fijo'); Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Agrupacion'); Normal('Deporte'); Normal('Etapa_Entrenamiento'); Normal('Modalidad');        
-}
+        var texto = $("#mensajeIncorrecto").html();
 
-function popular_modal_entrenador(persona){
+        $("#mensajeIncorrecto").html(texto + '<br>' + mensaje);
+        $("#mensaje-incorrecto").fadeIn();
+        $('#mensaje-incorrecto').focus();
+    }
+
+    function Normal(campo){
+        $("#"+campo).css({ 'border-color': '#CCCCCC' });    
+        $("#"+campo+"L").css({ 'color': '#555555' });    
+    }
+
+    function InfoBasica(id){    
+        $('#Fotografia').val('');
+            $.get("entrenador/" + id + "", function (response) {            
+                popular_modal_entrenador(response);
+            });
+            $("#mensaje-incorrecto").fadeOut();
+            Normal('Telefono_Fijo'); Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Agrupacion'); Normal('Deporte'); Normal('Etapa_Entrenamiento'); Normal('Modalidad');        
+    }
+    
+    function popular_modal_entrenador(persona){
         var nombreEntrenador="";
         var cedulaEntrenador="";
 
@@ -179,164 +179,159 @@ function popular_modal_entrenador(persona){
             $("#SImagen").append('<span class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span><br>No ha ingresado la imágen del entrenador.</span>');
         }
       
-    $('#modal_form_entrenador').modal('show');
-}
+        $('#modal_form_entrenador').modal('show');
+    }
+    
+    function RegistroEntrenador(){    
+    
+        var Id_Persona = $("#Id_Persona").val();
+        var Id_Entrenador = $("#Id_Entrenador").val();
+        var Telefono_Fijo = $('#Telefono_Fijo').val();
+        var Telefono_Celular = $('#Telefono_Celular').val();
+        var Correo_Electronico = $('#Correo_Electronico').val();
+        var Deporte = $('#Deporte').val();
+        var Agrupacion = $('#Agrupacion').val();    
+        var  Etapa_Entrenamiento = [];
+        var Modalidad = [];
+        var nombre = '';
+        var nombreM = '';
 
-
-function RegistroEntrenador(){    
-    
-    var Id_Persona = $("#Id_Persona").val();
-    var Id_Entrenador = $("#Id_Entrenador").val();
-    var Telefono_Fijo = $('#Telefono_Fijo').val();
-    var Telefono_Celular = $('#Telefono_Celular').val();
-    var Correo_Electronico = $('#Correo_Electronico').val();
-    var Deporte = $('#Deporte').val();
-    var Agrupacion = $('#Agrupacion').val();    
-    var  Etapa_Entrenamiento = [];
-    var Modalidad = [];
-    var nombre = '';
-    var nombreM = '';
-    
-    $.each(etapas, function(i, e){
-        nombre = '#etapa'+e['PK_I_ID_ETAPA_ENTRENAMIENTO'];
-        if($(nombre).is(":checked") == true){
-            Etapa_Entrenamiento[Etapa_Entrenamiento.length] = e['PK_I_ID_ETAPA_ENTRENAMIENTO'];
-        }
-    });
-    
-    if(Deporte){                
-        $.each(modalidades, function(i, e){
-           nombreM = '#modalidad'+e['PK_I_ID_MODALIDAD'];
-            if($(nombreM).is(":checked") == true){
-               Modalidad[Modalidad.length] = e['PK_I_ID_MODALIDAD'];
+        $.each(etapas, function(i, e){
+            nombre = '#etapa'+e['PK_I_ID_ETAPA_ENTRENAMIENTO'];
+            if($(nombre).is(":checked") == true){
+                Etapa_Entrenamiento[Etapa_Entrenamiento.length] = e['PK_I_ID_ETAPA_ENTRENAMIENTO'];
             }
         });
-    }
-    
-    var datos = {
-            Id_Persona: Id_Persona,
-            Telefono_Fijo: Telefono_Fijo,
-            Telefono_Celular: Telefono_Celular,
-            Correo_Electronico: Correo_Electronico,
-            Deporte: Deporte,
-            Agrupacion: Agrupacion,
-            Etapa_Entrenamiento: Etapa_Entrenamiento,
-            Modalidad: Modalidad
-        }   
-    $("#mensajeIncorrecto").html(':');        
-    var token = $("#token").val();
 
-    if(Id_Entrenador){
-        Proceso('POST', 'EditEntrenador/'+ Id_Entrenador, datos, token);
-    }else{            
-        Proceso('POST', 'AddEntrenador', datos, token);
-    }
-}
-
-function Proceso (tipo, url, datos, token){
-   
-     $.ajax({
-        type: tipo,
-        url: url,
-        headers: {'X-CSRF-TOKEN': token},
-        dataType: 'json',
-        data: datos,        
-        success: function (xhr) {
-            guardaImagen(datos['Id_Persona']);
-            console.log(xhr.Mensaje);
-            
-            alert(xhr.Mensaje);
-          /*  $("#Botonera").empty();
-            var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>\
-                            <button type="button" data-role="InformacionDeportiva" data-rel="'+datos['Id_Persona']+'" class="btn btn-default btn-sm">Información Deportiva</button>\
-                            <button type="button" data-role="ApoyoServicios" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>';
-            $("#Botonera").append(botonera);*/
-            $('#modal_form_persona').modal('hide');
-        },
-        error: function (xhr) {
-            if(xhr.responseJSON.Telefono_Fijo){ Validacion('Telefono_Fijo', xhr.responseJSON.Telefono_Fijo);}else{Normal('Telefono_Fijo');}
-            if(xhr.responseJSON.Telefono_Celular){ Validacion('Telefono_Celular', xhr.responseJSON.Telefono_Celular);}else{Normal('Telefono_Celular');}
-            if(xhr.responseJSON.Correo_Electronico){ Validacion('Correo_Electronico', xhr.responseJSON.Correo_Electronico);}else{Normal('Correo_Electronico');}
-            if(xhr.responseJSON.Etapa_Entrenamiento){ Validacion('Etapa_Entrenamiento', xhr.responseJSON.Etapa_Entrenamiento);}else{Normal('Etapa_Entrenamiento');}
-            if(xhr.responseJSON.Deporte){ Validacion('Deporte', xhr.responseJSON.Deporte);}else{Normal('Deporte');}
-            if(xhr.responseJSON.Agrupacion){ Validacion('Agrupacion', xhr.responseJSON.Agrupacion);}else{Normal('Agrupacion');}
-            if(xhr.responseJSON.Modalidad){ Validacion('Modalidad', xhr.responseJSON.Modalidad);}else{Normal('Modalidad');}
-        
-            var scrollPos;                    
-            scrollPos = $("#mensajeIncorrecto").offset().top;
-            $(window).scrollTop(scrollPos);
-            return false;
+        if(Deporte){                
+            $.each(modalidades, function(i, e){
+               nombreM = '#modalidad'+e['PK_I_ID_MODALIDAD'];
+                if($(nombreM).is(":checked") == true){
+                   Modalidad[Modalidad.length] = e['PK_I_ID_MODALIDAD'];
+                }
+            });
         }
-    });
+
+        var datos = {
+                Id_Persona: Id_Persona,
+                Telefono_Fijo: Telefono_Fijo,
+                Telefono_Celular: Telefono_Celular,
+                Correo_Electronico: Correo_Electronico,
+                Deporte: Deporte,
+                Agrupacion: Agrupacion,
+                Etapa_Entrenamiento: Etapa_Entrenamiento,
+                Modalidad: Modalidad,
+            }   
+        $("#mensajeIncorrecto").html(':');        
+        var token = $("#token").val();
+
+        if(Id_Entrenador){
+            Proceso('POST', 'EditEntrenador/'+ Id_Entrenador, datos, token);
+        }else{            
+            Proceso('POST', 'AddEntrenador', datos, token);
+        }
+    }
+
+    function Proceso (tipo, url, datos, token){
+
+         $.ajax({
+            type: tipo,
+            url: url,
+            headers: {'X-CSRF-TOKEN': token},
+            dataType: 'json',
+            data: datos,        
+            success: function (xhr) {
+              guardaImagen(datos['Id_Persona'], xhr.Mensaje);
+            },
+            error: function (xhr) {
+                if(xhr.responseJSON.Telefono_Fijo){ Validacion('Telefono_Fijo', xhr.responseJSON.Telefono_Fijo);}else{Normal('Telefono_Fijo');}
+                if(xhr.responseJSON.Telefono_Celular){ Validacion('Telefono_Celular', xhr.responseJSON.Telefono_Celular);}else{Normal('Telefono_Celular');}
+                if(xhr.responseJSON.Correo_Electronico){ Validacion('Correo_Electronico', xhr.responseJSON.Correo_Electronico);}else{Normal('Correo_Electronico');}
+                if(xhr.responseJSON.Etapa_Entrenamiento){ Validacion('Etapa_Entrenamiento', xhr.responseJSON.Etapa_Entrenamiento);}else{Normal('Etapa_Entrenamiento');}
+                if(xhr.responseJSON.Deporte){ Validacion('Deporte', xhr.responseJSON.Deporte);}else{Normal('Deporte');}
+                if(xhr.responseJSON.Agrupacion){ Validacion('Agrupacion', xhr.responseJSON.Agrupacion);}else{Normal('Agrupacion');}
+                if(xhr.responseJSON.Modalidad){ Validacion('Modalidad', xhr.responseJSON.Modalidad);}else{Normal('Modalidad');}
+
+                var scrollPos;                    
+                scrollPos = $("#mensajeIncorrecto").offset().top;
+                $(window).scrollTop(scrollPos);
+                return false;
+            }
+        });
+
+    }
     
-}
+    
+    function showDeportes(id, sel) {      
+        if(!sel){
+            $("#Modalidad").empty();
+        }
+        if(id){                
+            $.get("getDeportes/" + id + "", function (response) {            
+                $("#Deporte").empty();
+                $("#Deporte").append("<option value=''>Seleccionar</option>");
+                $.each(response, function(i, e){
+                    $("#Deporte").append("<option value='" +e.PK_I_ID_DEPORTE + "'>" + e.V_NOMBRE_DEPORTE + "</option>");
+                });
+            }).done(function(e){
+                $("#Deporte").val(sel);
+            });
+        }
+    }
 
-function showDeportes(id, sel) {      
-    if(!sel){
+    function showModalidades(id, seleccion) {    
         $("#Modalidad").empty();
-    }
-    if(id){                
-        $.get("getDeportes/" + id + "", function (response) {            
-            $("#Deporte").empty();
-            $("#Deporte").append("<option value=''>Seleccionar</option>");
-            $.each(response, function(i, e){
-                $("#Deporte").append("<option value='" +e.PK_I_ID_DEPORTE + "'>" + e.V_NOMBRE_DEPORTE + "</option>");
+        if(id){        
+             getModalidades(id);
+            $.get("getModalidades/" + id + "", function (response) {                
+                $.each(response, function(i, e){
+                   $('#Modalidad').append('<input type="checkbox"  name="modalidad'+e.PK_I_ID_MODALIDAD+'" id ="modalidad'+e.PK_I_ID_MODALIDAD+'" /><small>'+e.V_NOMBRE_MODALIDAD+'</small><br>');
+                });
+            }).done(function(e){
+              $.each(seleccion, function(i, e){
+                    $("#modalidad"+e['PK_I_ID_MODALIDAD']).prop("checked", "checked");
+                });
             });
-        }).done(function(e){
-            $("#Deporte").val(sel);
+        }
+    }
+
+    function getEtapas(){
+     etapas = [];
+        $.get("getEtapasEntrenamiento", function (etapasM) {    
+            etapas = etapasM;
         });
     }
-}
-
-function showModalidades(id, seleccion) {    
-    $("#Modalidad").empty();
-    if(id){        
-         getModalidades(id);
-        $.get("getModalidades/" + id + "", function (response) {                
-            $.each(response, function(i, e){
-               $('#Modalidad').append('<input type="checkbox"  name="modalidad'+e.PK_I_ID_MODALIDAD+'" id ="modalidad'+e.PK_I_ID_MODALIDAD+'" /><small>'+e.V_NOMBRE_MODALIDAD+'</small><br>');
+    function getModalidades(id){
+        if(id){
+            $.get("getModalidades/" + id + "", function (modalidadesM) {
+                modalidades = modalidadesM;
             });
-        }).done(function(e){
-          $.each(seleccion, function(i, e){
-                $("#modalidad"+e['PK_I_ID_MODALIDAD']).prop("checked", "checked");
-            });
-        });
+        }
     }
-}
 
-function getEtapas(){
- etapas = [];
-    $.get("getEtapasEntrenamiento", function (etapasM) {    
-        etapas = etapasM;
-    });
-}
-function getModalidades(id){
-    if(id){
-        $.get("getModalidades/" + id + "", function (modalidadesM) {
-            modalidades = modalidadesM;
+
+
+    function guardaImagen(idPersona, mensaje){
+        var token = $("#token").val();
+        $.ajax({
+            url: 'AddImagenEnt/'+idPersona,
+            type: 'POST',
+            data:  new FormData($("#Formulario_Imagen")[0]),
+            mimeType:"multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData:false,
+            headers: {'X-CSRF-TOKEN': token},
+            success: function(data){
+                alert(mensaje+data);
+                $("#Imagen").attr('src',$("#Imagen").attr('src')+idPersona+'_deportista.png?' + (new Date()).getTime());            
+                $('#modal_form_entrenador').modal('hide');
+
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                Validacion('Fotografia', 'Error en la imagen');
+            }
+
         });
-    }
-}
-
-
-
-function guardaImagen(idPersona){
-    var token = $("#token").val();
-    $.ajax({
-        url: 'AddImagenEnt/'+idPersona,
-        type: 'POST',
-        data:  new FormData($("#Formulario_Imagen")[0]),
-        mimeType:"multipart/form-data",
-        contentType: false,
-        cache: false,
-        processData:false,
-        headers: {'X-CSRF-TOKEN': token},
-        success: function(data){
-            $("#Imagen").attr('src',$("#Imagen").attr('src')+idPersona+'_deportista.png?' + (new Date()).getTime());
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            console.log('error');
-            $("#errores").html(errorThrown);
-        }        
-    });
-}
+    }    
+});

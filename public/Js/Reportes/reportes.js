@@ -30,7 +30,7 @@ function DescargaReporteEstimulos(){
      $("#mensaje-incorrecto-reporte").fadeOut();
         Normal('fInicio');
         Normal('fFin');
-        
+
         var inicio  = document.getElementById("fInicio").value;
         var fin  = document.getElementById("fFin").value;        
         if(!id || !inicio || !fin){
@@ -45,22 +45,21 @@ function DescargaReporteEstimulos(){
             BuscarReporte(id, inicio, fin) ;
         }
 }
-
-function BuscarReporte(id, inicio, fin){
-    location.href = 'HistorialEstimulos/'+id+'/'+inicio+'/'+fin;
+function Normal(campo){
+    $("#"+campo).css({ 'border-color': '#CCCCCC' });    
+    $("#"+campo+"L").css({ 'color': '#555555' });    
 }
+
 function ValidacionDeportiva(campo, mensaje){
     $("#"+campo).css({ 'border-color': '#B94A48' });    
     $("#"+campo+"L").css({ 'color': '#B94A48' });    
-    
+
     var texto = $("#mensajeIncorrectoReporte").html();
-    
+
     $("#mensajeIncorrectoReporte").html(texto + '<br>' + mensaje);
     $("#mensaje-incorrecto-reporte").fadeIn();
     $('#mensaje-incorrecto-reporte').focus();
 }
-
-function Normal(campo){
-    $("#"+campo).css({ 'border-color': '#CCCCCC' });    
-    $("#"+campo+"L").css({ 'color': '#555555' });    
+function BuscarReporte(id, inicio, fin){
+    location.href = 'HistorialEstimulos/'+id+'/'+inicio+'/'+fin;
 }

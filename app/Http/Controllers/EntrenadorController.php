@@ -18,6 +18,8 @@ use App\AgrupacionModel;
 use App\EntrenadorEtapaModel;
 use App\EntrenadorModalidadModel;
 
+use Validator;
+
 class EntrenadorController extends Controller
 {
     /**
@@ -118,8 +120,7 @@ class EntrenadorController extends Controller
      */
     public function update(RegistroEntrenadorRequest $request, $id)
     {
-        if ($request->ajax()){
-            
+        if ($request->ajax()){            
             $entrenador = EntrenadorModel::find($id);
             $entrenador->FK_I_ID_PERSONA = $request->Id_Persona;
             $entrenador->FK_I_ID_AGRUPACION = $request->Agrupacion;
@@ -131,12 +132,12 @@ class EntrenadorController extends Controller
             if($entrenador->save()){
                 $entrenador->EntrenadorEtapaEnt()->sync($request->Etapa_Entrenamiento);
                 $entrenador->EntrenadorModalidad()->sync($request->Modalidad);                
-                return response()->json(["Mensaje" => "Entrenador actualizado correctamente!!."]);
+                return response()->json(["Mensaje" => "Entrenador actualizado correctamente"]);
             }else{
-                return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);            
+                return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde"]);            
             }
         }else{
-            return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde."]);            
+            return response()->json(["Mensaje" => "No se ha registrado correctamente, por favor inténtelo más tarde"]);            
         }
     }
 
@@ -157,17 +158,24 @@ class EntrenadorController extends Controller
     }
     
     public function AgregarImagen(Request $request, $idPersona){
-        if ($request->hasFile('Fotografia')){            
-            $persona = Persona::with('entrenador')->find($idPersona);
-            $persona->entrenador['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_entrenador.png';
-            $persona->entrenador->save();
-            $file = $request->file('Fotografia'); 
-            $nombre = $idPersona.'_entrenador.png';         
-            \Storage::disk('fotografias')->put($nombre,  \File::get($file));
-            return "Archivo almacenado correctamente";
-        }
-        else{
-            return "No se encontro archivo.";
+        $validator = Validator:: make($request->all(),[
+            'Fotografia' => 'image|mimes:jpeg,png,bmp|max:1000',
+        ]);
+        if ($validator->fails()) {
+            return ", pero ocurrio un error en la validación de la imagen o su tamaño.";
+        }else{        
+            if ($request->hasFile('Fotografia')){            
+                $persona = Persona::with('entrenador')->find($idPersona);
+                $persona->entrenador['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_entrenador.png';
+                $persona->entrenador->save();
+                $file = $request->file('Fotografia'); 
+                $nombre = $idPersona.'_entrenador.png';         
+                \Storage::disk('fotografias')->put($nombre,  \File::get($file));
+                return " y la imagen ha sido actualizada correctamente.";
+            }
+            else{
+                return ", la imagen no ha sido actualizada.";
+            }
         }
     }
     

@@ -2,6 +2,7 @@
 @section('script')
   @parent
     <script src="{{ asset('public/Js/Entrenador/Entrenador.js') }}"></script> 
+    {{Html::style('public/Css/bootstrap.css')}}
     <!--<script src="{{ asset('public/Js/Deportista/Deportiva.js') }}"></script> 
     <script src="{{ asset('public/Js/Deportista/ApoyoServicios.js') }}"></script>    
     
