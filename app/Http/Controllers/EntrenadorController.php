@@ -153,7 +153,7 @@ class EntrenadorController extends Controller
     }
     
     public function datos($id){
-        $persona = Persona::with('entrenador', 'entrenador.etapasEntrenador', 'entrenador.modalidadesEntrenador')->find($id);        
+        $persona = Persona::with('entrenador', 'entrenador.etapasEntrenador', 'entrenador.modalidadesEntrenador', 'entrenador.Historialdeportistas')->find($id);        
         return $persona;
     }
     

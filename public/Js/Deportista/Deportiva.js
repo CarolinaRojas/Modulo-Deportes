@@ -58,7 +58,7 @@ $(function(e){
 
             contador = 0;
             conEnt =[];
-
+           
             $.get("Dentrenadores/"+persona.deportista['PK_I_ID_DEPORTISTA'], function (persona) {
                   if(persona){
                       $.each(persona.entrenadores, function(i, e){
@@ -82,16 +82,19 @@ $(function(e){
                                 </div>\n\
                             </div>';            
                         $('#PanelEntrenador').append(campos);                                 
-                        $("#Entrenador option[value='"+e.FK_I_ID_PERSONA+"']").remove();                    
-                        conEnt[id] = id_entrenador;
-                      });
+                        $("#Entrenador option[value='"+e.FK_I_ID_PERSONA+"']").remove();
+                        conEnt[id]= id_entrenador;
+                      });                      
                   }      
+                }).done(function(){
+                    $('#modal_form_deportiva').modal('show');
                 });
         }else{
             ShowRopa(persona['Id_Genero'], 1);
-            ShowZapatos(persona['Id_Genero'], 2);
-        }
-        $('#modal_form_deportiva').modal('show');
+            ShowZapatos(persona['Id_Genero'], 2);           
+            $('#modal_form_deportiva').modal('show');
+        }   
+        
     };
 
     function SeleccionEntrenador(id){      
@@ -116,8 +119,7 @@ $(function(e){
                             </div>';                        
                 $('#PanelEntrenador').append(campos);            
                 document.getElementById("Entrenador").remove(document.getElementById("Entrenador").selectedIndex);
-                contador = contador + 1;
-                conEnt[(conEnt.length)+1] = persona.entrenador['PK_I_ID_ENTRENADOR'];          
+                conEnt[id] = persona.entrenador['PK_I_ID_ENTRENADOR'];          
             }
         });
     }
@@ -132,6 +134,7 @@ $(function(e){
             var Talla_Zapatos = $("#Talla_Zapatos").val();
             var Talla_Chaqueta = $("#Talla_Chaqueta").val();
             var Talla_Pantalon = $("#Talla_Pantalon").val();
+            conEnt = conEnt.filter(Boolean);
             var ArrayEntrenador = conEnt;        
 
             var datos = {                    
@@ -162,6 +165,7 @@ $(function(e){
             dataType: 'json',
             data: datos,
             success: function (xhr) {
+                console.log(xhr);
                 alert(xhr.Mensaje);
                 $("#Botonera").empty();
                 var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>\
@@ -203,19 +207,7 @@ $(function(e){
         $("#"+campo+"L").css({ 'color': '#555555' });    
     }
 
-    function tallaZapatosInter(id_talla){
-        if(id_talla){
-            $("#TUK").empty();
-            $("#TUSA").empty();
-            $.get("getOnlyTalla/"+id_talla, function (talla) {
-                $("#TUK").append(talla.V_UK);
-                $("#TUSA").append(talla.V_USA);
-            });
-            document.getElementById("ZapatoInter").style.visibility = "visible";
-        }else{
-            document.getElementById("ZapatoInter").style.visibility = "hidden";
-        }
-    }
+    
 
     function ShowRopa(id_genero, id_tipo, seleccion_camisa, seleccion_chaqueta, seleccion_pantalon){
         $.get("getTallas/"+id_genero+"/"+id_tipo, function (tallasRopa) {        
@@ -273,8 +265,21 @@ $(function(e){
     }
 });
 function DesechaEntrenador(id, nombre){
-        document.getElementById("DivEntrenador"+id.value).remove(document.getElementById("DivEntrenador"+id.value));
-        $('#Entrenador').append('<option value="'+id.value+'">'+nombre+'</option>');
-        delete conEnt[parseInt(id.value)];
-        conEnt = conEnt.filter(Boolean);
+    document.getElementById("DivEntrenador"+id.value).remove(document.getElementById("DivEntrenador"+id.value));
+    $('#Entrenador').append('<option value="'+id.value+'">'+nombre+'</option>');    
+    delete conEnt[parseInt(id.value)];
+}
+
+function tallaZapatosInter(id_talla){
+    if(id_talla){
+        $("#TUK").empty();
+        $("#TUSA").empty();
+        $.get("getOnlyTalla/"+id_talla, function (talla) {
+            $("#TUK").append(talla.V_UK);
+            $("#TUSA").append(talla.V_USA);
+        });
+        document.getElementById("ZapatoInter").style.visibility = "visible";
+    }else{
+        document.getElementById("ZapatoInter").style.visibility = "hidden";
     }
+}

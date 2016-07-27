@@ -104,4 +104,11 @@ class DeportistaModel extends Model
     public function localidad(){
         return $this->belongsTo('App\Localidad', 'FK_I_ID_LOCALIDAD');
     }
+    
+    
+    public function Historialentrenadores()
+    {
+        return $this->belongsToMany('App\EntrenadorModel', 'tb_srd_h_deportista_entrenador', 'FK_I_ID_DEPORTISTA_HIST', 'FK_I_ID_ENTRENADOR_HIST')->withPivot('created_at');
+    }
+    
 }

@@ -32,16 +32,14 @@ use App\TipoCuentaModel;
 use App\TipoEtapaModel;
 use App\Localidad;
 use App\TipoTallaModel;
-use App\EntrenadorModalidadModel;
-
+use App\HistorialDeportistaEntrenadorModel;
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
 use App\Http\Requests\EstimuloRequest;
-
 use Validator;
-
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Session;
+use Carbon\Carbon;
 
 class DeportistaController extends Controller{
 
@@ -212,7 +210,6 @@ class DeportistaController extends Controller{
                         return response()->json(["Mensaje" => "La etapa nacional del deportista no se ha ingresado correctamente, intentelo más tarde."]);
                     }
                 }
-                
                 return response()->json(["Mensaje" => "Deportista ingresado correctamente"]);                
                
             }else{
@@ -307,8 +304,10 @@ class DeportistaController extends Controller{
         if ($request->ajax()){
             
             $ArrayEntrenadores=array_values(array_diff($request->ArrayEntrenador, array('')));
-            $deportista = DeportistaModel::find($id);
+            $deportista = DeportistaModel::find($id);            
             $deportista->entrenadores()->sync($ArrayEntrenadores);
+            
+            $deportista->Historialentrenadores()->attach($ArrayEntrenadores);
            
             $deportista->FK_I_ID_CLUB_DEPORTIVO = $request->Club_Deportivo;
             $deportista->FK_I_ID_TALLA_CAMISA = $request->Talla_Camisa;
@@ -316,7 +315,7 @@ class DeportistaController extends Controller{
             $deportista->FK_I_ID_TALLA_CHAQUETA = $request->Talla_Chaqueta;
             $deportista->FK_I_ID_TALLA_PANTALON = $request->Talla_Pantalon;
             
-            if($deportista->save()){
+            if($deportista->save()){                
                 return response()->json(["Mensaje" => "Deportista actualizado correctamente."]);
             }else{
                 return response()->json(["Mensaje" => "No se ha actualizado correctamente, por favor inténtelo más tarde."]);
@@ -342,21 +341,7 @@ class DeportistaController extends Controller{
         }
         return($etapas->etapas);
     }
-        
-    /*public function AgregarImagen(Request $request, $idPersona){
-        if ($request->hasFile('Fotografia')){            
-            $persona = Persona::with('deportista')->find($idPersona);
-            $persona->deportista['V_URL_IMG'] = '../Modulo-Deportes/storage/app/fotografias/'.$nombre = $idPersona.'_deportista.png';
-            $persona->deportista->save();
-            $file = $request->file('Fotografia'); 
-            $nombre = $idPersona.'_deportista.png';         
-            \Storage::disk('fotografias')->put($nombre,  \File::get($file));
-            return "Archivo almacenado correctamente";
-        }
-        else{
-            return "No se encontro archivo.";
-        }
-    }*/
+ 
     public function AgregarImagen(Request $request, $idPersona){
         $validator = Validator:: make($request->all(),[
             'Fotografia' => 'image|mimes:jpeg,png,bmp|max:1000',
@@ -422,7 +407,7 @@ class DeportistaController extends Controller{
     }
     
     public function EntrenadorDeporte(Request $request, $id){
-    $entrenadoresDeporte = EntrenadorModel::with('deporte', 'persona')->where('FK_I_ID_DEPORTE', '=', $id)->get();    
+        $entrenadoresDeporte = EntrenadorModel::with('deporte', 'persona')->where('FK_I_ID_DEPORTE', '=', $id)->get();    
     return $entrenadoresDeporte;
     }
 }

@@ -45,4 +45,9 @@ class EntrenadorModel extends Model
     public function modalidadesEntrenador() {
         return $this->belongsToMany('App\ModalidadModel', 'tb_srd_entrenador_modalidad', 'FK_I_ID_ENTRENADOR_M', 'FK_I_ID_MODALIDAD_E');
     }
+    
+    public function Historialdeportistas()
+    {
+        return $this->belongsToMany('App\DeportistaModel', 'tb_srd_deportista_entrenador', 'FK_I_ID_ENTRENADOR', 'FK_I_ID_DEPORTISTA');
+    }
 }

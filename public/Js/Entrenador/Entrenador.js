@@ -136,6 +136,10 @@ $(function(e){
     }
     
     function popular_modal_entrenador(persona){
+        //console.log();
+        $('#Num_Deportistas').empty();
+        $('#Num_Deportistas').append((persona.entrenador['historialdeportistas']).length);
+        
         var nombreEntrenador="";
         var cedulaEntrenador="";
 

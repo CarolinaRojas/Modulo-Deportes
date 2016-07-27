@@ -152,7 +152,8 @@
                             </div>
                             <br>
                             <h4 class="modal-title text-uppercase">Datos del entrenador:</h4>
-                                <br>
+                            <h4>N° deportistas a cargo: <span class="label label-default" id="Num_Deportistas"></span></h4>
+                            <br>
                             <input type="hidden" name="Id_Entrenador" id="Id_Entrenador">
                             <div class="row">
                                 <div class="col-md-2">
