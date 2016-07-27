@@ -77,6 +77,15 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('HistorialEstimulos/{id}/{inicio}/{fin}','ReportesController@ReporteDeportistaEstimulos');
     Route::resource('reportes','ReportesController');
     
+    Route::resource('ReporteGeneral', 'ReportesController@ReporteGeneral');
+    Route::get('generos', 'ReportesController@Generos');
+    Route::get('localidades', 'ReportesController@Localidades');
+    Route::get('agrupaciones', 'ReportesController@Agrupaciones');
+    Route::get('deportes/{id}', 'ReportesController@Deportes');
+    Route::get('modalidades/{id}', 'ReportesController@Modalidades');
+    
+    
+    
     /************RUTAS PARA ENTRENADORES*********************/
     Route::get('GestionEntrenador','EntrenadorController@index');
     Route::get('entrenador/{id}','EntrenadorController@datos');

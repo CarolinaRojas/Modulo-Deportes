@@ -15,9 +15,13 @@ use App\Tipo;
 use App\HistorialEtapaModel;
 use App\TipoEstimuloModel;
 use App\DeportistaEstimuloModel;
+use App\Genero;
+use App\Localidad;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+
+use Validator;
 
 class ReportesController extends Controller
 {
@@ -435,5 +439,62 @@ class ReportesController extends Controller
                 $sheet->fromArray($per);
            });
         })->download('xls');
+    }    
+   
+    public function Generos(Request $request){
+        if ($request->ajax()) {
+            $generos = Genero::all();            
+        }
+        return $generos;
     }
+    
+    public function Localidades(Request $request){
+        if ($request->ajax()) {
+            $localidades = Localidad::all();            
+        }
+        return $localidades;
+    }
+    
+    public function Agrupaciones(Request $request){
+        if ($request->ajax()) {
+            $agrupaciones = AgrupacionModel::all();            
+        }
+        return $agrupaciones;
+    }
+    
+    public function Deportes(Request $request, $id){
+        if ($request->ajax()) {
+            $deportes = DeporteModel::getDeportesJSON($id);            
+        }
+        return response()->json($deportes);
+    }
+    
+    public function Modalidades(Request $request, $id){
+        if ($request->ajax()) {
+            $modalidades = ModalidadModel::getModalidadesJSON($id);            
+        }
+        return response()->json($modalidades);
+    }
+    
+     public function ReporteGeneral(Request $request){
+         if ($request->ajax()) {            
+            $validator = Validator:: make($request->all(),[
+                        'Genero' => 'required_without_all:Edad,Localidad,Agrupacion,Deporte,Modalidad',
+                        'Edad' => 'required_without_all:Genero,Localidad,Agrupacion,Deporte,Modalidad|numeric',
+                        'Localidad' => 'required_without_all:Genero,Edad,Agrupacion,Deporte,Modalidad',
+                        'Agrupacion' => 'required_without_all:Genero,Edad,Localidad,Deporte,Modalidad',
+                        'Deporte' => 'required_without_all:Genero,Edad,Localidad,Agrupacion,Modalidad',
+                        'Modalidad' => 'required_without_all:Genero,Edad,Localidad,Agrupacion,Deporte',
+                        'inicio' => 'required|date',
+                        'fin' => 'required|date',
+                
+                    ]);
+            if ($validator->fails()) {
+                return($validator->errors());
+                //dd()
+            }else{        
+                return('bien');
+            }
+         }        
+    }   
 }

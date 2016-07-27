@@ -30,7 +30,7 @@
                     <div tabindex="-1" id="mensaje-incorrecto-reporte" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
                         <strong>Error </strong> <span id="mensajeIncorrectoReporte"></span>
                     </div>                    
-                    <div class="row">
+                    <div class="row page-header">
                         <div class="col-sm-12 tituloCollapse" data-toggle="collapse" data-target="#ReporteHistorial">
                             <button type="button" class="btn btn-default">Historial de estímulos de deportistas</button>
                         </div>                        
@@ -38,7 +38,7 @@
                         <div id="ReporteHistorial" class="collapse">   
                             <div class="row container-fluid">      
                                 <br>
-                                <div class="col-md-3"><h4>Fechas de intervalo del historial:</h4></div>
+                                <div class="col-md-4"><h4>Fechas de intervalo del historial:</h4></div>
                             </div>
                             <div class="row container-fluid">      
                                 <div class="col-md-2">
@@ -68,6 +68,108 @@
                                 <div class="col-md-2">
                                     <button onclick="DescargaReporteEstimulos();" type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Descargar Reporte</button>
                                 </div>         
+                            </div>
+                        </div>
+                    </div>
+                    <!--REPORTES GENERALES-->                    
+                    <div class="row page-header">
+                        <div class="col-sm-12 tituloCollapse" data-toggle="collapse" data-target="#ReporteGeneral">
+                            <button type="button" class="btn btn-default" name="BotonReporteGeneral" id="BotonReporteGeneral">Reporte general de deportistas</button>
+                        </div>
+                        <br>
+                        <div id="ReporteGeneral" class="collapse">   
+                            <div class="row container-fluid">      
+                                <br>
+                                <div class="col-md-4"><h4>Seleccione los parámetros de búsqueda:</h4></div>
+                            </div>
+                            <div class="row container-fluid">      
+                                <div class="col-md-2">
+                                    <label for="date-depart" id="GeneroL">Genero:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="Genero" id="Genero" class="form-control">
+                                          <option value="">Seleccionar</option>
+                                      </select>
+                                </div> 
+                                <div class="col-md-2">
+                                    <label for="date-depart" id="EdadL">Edad:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control" placeholder="Edad" type="text" name="Edad" id="Edad">
+                                </div>                                 
+                            </div>
+                            <br>
+                            <div class="row container-fluid">      
+                                <div class="col-md-2">
+                                    <label for="date-depart" id="LocalidadL">Localidad:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="Localidad" id="Localidad" class="form-control">
+                                          <option value="">Seleccionar</option>
+                                      </select>
+                                </div>                     
+                            </div>
+                            <br>
+                            <div class="row container-fluid">      
+                                <div class="col-md-2">
+                                    <label for="date-depart" id="AgrupacionL">Agrupación:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="Agrupacion" id="Agrupacion" class="form-control">
+                                          <option value="">Seleccionar</option>
+                                      </select>
+                                </div> 
+                                <div class="col-md-2">
+                                    <label for="date-depart" id="DeporteL">Deporte:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="Deporte" id="Deporte" class="form-control">
+                                          <option value="">Seleccionar</option>
+                                          <option value="1">uno</option>
+                                      </select>
+                                </div>                                 
+                            </div>
+                            <br>
+                            <div class="row container-fluid">      
+                                <div class="col-md-2">
+                                    <label for="date-depart" id="ModalidadL">Modalidad:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="Modalidad" id="Modalidad" class="form-control">
+                                          <option value="">Seleccionar</option>                                          
+                                      </select>
+                                </div>                                 
+                            </div>   
+                            <br>
+                            <div class="row container-fluid">      
+                                <div class="col-md-2">
+                                    <label for="date-depart" id="fInicioGeneralL">Fecha Inicio:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group date" id="fInicioDateGeneral">
+                                        <input id="fInicioGeneral" class="form-control datepicker" type="text" value="" 
+                                        name="fInicioGeneral" 
+                                        default="" 
+                                        data-date="" data-behavior="fInicioGeneral">
+                                    <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
+                                    </div>
+                                </div>                  
+                                <div class="col-md-2">
+                                    <label for="date-depart" id="fFinGeneralL">Fecha Fin:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group date" id="fFinDateGeneral">
+                                        <input id="fFinGeneral" class="form-control datepicker" type="text" value="" 
+                                        name="fFinGeneral" 
+                                        default="" 
+                                        data-date="" data-behavior="fFinGeneral">
+                                    <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
+                                    </div>
+                                </div>        
+                            </div>
+                            <br>
+                            <div class="col-md-2">
+                                <button onclick="ReporteGeneral();" type="button" class="btn btn-primary" name="ReporteGeneral" id="ReporteGeneral">Descargar reporte general</button>
                             </div>
                         </div>
                     </div>
