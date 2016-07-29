@@ -111,9 +111,6 @@ $(function(e){
         });
     }
     
-    
-    
-    
 });
 
 function DescargaReporteEstimulos(){
@@ -163,7 +160,10 @@ function BuscarReporte(id, inicio, fin){
     location.href = 'HistorialEstimulos/'+id+'/'+inicio+'/'+fin;
 }
 
-function ReporteGeneral(){
+function ValidacionReporteGeneral(){
+    $("#mensajeIncorrectoReporte").empty();
+    $("#mensaje-incorrecto-reporte").fadeOut();
+    
     Normal('Genero');Normal('Edad');Normal('Localidad');Normal('Agrupacion');Normal('Deporte');Normal('Modalidad');Normal('fInicioGeneral');Normal('fFinGeneral');
     var token = $("#token").val();
     var Genero = $("#Genero").val();
@@ -184,9 +184,20 @@ function ReporteGeneral(){
                 inicio: inicio,
                 fin: fin
                   };
+                  
+    var conEnt =[];
+    conEnt[0] = Genero;
+    conEnt[1] = Edad;
+    conEnt[2] = Localidad;
+    conEnt[3] = Agrupacion;
+    conEnt[4] = Deporte;
+    conEnt[5] = Modalidad;
+    conEnt[6] = inicio;
+    conEnt[7] = fin;
+    
     $.ajax({
         type: 'POST',
-        url: 'ReporteGeneral',
+        url: 'ValidacionReporteGeneral',
         headers: {'X-CSRF-TOKEN': token},
         dataType: 'json',
         data: datos,        
@@ -207,16 +218,27 @@ function ReporteGeneral(){
                 scrollPos = $("#mensajeIncorrectoReporte").offset().top;
                 $(window).scrollTop(scrollPos);
                 return false;
+            }else{
+                if(xhr.Mensaje == 'validator ok'){
+                    
+                    
+                    console.log(xhr.datos);
+                    
+//                    return false;
+                    /*console.log('succ');
+                    console.log();*/
+                    //console.log(datos);
+                    location.href = 'DRepoGeneral/'+49+'/'+conEnt;
+                }else{
+                    console.log('no');
+                }
+                
             }
-            console.log('succ');
-            console.log(xhr);
         },
-        error: function (xhr) {                  
-
+        error: function (xhr){
             console.log('err');
             console.log(xhr);              
 
         }
     });
 }
-

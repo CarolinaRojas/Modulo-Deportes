@@ -77,7 +77,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('HistorialEstimulos/{id}/{inicio}/{fin}','ReportesController@ReporteDeportistaEstimulos');
     Route::resource('reportes','ReportesController');
     
-    Route::resource('ReporteGeneral', 'ReportesController@ReporteGeneral');
+    Route::post('ValidacionReporteGeneral', 'ReportesController@ValidacionReporteGeneral');
+    Route::get('DRepoGeneral/{id}/{datos}','ReportesController@DescargaRepoGeneral');
+    
     Route::get('generos', 'ReportesController@Generos');
     Route::get('localidades', 'ReportesController@Localidades');
     Route::get('agrupaciones', 'ReportesController@Agrupaciones');

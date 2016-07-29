@@ -169,7 +169,7 @@
                             </div>
                             <br>
                             <div class="col-md-2">
-                                <button onclick="ReporteGeneral();" type="button" class="btn btn-primary" name="ReporteGeneral" id="ReporteGeneral">Descargar reporte general</button>
+                                <button onclick="ValidacionReporteGeneral();" type="button" class="btn btn-primary" name="ReporteGeneral" id="ReporteGeneral">Descargar reporte general</button>
                             </div>
                         </div>
                     </div>
