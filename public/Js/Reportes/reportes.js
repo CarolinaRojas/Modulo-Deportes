@@ -1,5 +1,4 @@
-$(function(e){ 
-    
+$(function(e){     
     var CurrentDate = new Date();
     var date = CurrentDate.getDate();
     CurrentDate.setDate(1);
@@ -39,12 +38,24 @@ $(function(e){
     
     $('[data-toggle="tooltip"]').tooltip('show');
     
+    function Limpiar(){
+        $("#mensajeIncorrectoReporte").empty();
+        $("#mensaje-incorrecto-reporte").fadeOut();
+        Normal('Genero');Normal('Edad');Normal('Localidad');  Normal('Tipo_Deportista'); Normal('EtapaNacional'); Normal('EtapaInternacional');Normal('Agrupacion');Normal('Deporte');Normal('Modalidad');Normal('fInicioGeneral');Normal('fFinGeneral');
+        
+        Normal('fInicio');
+        Normal('fFin');
+    }
+    
+    $("#HistorialDeportistas").on('click', function(e){
+        Limpiar();
+    });
     
     $("#BotonReporteGeneral").on('click', function(e){
-        Normal('Genero');Normal('Edad');Normal('Localidad');Normal('Agrupacion');Normal('Deporte');Normal('Modalidad');Normal('fInicioGeneral');Normal('fFinGeneral');
         ShowAgrupaciones();
         ShowGenero();
         ShowLocalidad();
+        ShowTipoDeportista();
     });
     
     $("#Agrupacion").on('change', function(e){
@@ -54,6 +65,12 @@ $(function(e){
     $("#Deporte").on('change', function(e){
         ShowModalidades(this.value);
     });
+    
+    $("#Tipo_Deportista").on('change', function(e){
+        ShowEtapas(this.value);
+    });
+    
+    
     
     function ShowGenero(){
         $("#Genero").empty();
@@ -111,6 +128,48 @@ $(function(e){
         });
     }
     
+    function ShowTipoDeportista(){
+        $("#Tipo_Deportista").empty();
+        $("#Tipo_Deportista").append("<option value=''>Seleccionar</option>");
+        $.get("tipoDeportistas", function (tipoDeportista) {
+            $.each(tipoDeportista, function(i, e){
+                    $("#Tipo_Deportista").append("<option value='" +e.PK_I_ID_TIPO_DEPORTISTA + "'>" + e.V_NOMBRE_TIPO_DEPORTISTA + "</option>");
+            });
+        });
+    }
+    
+    function ShowEtapas(id_tipo_deportista) {      
+        if(id_tipo_deportista != 0){
+            var id_tipo_etapa_nac = 0;
+            var id_tipo_etapa_inter = 0;
+
+            if(id_tipo_deportista == 1){
+                id_tipo_etapa_nac = 1;
+                id_tipo_etapa_inter = 2
+
+            }else if(id_tipo_deportista == 2){
+                id_tipo_etapa_nac = 3;
+                id_tipo_etapa_inter = 4;
+            }
+
+            $.get("getEtapasNac/" + id_tipo_etapa_nac + "", function (response) {
+                $("#EtapaNacional").empty();
+                    $("#EtapaNacional").append("<option value=''>Seleccionar</option>");
+                    $.each(response, function(i, e){
+                        $('#EtapaNacional').append('<option value="'+ e.PK_I_ID_ETAPA +'">'+ e.V_NOMBRE_ETAPA +'</option>');
+                    });
+            });
+
+            $.get("getEtapasInter/" + id_tipo_etapa_inter + "", function (response) {
+                $("#EtapaInternacional").empty();
+                    $("#EtapaInternacional").append("<option value=''>Seleccionar</option>");
+                    $.each(response, function(i, e){
+                        $('#EtapaInternacional').append('<option value="'+ e.PK_I_ID_ETAPA +'">'+ e.V_NOMBRE_ETAPA +'</option>');
+                    });
+            });        
+        }
+    }
+    
 });
 
 function DescargaReporteEstimulos(){
@@ -164,11 +223,14 @@ function ValidacionReporteGeneral(){
     $("#mensajeIncorrectoReporte").empty();
     $("#mensaje-incorrecto-reporte").fadeOut();
     
-    Normal('Genero');Normal('Edad');Normal('Localidad');Normal('Agrupacion');Normal('Deporte');Normal('Modalidad');Normal('fInicioGeneral');Normal('fFinGeneral');
+    Normal('Genero');Normal('Edad');Normal('Localidad'); Normal('Tipo_Deportista'); Normal('EtapaNacional'); Normal('EtapaInternacional'); Normal('Agrupacion');Normal('Deporte');Normal('Modalidad');Normal('fInicioGeneral');Normal('fFinGeneral');
     var token = $("#token").val();
     var Genero = $("#Genero").val();
     var Edad = $("#Edad").val();
-    var Localidad = $("#Localidad").val();    
+    var Localidad = $("#Localidad").val();  
+    var Tipo_Deportista = $("#Tipo_Deportista").val();
+    var EtapaNacional = $("#EtapaNacional").val();
+    var EtapaInternacional = $("#EtapaInternacional").val();
     var Agrupacion = $("#Agrupacion").val();
     var Deporte = $("#Deporte").val();
     var Modalidad = $("#Modalidad").val();    
@@ -178,13 +240,15 @@ function ValidacionReporteGeneral(){
                 Genero: Genero,
                 Edad: Edad, 
                 Localidad: Localidad,
+                Tipo_Deportista: Tipo_Deportista,
+                EtapaNacional: EtapaNacional,
+                EtapaInternacional: EtapaInternacional,
                 Agrupacion: Agrupacion,
                 Deporte: Deporte,
                 Modalidad: Modalidad,
                 inicio: inicio,
                 fin: fin
                   };
-                  
     var conEnt =[];
     conEnt[0] = Genero;
     conEnt[1] = Edad;
@@ -194,6 +258,9 @@ function ValidacionReporteGeneral(){
     conEnt[5] = Modalidad;
     conEnt[6] = inicio;
     conEnt[7] = fin;
+    conEnt[8] = Tipo_Deportista;
+    conEnt[9] = EtapaNacional;
+    conEnt[10] = EtapaInternacional;
     
     $.ajax({
         type: 'POST',
@@ -208,6 +275,9 @@ function ValidacionReporteGeneral(){
                 if(xhr.Genero){ ValidacionDeportiva('Genero', xhr.Genero);}else{Normal('Genero');}
                 if(xhr.Edad){ ValidacionDeportiva('Edad', xhr.Edad);}else{Normal('Edad');}
                 if(xhr.Localidad){ ValidacionDeportiva('Localidad', xhr.Localidad);}else{Normal('Localidad');}
+                if(xhr.Tipo_Deportista){ ValidacionDeportiva('Tipo_Deportista', xhr.Tipo_Deportista);}else{Normal('Tipo_Deportista');}
+                if(xhr.EtapaNacional){ ValidacionDeportiva('EtapaNacional', xhr.EtapaNacional);}else{Normal('EtapaNacional');}
+                if(xhr.EtapaInternacional){ ValidacionDeportiva('EtapaInternacional', xhr.EtapaInternacional);}else{Normal('EtapaInternacional');}
                 if(xhr.Agrupacion){ ValidacionDeportiva('Agrupacion', xhr.Agrupacion);}else{Normal('Agrupacion');}
                 if(xhr.Deporte){ ValidacionDeportiva('Deporte', xhr.Deporte);}else{Normal('Deporte');}
                 if(xhr.Modalidad){ ValidacionDeportiva('Modalidad', xhr.Modalidad);}else{Normal('Modalidad');}
@@ -220,19 +290,10 @@ function ValidacionReporteGeneral(){
                 return false;
             }else{
                 if(xhr.Mensaje == 'validator ok'){
-                    
-                    
-                    console.log(xhr.datos);
-                    
-//                    return false;
-                    /*console.log('succ');
-                    console.log();*/
-                    //console.log(datos);
                     location.href = 'DRepoGeneral/'+49+'/'+conEnt;
                 }else{
                     console.log('no');
                 }
-                
             }
         },
         error: function (xhr){

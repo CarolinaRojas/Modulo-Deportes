@@ -32,7 +32,7 @@
                     </div>                    
                     <div class="row page-header">
                         <div class="col-sm-12 tituloCollapse" data-toggle="collapse" data-target="#ReporteHistorial">
-                            <button type="button" class="btn btn-default">Historial de estímulos de deportistas</button>
+                            <button type="button" class="btn btn-default" id="HistorialDeportistas">Historial de estímulos de deportistas</button>
                         </div>                        
                         <br>
                         <div id="ReporteHistorial" class="collapse">   
@@ -42,7 +42,7 @@
                             </div>
                             <div class="row container-fluid">      
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="fInicioL">Fecha Inicio:</label>
+                                    <label for="inputEmail" class="control-label" id="fInicioL">Fecha Inicio:</label>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group date" id="fInicioDate">
@@ -54,7 +54,7 @@
                                     </div>
                                 </div>                  
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="fFinL">Fecha Fin:</label>
+                                    <label for="inputEmail" class="control-label" id="fFinL">Fecha Fin:</label>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group date" id="fFinDate">
@@ -84,15 +84,15 @@
                             </div>
                             <div class="row container-fluid">      
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="GeneroL">Genero:</label>
+                                    <label for="inputEmail" class="control-label" id="GeneroL">Genero:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="Genero" id="Genero" class="form-control">
                                           <option value="">Seleccionar</option>
                                       </select>
-                                </div> 
+                                </div>
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="EdadL">Edad:</label>
+                                    <label for="inputEmail" class="control-label" id="EdadL">Edad:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <input class="form-control" placeholder="Edad" type="text" name="Edad" id="Edad">
@@ -101,7 +101,7 @@
                             <br>
                             <div class="row container-fluid">      
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="LocalidadL">Localidad:</label>
+                                    <label for="inputEmail" class="control-label" id="LocalidadL">Localidad:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="Localidad" id="Localidad" class="form-control">
@@ -112,7 +112,37 @@
                             <br>
                             <div class="row container-fluid">      
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="AgrupacionL">Agrupación:</label>
+                                    <label for="inputEmail" class="control-label" id="Tipo_DeportistaL">Tipo de deportista:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="Tipo_Deportista" id="Tipo_Deportista" class="form-control">
+                                          <option value="">Seleccionar</option>
+                                      </select>
+                                </div>                                
+                            </div>
+                            <br>
+                            <div class="row container-fluid">      
+                                <div class="col-md-2">
+                                    <label for="inputEmail" class="control-label" id="EtapaNacionalL">Etapa nacional:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="EtapaNacional" id="EtapaNacional" class="form-control">
+                                          <option value="">Seleccionar</option>
+                                      </select>
+                                </div> 
+                                <div class="col-md-2">
+                                    <label for="inputEmail" class="control-label" id="EtapaInternacionalL">Etapa internacional:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="EtapaInternacional" id="EtapaInternacional" class="form-control">
+                                          <option value="">Seleccionar</option>
+                                      </select>
+                                </div> 
+                            </div>
+                            <br>
+                            <div class="row container-fluid">      
+                                <div class="col-md-2">
+                                    <label for="inputEmail" class="control-label" id="AgrupacionL">Agrupación:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="Agrupacion" id="Agrupacion" class="form-control">
@@ -120,7 +150,7 @@
                                       </select>
                                 </div> 
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="DeporteL">Deporte:</label>
+                                    <label for="inputEmail" class="control-label" id="DeporteL">Deporte:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="Deporte" id="Deporte" class="form-control">
@@ -132,7 +162,7 @@
                             <br>
                             <div class="row container-fluid">      
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="ModalidadL">Modalidad:</label>
+                                    <label for="inputEmail" class="control-label" id="ModalidadL">Modalidad:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="Modalidad" id="Modalidad" class="form-control">
@@ -143,7 +173,7 @@
                             <br>
                             <div class="row container-fluid">      
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="fInicioGeneralL">Fecha Inicio:</label>
+                                    <label for="inputEmail" class="control-label" id="fInicioGeneralL">Fecha Inicio:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group date" id="fInicioDateGeneral">
@@ -155,7 +185,7 @@
                                     </div>
                                 </div>                  
                                 <div class="col-md-2">
-                                    <label for="date-depart" id="fFinGeneralL">Fecha Fin:</label>
+                                    <label for="inputEmail" class="control-label" id="fFinGeneralL">Fecha Fin:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group date" id="fFinDateGeneral">

@@ -85,6 +85,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('agrupaciones', 'ReportesController@Agrupaciones');
     Route::get('deportes/{id}', 'ReportesController@Deportes');
     Route::get('modalidades/{id}', 'ReportesController@Modalidades');
+    Route::get('tipoDeportistas', 'ReportesController@TipoDeportistas');
     
     
     

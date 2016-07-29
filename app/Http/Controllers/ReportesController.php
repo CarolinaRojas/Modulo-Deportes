@@ -17,6 +17,7 @@ use App\TipoEstimuloModel;
 use App\DeportistaEstimuloModel;
 use App\Genero;
 use App\Localidad;
+use App\TipoDeportistaModel;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -476,16 +477,26 @@ class ReportesController extends Controller
         return response()->json($modalidades);
     }
     
+    public function TipoDeportistas(Request $request){
+        if ($request->ajax()) {
+            $tipoDeportistas = TipoDeportistaModel::all();
+        }
+        return response()->json($tipoDeportistas);
+    }
+    
      public function ValidacionReporteGeneral(Request $request){
          
          if ($request->ajax()) {            
             $validator = Validator:: make($request->all(),[
-                        'Genero' => 'required_without_all:Edad,Localidad,Agrupacion,Deporte,Modalidad',
-                        'Edad' => 'required_without_all:Genero,Localidad,Agrupacion,Deporte,Modalidad|numeric',
-                        'Localidad' => 'required_without_all:Genero,Edad,Agrupacion,Deporte,Modalidad',
-                        'Agrupacion' => 'required_without_all:Genero,Edad,Localidad,Deporte,Modalidad',
-                        'Deporte' => 'required_without_all:Genero,Edad,Localidad,Agrupacion,Modalidad',
-                        'Modalidad' => 'required_without_all:Genero,Edad,Localidad,Agrupacion,Deporte',
+                        'Genero' => 'required_without_all:Edad,Localidad,Tipo_Deportista,EtapaNacional,EtapaInternacional,Agrupacion,Deporte,Modalidad',
+                        'Edad' => 'required_without_all:Genero,Localidad,Tipo_Deportista,EtapaNacional,EtapaInternacional,Agrupacion,Deporte,Modalidad|numeric',
+                        'Localidad' => 'required_without_all:Genero,Edad,Tipo_Deportista,EtapaNacional,EtapaInternacional,Agrupacion,Deporte,Modalidad',
+                        'Tipo_Deportista' => 'required_without_all:Genero,Edad,Localidad,EtapaNacional,EtapaInternacional,Agrupacion,Deporte,Modalidad',
+                        'EtapaNacional' => 'required_without_all:Genero,Edad,Localidad,Tipo_Deportista,EtapaInternacional,Agrupacion,Deporte,Modalidad',
+                        'EtapaInternacional' => 'required_without_all:Genero,Edad,Localidad,Tipo_Deportista,EtapaNacional,Agrupacion,Deporte,Modalidad',
+                        'Agrupacion' => 'required_without_all:Genero,Edad,Localidad,Tipo_Deportista,EtapaNacional,Deporte,Modalidad',
+                        'Deporte' => 'required_without_all:Genero,Edad,Localidad,Tipo_Deportista,EtapaNacional,EtapaInternacional,Agrupacion,Modalidad',
+                        'Modalidad' => 'required_without_all:Genero,Edad,Localidad,Tipo_Deportista,EtapaNacional,EtapaInternacional,Agrupacion,Deporte',
                         'inicio' => 'required|date',
                         'fin' => 'required|date',
                 
