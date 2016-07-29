@@ -512,7 +512,7 @@ class ReportesController extends Controller
     public function DescargaRepoGeneral(Request $request, $id, $datosRep){
         
         $datosRep = explode(',', $datosRep);        
-        $datos = array($id, $datosRep[6], $datosRep[7], $datosRep[0], $datosRep[1], $datosRep[2], $datosRep[3], $datosRep[4], $datosRep[5]);
+        $datos = array($id, $datosRep[6], $datosRep[7], $datosRep[0], $datosRep[1], $datosRep[2], $datosRep[3], $datosRep[4], $datosRep[5], $datosRep[8], $datosRep[9], $datosRep[10]);
         Excel::create('Historial Deportistas('.$datos[1].'&'.$datos[2].')', function($excel) use($datos){
            $excel->sheet('Sheetname', function($sheet) use ($datos){               
                $persona = Tipo::with('personas', 
@@ -578,6 +578,30 @@ class ReportesController extends Controller
                    $id_modalidad = $datos[8];
                    $ArrayDescarga = $persona->personas->filter(function ($persona)  use ($id_modalidad){
                         return $persona->deportista['FK_I_ID_MODALIDAD'] == $id_modalidad;
+                    });
+                }
+                
+                //Tipo Deportista
+                if($datos[9]){
+                   $id_tipo_deportista = $datos[9];
+                   $ArrayDescarga = $persona->personas->filter(function ($persona)  use ($id_tipo_deportista){
+                        return $persona->deportista['FK_I_ID_TIPO_DEPORTISTA'] == $id_tipo_deportista;
+                    });
+                }
+                
+                //Etapa Nacional
+                if($datos[10]){
+                   $id_etapa_nacional = $datos[10];
+                   $ArrayDescarga = $persona->personas->filter(function ($persona)  use ($id_etapa_nacional){
+                        return $persona->deportista['FK_I_ID_ETAPA_NACIONAL'] == $id_etapa_nacional;
+                    });
+                }
+                
+                //Etapa Internacional
+                if($datos[11]){
+                   $id_etapa_internacional = $datos[11];
+                   $ArrayDescarga = $persona->personas->filter(function ($persona)  use ($id_etapa_internacional){
+                        return $persona->deportista['FK_I_ID_ETAPA_INTERNACIONAL'] == $id_etapa_internacional;
                     });
                 }
                
