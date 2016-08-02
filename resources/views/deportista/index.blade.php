@@ -36,14 +36,18 @@
                               </div>
                             </div>
                             <div class="col-xs-12">
-                                <div class="input-group">
-                                    <input name="buscador" type="text" class="form-control" placeholder="Buscar" value="1032455961">
-                                    <span class="input-group-btn">
-                                        <button id="buscar" data-role="buscar" class="btn btn-default" type="button">
-                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                        </button>
-                                    </span>
-                                </div>
+                                    <div class="input-group">                                        
+                                        <input id="buscador" name="buscador" type="text" class="form-control" placeholder="Buscar" value="1032455961">
+                                        <span class="input-group-btn">
+                                            <button autocomplete="off" data-loading-text="Cargando..." id="buscar" data-role="buscar" class="btn btn-default" type="button">
+                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <br>
+                                    <div tabindex="-1" id="mensaje-incorrectoB" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
+                                        <strong>Error </strong> <span id="mensajeIncorrectoB"></span>
+                                    </div>                                    
                             </div>
                             <div class="col-xs-12"><br></div>
                                 <div class="col-xs-12">
@@ -82,7 +86,7 @@
                                 <div class="form-group">
                                    
                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                     <button type="button" class="btn btn-primary" name="Enviar" id="Enviar">Enviar</button>
+                                     <button autocomplete="off" data-loading-text="Cargando..." type="button" class="btn btn-primary" name="Enviar" id="Enviar">Enviar</button>
                                    
                                 </div>
                             </div>
@@ -122,7 +126,7 @@
                         <br>
                       <div class="row">
                            <div class="col-md-2">
-                              <label for="inputEmail" class="control-label pull-right" id="Club_DeportivoL">Club Deportivo:</label>
+                              <label for="inputEmail" class="control-label" id="Club_DeportivoL">Club Deportivo:</label>
                           </div>
                           <div class="col-md-4">
                             <select name="Club_Deportivo" id="Club_Deportivo" class="form-control">
@@ -136,7 +140,7 @@
                       <br>
                       <div class="row">
                             <div class="col-md-2">
-                               <label for="inputEmail" class="control-label pull-right" id="Nombre_EntrenadorL">Selección de entrenador:</label>
+                               <label for="inputEmail" class="control-label" id="Nombre_EntrenadorL">Selección de entrenador:</label>
                             </div>
                             <div class="col-md-4">
                                 <select name="Entrenador" id="Entrenador" class="form-control">
@@ -155,7 +159,7 @@
                     <br>                    
                     <div class="row">                          
                         <div class="col-md-2">
-                            <label for="inputEmail" class="control-label pull-right" id="Talla_CamisaL">Talla Camisa:</label>
+                            <label for="inputEmail" class="control-label" id="Talla_CamisaL">Talla Camisa:</label>
                         </div>
                         <div class="col-md-4">
                             <select name="Talla_Camisa" id="Talla_Camisa" class="form-control">
@@ -167,7 +171,7 @@
                     <div class="row">
                            
                           <div class="col-md-2">
-                              <label for="inputEmail" class="control-label pull-right" id="Talla_ChaquetaL">Talla Cahqueta:</label>
+                              <label for="inputEmail" class="control-label" id="Talla_ChaquetaL">Talla Cahqueta:</label>
                           </div>
                           <div class="col-md-4">
                                 <select name="Talla_Chaqueta" id="Talla_Chaqueta" class="form-control">
@@ -175,7 +179,7 @@
                                 </select>
                           </div>
                           <div class="col-md-2">
-                              <label for="inputEmail" class="control-label pull-right" id="Talla_PantalonL">Talla Pantalon:</label>
+                              <label for="inputEmail" class="control-label" id="Talla_PantalonL">Talla Pantalon:</label>
                           </div>
                           <div class="col-md-4">
                                 <select name="Talla_Pantalon" id="Talla_Pantalon" class="form-control">
@@ -186,7 +190,7 @@
                       <br>
                       <div class="row">                                                     
                         <div class="col-md-2">
-                            <label for="inputEmail" class="control-label pull-right" id="Talla_ZapatosL">Talla Zapatos (Nacional):</label>
+                            <label for="inputEmail" class="control-label" id="Talla_ZapatosL">Talla Zapatos (Nacional):</label>
                         </div>
                         <div class="col-md-4">
                             <select name="Talla_Zapatos" id="Talla_Zapatos" class="form-control" onchange="tallaZapatosInter(this.value);">
@@ -196,7 +200,7 @@
                         </div>
                           <div id="ZapatoInter" >
                             <div class="col-md-2">
-                                <label for="inputEmail" class="control-label pull-right" id="Talla_ZapatosInterL">Talla Zapatos (Internacional):</label>
+                                <label for="inputEmail" class="control-label" id="Talla_ZapatosInterL">Talla Zapatos (Internacional):</label>
                             </div>
                             <div class="col-md-4">
                                 <h4>Talla Reino Unido: <span class="label label-default" id="TUK"></span></h4>
@@ -209,7 +213,7 @@
                           <div class="form-group">
                              <div class="col-lg-12 ">
                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                               <button type="button" class="btn btn-primary" name="EnviarDeportiva" id="EnviarDeportiva">Enviar</button>
+                               <button autocomplete="off" data-loading-text="Cargando..." type="button" class="btn btn-primary" name="EnviarDeportiva" id="EnviarDeportiva">Enviar</button>
                              </div>
                           </div>
                       </div>
@@ -264,7 +268,7 @@
                                 </div>
                             </div>                                      
                            <div class="col-md-2">
-                               <button type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Descargar Reporte</button>
+                               <button autocomplete="off" data-loading-text="Cargando..." type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Descargar Reporte</button>
                            </div>                   
                       </div>   
                   </div>
@@ -306,7 +310,7 @@
                        <br>
                         <div class="row">
                             <div class="col-md-2 ">   
-                                <button type="button" class="btn btn-primary" name="AgregarEstimulo" id="AgregarEstimulo">Agregar Estímulo</button>
+                                <button autocomplete="off" data-loading-text="Cargando..." type="button" class="btn btn-primary" name="AgregarEstimulo" id="AgregarEstimulo">Agregar Estímulo</button>
                             </div>
                         </div>
                   </div>

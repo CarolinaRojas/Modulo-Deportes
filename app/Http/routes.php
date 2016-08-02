@@ -87,8 +87,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('modalidades/{id}', 'ReportesController@Modalidades');
     Route::get('tipoDeportistas', 'ReportesController@TipoDeportistas');
     
-    
-    
     /************RUTAS PARA ENTRENADORES*********************/
     Route::get('GestionEntrenador','EntrenadorController@index');
     Route::get('entrenador/{id}','EntrenadorController@datos');
@@ -99,6 +97,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('getEtapasEntrenamiento', 'EntrenadorController@getEtapasEntrenamiento');
     Route::post('AddImagenEnt/{id}','EntrenadorController@AgregarImagen'); 
     Route::get('conteoDeportistas', 'EntrenadorController@conteoDeportistas');
-    //Route::get('getEntrenadorEtapas/{id}', 'EntrenadorController@getEntrenadorEtapas');
     
 });

@@ -7,6 +7,7 @@ $(function(e){
     $('#AgregarEntrenador').on('click', function(e){ SeleccionEntrenador($('#Entrenador').val()); });   
     
     $('#personas').delegate('button[data-role="InformacionDeportiva"]', 'click', function(e){    
+        $("#InformacionDeportiva").button('loading');
         var id = $(this).data('rel');        
         $.get("deportista/" + id + "", function (deportista) {
             $("#mensaje-incorrecto-dos").fadeOut();
@@ -88,11 +89,13 @@ $(function(e){
                   }      
                 }).done(function(){
                     $('#modal_form_deportiva').modal('show');
+                    $("#InformacionDeportiva").button('reset');
                 });
         }else{
             ShowRopa(persona['Id_Genero'], 1);
             ShowZapatos(persona['Id_Genero'], 2);           
-            $('#modal_form_deportiva').modal('show');
+            $('#modal_form_deportiva').modal('show');            
+            $("#InformacionDeportiva").button('reset');
         }   
         
     };
@@ -126,6 +129,7 @@ $(function(e){
 
     function RegistroDeportiva(){
         $('#EnviarDeportiva').on('click', function () {
+            $('#EnviarDeportiva').button('loading');
             var Id_Persona = $("#Id_Persona").val();
             var Id_Deportista = $("#Id_Deportista").val();
             var Club_Deportivo = $("#Club_Deportivo").val();
@@ -168,9 +172,9 @@ $(function(e){
                 console.log(xhr);
                 alert(xhr.Mensaje);
                 $("#Botonera").empty();
-                var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>\
-                                <button type="button" data-role="InformacionDeportiva" data-rel="'+datos['Id_Persona']+'" class="btn btn-default btn-sm">Información Deportiva</button>\
-                                <button type="button" data-role="ApoyoServicios" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>';
+                var botonera = '<button id="InformacionBasica" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionBasica" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>\
+                                <button id="InformacionDeportiva" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionDeportiva" data-rel="'+datos['Id_Persona']+'" class="btn btn-default btn-sm">Información Deportiva</button>\
+                                <button id="ApoyoServicios" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="ApoyoServicios" data-rel="'+datos['Id_Persona']+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>';
                 $("#Botonera").append(botonera);
                 $('#modal_form_deportiva').modal('hide');
             },
@@ -186,8 +190,11 @@ $(function(e){
                 var scrollPos;                    
                 scrollPos = $("#mensajeIncorrectoDos").offset().top;
                 $(window).scrollTop(scrollPos);
+                $('#EnviarDeportiva').button('reset');
                 return false;
             }
+        }).done(function(e){
+            $('#EnviarDeportiva').button('reset');
         });
     }
 

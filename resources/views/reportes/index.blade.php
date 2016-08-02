@@ -12,12 +12,12 @@
     {{Html::script('public/Js/dataTables.bootstrap.min.js')}}
     
     <script src="{{ asset('public/Js/bootstrap-datepicker.js') }}"></script>
-    {{Html::style('public/Css/bootstrap-datepicker3.css')}}
+    {{Html::style('public/Css/bootstrap-datepicker3.css')}}    
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyB6K1CFUQ1RwVJ-nyXxd6W0rfiIBe12Q&libraries=places" type="text/javascript"></script>
     
 @stop  
-@section('content') 
+@section('content')
 <center><h3>GESTIÓN DE REPORTES</h3></center>
   <input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
     <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">  
@@ -29,7 +29,7 @@
                 <div class="panel-body">
                     <div tabindex="-1" id="mensaje-incorrecto-reporte" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
                         <strong>Error </strong> <span id="mensajeIncorrectoReporte"></span>
-                    </div>                    
+                    </div>
                     <div class="row page-header">
                         <div class="col-sm-12 tituloCollapse" data-toggle="collapse" data-target="#ReporteHistorial">
                             <button type="button" class="btn btn-default" id="HistorialDeportistas">Historial de estímulos de deportistas</button>
@@ -66,16 +66,20 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <button onclick="DescargaReporteEstimulos();" type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Descargar Reporte</button>
+                                    <button autocomplete="off" data-loading-text="Cargando..." onclick="DescargaReporteEstimulos();" type="button" class="btn btn-primary" name="BuscarReporte" id="BuscarReporte">Descargar Reporte</button>
                                 </div>         
                             </div>
                         </div>
                     </div>
-                    <!--REPORTES GENERALES-->                    
-                    <div class="row page-header">
+                    <!--REPORTES GENERALES-->                     
+                    
+                    <div tabindex="-1" id="mensaje-incorrecto2-reporte" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
+                        <strong>Error </strong> <span id="mensajeIncorrecto2Reporte"></span>
+                    </div>
+                    <div class="row page-header">                        
                         <div class="col-sm-12 tituloCollapse" data-toggle="collapse" data-target="#ReporteGeneral">
                             <button type="button" class="btn btn-default" name="BotonReporteGeneral" id="BotonReporteGeneral">Reporte general de deportistas</button>
-                        </div>
+                        </div>                         
                         <br>
                         <div id="ReporteGeneral" class="collapse">   
                             <div class="row container-fluid">      
@@ -199,7 +203,7 @@
                             </div>
                             <br>
                             <div class="col-md-2">
-                                <button onclick="ValidacionReporteGeneral();" type="button" class="btn btn-primary" name="ReporteGeneral" id="ReporteGeneral">Descargar reporte general</button>
+                                <button autocomplete="off" data-loading-text="Cargando..." onclick="ValidacionReporteGeneral();" type="button" class="btn btn-primary" name="ReporteGeneralB" id="ReporteGeneralB">Descargar reporte general</button>
                             </div>
                         </div>
                     </div>

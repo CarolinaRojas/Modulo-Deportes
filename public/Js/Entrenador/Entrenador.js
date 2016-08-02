@@ -45,9 +45,9 @@ $(function(e){
     });
     
     
-    $('#personas').delegate('button[data-role="InformacionEntrenador"]', 'click', function(e){ var id = $(this).data('rel'); InfoBasica(id); }); 
+    $('#personas').delegate('button[data-role="InformacionEntrenador"]', 'click', function(e){ var id = $(this).data('rel'); InfoBasica(id); $("#InformacionEntrenador").button('loading');}); 
     
-    $('#Enviar').on('click', function () { RegistroEntrenador(); });
+    $('#Enviar').on('click', function () { RegistroEntrenador(); $("#Enviar").button('loading'); });
     
     $('#Agrupacion').on('change', function(e){ showDeportes($('#Agrupacion').val()); });
     
@@ -91,7 +91,7 @@ $(function(e){
                                       '</dvi><br><br><br>'+
                                       '<div class="row">'+
                                           '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
-                                              '<button type="button" data-role="InformacionEntrenador" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
+                                              '<button id="InformacionEntrenador" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionEntrenador" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
                                           '</div>'+
                                       '</div>';
                         }
@@ -184,6 +184,7 @@ $(function(e){
         }
       
         $('#modal_form_entrenador').modal('show');
+        $("#InformacionEntrenador").button('reset');
     }
     
     function RegistroEntrenador(){    
@@ -259,8 +260,11 @@ $(function(e){
                 var scrollPos;                    
                 scrollPos = $("#mensajeIncorrecto").offset().top;
                 $(window).scrollTop(scrollPos);
+                $("#Enviar").button('reset');
                 return false;
             }
+        }).done(function(){
+            $("#Enviar").button('reset');
         });
 
     }

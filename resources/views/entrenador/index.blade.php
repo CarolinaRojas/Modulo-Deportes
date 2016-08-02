@@ -3,19 +3,6 @@
   @parent
     <script src="{{ asset('public/Js/Entrenador/Entrenador.js') }}"></script> 
     {{Html::style('public/Css/bootstrap.css')}}
-    <!--<script src="{{ asset('public/Js/Deportista/Deportiva.js') }}"></script> 
-    <script src="{{ asset('public/Js/Deportista/ApoyoServicios.js') }}"></script>    
-    
-    {{Html::script('public/Js/jquery.dataTables.js')}}
-    {{Html::script('public/Js/dataTables.responsive.min.js')}}        
-    {{Html::style('public/Css/jquery.dataTables.min.css')}}
-    {{Html::style('public/Css/bootstrap.css')}}
-    {{Html::script('public/Js/tablesIdioma.js')}}   
-    {{Html::style('public/Css/dataTables.bootstrap.min.css')}}
-    {{Html::script('public/Js/dataTables.bootstrap.min.js')}}
-    
-    <script src="{{ asset('public/Js/bootstrap-datepicker.js') }}"></script>
-    {{Html::style('public/Css/bootstrap-datepicker3.css')}}-->
     
 @stop  
 @section('content') 
@@ -32,7 +19,7 @@
                         <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">
                             <div id="alerta" class="col-xs-12" style="display:none;">
                               <div class="alert alert-success alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button autocomplete="off" data-loading-text="Cargando..." type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 Datos actualizados satisfactoriamente.
                               </div>
                             </div>
@@ -40,7 +27,7 @@
                                 <div class="input-group">
                                     <input name="buscador" type="text" class="form-control" placeholder="Buscar" value="1016015041">
                                     <span class="input-group-btn">
-                                        <button id="buscar" data-role="buscar" class="btn btn-default" type="button">
+                                        <button autocomplete="off" data-loading-text="Cargando..." id="buscar" data-role="buscar" class="btn btn-default" type="button">
                                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                         </button>
                                     </span>
@@ -60,7 +47,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="padding-bottom: 50px;">
                   <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <button autocomplete="off" data-loading-text="Cargando..." type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       <h4 class="modal-title text-center" id="nombreEntrenador"></h4>
                       <p class="list-group-item-text text-center">
                         <small id="cedulaEntrenador" ></small>
@@ -83,7 +70,7 @@
                                 <div class="row">    
                                     <form enctype="multipart/form-data" id="Formulario_Imagen" name="Formulario_Imagen" role="form" method="POST" action="">        
                                         <div class="col-md-2">
-                                            <label for="inputEmail" class="control-label pull-right" id="FotografiaL">Fotografia de entrenador:</label>
+                                            <label for="inputEmail" class="control-label" id="FotografiaL">Fotografia de entrenador:</label>
                                         </div>
                                         <div class="col-md-4">
                                             <input type="file" name="Fotografia" class="form-control" id="Fotografia">
@@ -93,14 +80,14 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label for="inputEmail" class="control-label pull-right">Fecha Nacimiento:</label>
+                                        <label for="inputEmail" class="control-label">Fecha Nacimiento:</label>
                                     </div>
                                     <div class="col-md-4">
                                         <input class="form-control" placeholder="Fecha Nacimiento" type="text" name="Fecha_Nacimiento" readonly="readonly">
                                     </div>
 
                                     <div class="col-md-2">
-                                        <label for="inputEmail" class="control-label pull-right">Género:</label>
+                                        <label for="inputEmail" class="control-label">Género:</label>
                                     </div>
                                     <div class="col-md-4">
                                         <select name="Genero" id="Genero" class="form-control" disabled="">
@@ -114,7 +101,7 @@
                                 <br>
                                 <div class="row">
                                    <div class="col-md-2">
-                                        <label for="inputEmail" class="control-label pull-right">Pais Nacimiento:</label>
+                                        <label for="inputEmail" class="control-label">Pais Nacimiento:</label>
                                     </div>
                                     <div class="col-md-4">
                                         <select name="Pais" id="Pais" class="form-control" disabled="">
@@ -125,7 +112,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <label for="inputEmail" class="control-label pull-right">Ciudad:</label>
+                                        <label for="inputEmail" class="control-label">Ciudad:</label>
                                       </div>
                                       <div class="col-md-4">
                                         <input class="form-control" placeholder="Ciudad" type="text" name="Nombre_Ciudad" readonly="readonly">
@@ -134,7 +121,7 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-2">
-                                      <label for="inputEmail" class="control-label pull-right">Grupo Etnico:</label>
+                                      <label for="inputEmail" class="control-label">Grupo Etnico:</label>
                                     </div>    
                                     <div class="col-md-4">
                                         <select name="Grupo_Etnico" id="Grupo_Etnico" class="form-control" disabled="">
@@ -157,13 +144,13 @@
                             <input type="hidden" name="Id_Entrenador" id="Id_Entrenador">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label for="inputEmail" class="control-label pull-right" id="Telefono_FijoL">Telefono fijo:</label>
+                                    <label for="inputEmail" class="control-label" id="Telefono_FijoL">Telefono fijo:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <input class="form-control" placeholder="Telefono fijo" type="text" name="Telefono_Fijo" id="Telefono_Fijo">
                                 </div>
                                 <div class="col-md-2">
-                                    <label for="inputEmail" class="control-label pull-right" id="Telefono_CelularL">Telefono Celular:</label>
+                                    <label for="inputEmail" class="control-label" id="Telefono_CelularL">Telefono Celular:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <input class="form-control" placeholder="Telefono Celular" type="text" name="Telefono_Celular" id="Telefono_Celular">
@@ -172,7 +159,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label for="inputEmail" class="control-label pull-right" id="Correo_ElectronicoL">Correo Electronico:</label>
+                                    <label for="inputEmail" class="control-label" id="Correo_ElectronicoL">Correo Electronico:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <input class="form-control" placeholder="Correo Electronico" type="text" name="Correo_Electronico" id="Correo_Electronico">
@@ -181,7 +168,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label for="inputEmail" class="control-label pull-right" id="Etapa_EntrenamientoL">Etapas de entrenamiento:</label>
+                                    <label for="inputEmail" class="control-label" id="Etapa_EntrenamientoL">Etapas de entrenamiento:</label>
                                 </div>
                                 <br>
                                 <div class="col-md-4" id="Etapa_Entrenamiento">
@@ -196,7 +183,7 @@
                             <br>
                              <div class="row">
                                  <div class="col-md-2">
-                                    <label for="inputEmail" class="control-label pull-right" id="AgrupacionL">Agrupación:</label>
+                                    <label for="inputEmail" class="control-label" id="AgrupacionL">Agrupación:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="Agrupacion" id="Agrupacion" class="form-control">
@@ -207,7 +194,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2">
-                                    <label for="inputEmail" class="control-label pull-right" id="DeporteL">Deporte:</label>
+                                    <label for="inputEmail" class="control-label" id="DeporteL">Deporte:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="Deporte" id="Deporte" class="form-control">
@@ -218,7 +205,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label for="inputEmail" class="control-label pull-right" id="ModalidadL">Modalidades:</label>
+                                    <label for="inputEmail" class="control-label" id="ModalidadL">Modalidades:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="col-md-12" id="Modalidad">
@@ -238,7 +225,7 @@
                             <div class="col-xs-12 col-md-12 ">   
                                 <div class="form-group">                                   
                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                     <button type="button" class="btn btn-primary" name="Enviar" id="Enviar">Enviar</button>
+                                     <button autocomplete="off" data-loading-text="Cargando..." type="button" class="btn btn-primary" name="Enviar" id="Enviar">Enviar</button>
                                    
                                 </div>
                             </div>

@@ -12,7 +12,7 @@
 <div class="row">    
     <form enctype="multipart/form-data" id="Formulario_Imagen" name="Formulario_Imagen" role="form" method="POST" action="">        
         <div class="col-md-2">
-            <label for="inputEmail" class="control-label pull-right" id="FotografiaL">Fotografia de deportista:</label>
+            <label for="inputEmail" class="control-label" id="FotografiaL">Fotografia de deportista:</label>
         </div>
         <div class="col-md-4">
             <input type="file" name="Fotografia" class="form-control" id="Fotografia">
@@ -22,14 +22,14 @@
 <br>
 <div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Fecha Nacimiento:</label>
+        <label for="inputEmail" class="control-label">Fecha Nacimiento:</label>
     </div>
     <div class="col-md-4">
         <input class="form-control" placeholder="Fecha Nacimiento" type="text" name="Fecha_Nacimiento" readonly="readonly">
     </div>
     
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Género:</label>
+        <label for="inputEmail" class="control-label">Género:</label>
     </div>
     <div class="col-md-4">
         <select name="Genero" id="Genero" class="form-control" disabled="">
@@ -43,7 +43,7 @@
 <br>
 <div class="row">
    <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Pais Nacimiento:</label>
+        <label for="inputEmail" class="control-label">Pais Nacimiento:</label>
     </div>
     <div class="col-md-4">
         <select name="Pais" id="Pais" class="form-control" disabled="">
@@ -54,7 +54,7 @@
         </select>
     </div>
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label pull-right">Ciudad:</label>
+        <label for="inputEmail" class="control-label">Ciudad:</label>
       </div>
       <div class="col-md-4">
         <input class="form-control" placeholder="Ciudad" type="text" name="Nombre_Ciudad" readonly="readonly">
@@ -63,7 +63,7 @@
 <br>
 <div class="row">
     <div class="col-md-2">
-      <label for="inputEmail" class="control-label pull-right">Grupo Etnico:</label>
+      <label for="inputEmail" class="control-label">Grupo Etnico:</label>
     </div>    
     <div class="col-md-4">
         <select name="Grupo_Etnico" id="Grupo_Etnico" class="form-control" disabled="">

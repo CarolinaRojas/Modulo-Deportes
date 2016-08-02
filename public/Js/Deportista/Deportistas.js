@@ -1,29 +1,21 @@
 var html;
 $(function(e){ 
-    
     $('#Fecha_Ingreso_Date').datepicker({        
        format: 'yyyy-mm-dd',
        autoclose: true,   
     });
+    
     $('#Fecha_Retiro_Date').datepicker({        
        format: 'yyyy-mm-dd',
        autoclose: true,
     });
     
-    
     var $personas_actuales = $('#personas').html();    
     var URL = $('#main_persona').data('url');    
-    var buscar = function(e){
-      var key = $('input[name="buscador"]').val();
-      if (key.length > 2){
-        $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-remove');
-        $('#buscar').data('role', 'reset');
-
-        $.get(
-          'personaBuscarDeportista/'+key,
-          {}, 
-          function(data){
-              
+    var buscar = function(e){        
+    var key = $('input[name="buscador"]').val();
+    if(key){
+        $.get('personaBuscarDeportista/'+key,{}, function(data){              
             if(data.length > 0){
               var html = '';      
               $.each(data, function(i, e){                                          
@@ -53,40 +45,52 @@ $(function(e){
                            if(responseDep.deportista){
                                       html +=  '<div class="row">'+
                                                    '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
-                                                        '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
-                                                        '<button type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default btn-sm">Información Deportiva</button>'+
-                                                        '<button type="button" data-role="ApoyoServicios" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>'+
+                                                        '<button id="InformacionBasica" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
+                                                        '<button id="InformacionDeportiva" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionDeportiva" data-rel="'+e['Id_Persona']+'" class="btn btn-default btn-sm">Información Deportiva</button>'+
+                                                        '<button id="ApoyoServicios" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="ApoyoServicios" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>'+
                                                    '</div>'+
                                                '</div>';
                            }else{
                                html +=   '<div class="row">'+
                                              '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
-                                                 '<button type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
+                                                 '<button id="InformacionBasica" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionBasica" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
                                              '</div>'+
                                          '</div>';
                            }     
                            html += '</li>';
-
+                           
                            $('#personas').html(html);
                            $('#paginador').fadeOut();
                        });
                     }
                     html += '</li>';
                     $('#personas').html(html);
-                    $('#paginador').fadeOut();
-                });
-                     
+                    $('#paginador').fadeOut();                    
+                });                     
               });              
-            }            
+            }else{
+                $('#buscar').button('reset');  
+                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><br><br>'+
+                              '<h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
+            $('#paginador').fadeOut();
+            }        
           },
           'json'
-        )
-      } else if(key.length == 0){
-        reset(e);
+        ).done(function (e){
+            $('#buscar').button('reset');            
+            
+        });
+      }else{           
+            $('#buscar').button('reset');  
+            $("#buscar").css({ 'border-color': '#B94A48' });    
+            var texto = $("#mensajeIncorrectoB").html();
+
+            $("#mensajeIncorrectoB").html(texto + '<br>' + 'Debe ingresar un parámetro para realizar la búsqueda.');
+            $("#mensaje-incorrectoB").fadeIn();
+            $('#mensaje-incorrectoB').focus();
       }
     };
-    var reset = function(e){
-        
+    var reset = function(e){        
         $('input[name="buscador"]').val('');
       
         $('input[name="Direccion_Residencia"]').val('');          
@@ -138,10 +142,10 @@ $(function(e){
         $('Talla_Pantalon').val('').change();
         $("#PanelEntrenador").empty();
         
-      
-        $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-search');
         $('#personas').html($personas_actuales);
         $('#paginador').fadeIn();
+        
+        $('#buscar').button('reset');
     };    
     
     var popular_modal_persona = function(persona){
@@ -223,29 +227,38 @@ $(function(e){
       }else{            
          $("#SImagen").append('<span class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span><br>No ha ingresado la imágen del deportista.</span>');
       }
-      
-    $('#modal_form_persona').modal('show');
+        $('#modal_form_persona').modal('show');
+        $("#InformacionBasica").button('reset');
     };
 
-    $('#buscar').on('click', function(e){
-      var role = $(this).data('role');
-      switch(role)
-      {
-        case 'buscar':
-          $(this).data('role', 'reset');
-          buscar(e);
-        break;
-
-        case 'reset':
-          $(this).data('role', 'buscar');
-          reset(e);
-        break;
-      }
+    $('#buscar').on('click', function(e){        
+        $("#mensajeIncorrectoB").empty();
+        $("#mensaje-incorrectoB").fadeOut();
+        
+        var role = $(this).data('role');
+        
+        switch(role){
+            case 'buscar':                
+                $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-remove');
+                $(this).data('role', 'reset');
+                $(this).button('loading');
+                buscar(e);          
+            break;
+            case 'reset': 
+                $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-search');
+                $(this).data('role', 'buscar');
+                //$(this).button('loading');
+                reset(e);
+            break;
+        }
     });
     
     $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){
+        $("#InformacionBasica").button('loading');
+        $("#mensajeIncorrectoB").empty();
+        $("#mensaje-incorrectoB").fadeOut();
         var id = $(this).data('rel');
-        $.get("deportista/" + id + "", function (response) {            
+        $.get("deportista/" + id + "", function (response) {             
             $("#mensaje-incorrecto").fadeOut();
             $('#Fotografia').val('');
             Normal('Grupo_Sanguineo'); Normal('Eps'); Normal('Estado_Civil'); Normal('Estrato'); Normal('Situacion_Militar');
@@ -255,12 +268,11 @@ $(function(e){
             popular_modal_persona(response);
         });
     });
-   
-
 
     function RegistroDeportista(){
 
         $('#Enviar').on('click', function () {
+            $("#Enviar").button('loading');
             var Id_Persona = $("#Id_Persona").val();
             var Id_Deportista = $("#Id_Deportista").val();
             var Eps = $('#Eps').val();
@@ -388,8 +400,11 @@ $(function(e){
                 var scrollPos;                    
                 scrollPos = $("#mensajeIncorrecto").offset().top;
                 $(window).scrollTop(scrollPos);
+                $('#Enviar').button('reset');
                 return false;
             }
+        }).done(function(e){
+            $('#Enviar').button('reset');
         });
 
     }
@@ -478,9 +493,9 @@ $(function(e){
                     alert(mensaje+data);
                     $("#Imagen").attr('src',$("#Imagen").attr('src')+idPersona+'_deportista.png?' + (new Date()).getTime());            
                     $("#Botonera").empty();
-                    var botonera = '<button type="button" data-role="InformacionBasica" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Información Basica</button>\
-                                    <button type="button" data-role="InformacionDeportiva" data-rel="'+idPersona+'" class="btn btn-default btn-sm">Información Deportiva</button>\
-                                    <button type="button" data-role="ApoyoServicios" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>';
+                    var botonera = '<button id="InformacionBasica" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionBasica" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Información Basica</button>\
+                                    <button id="InformacionDeportiva" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionDeportiva" data-rel="'+idPersona+'" class="btn btn-default btn-sm">Información Deportiva</button>\
+                                    <button id="ApoyoServicios" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="ApoyoServicios" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>';
                     $("#Botonera").append(botonera);
                     $('#modal_form_persona').modal('hide');
 

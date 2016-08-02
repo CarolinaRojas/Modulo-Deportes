@@ -23,6 +23,7 @@ $(function(e){
     });
     
     $('#personas').delegate('button[data-role="ApoyoServicios"]', 'click', function(e){    
+        $("#ApoyoServicios").button('loading');
         var id = $(this).data('rel'); 
         $("#mensaje-incorrecto-tres").fadeOut();
         document.getElementById("fInicio").value = '';
@@ -37,6 +38,7 @@ $(function(e){
     });   
     
     $('#BuscarReporte').click(function (){    
+        $("#BuscarReporte").button('loading');
         $("#mensajeIncorrectoTres").empty();
         $("#mensaje-incorrecto-tres").fadeOut();
         Normal('fInicio');
@@ -50,14 +52,17 @@ $(function(e){
         if(!id || !inicio /*|| !fin*/){
             if(!inicio){                
                 ValidacionApoyo("fInicio", 'Ingrese una fecha de inicio para generar el reporte.');
+                $("#BuscarReporte").button('reset');
             }
             return false;
         }else{
-            BuscarIndividual(id, inicio) ;
+            BuscarIndividual(id, inicio);
+            $("#BuscarReporte").button('reset');
         }
     });
     
     $('#AgregarEstimulo').click(function () {
+        $("#AgregarEstimulo").button('loading');
         AgregarEstimulo();
     });
 
@@ -87,14 +92,16 @@ $(function(e){
             }
         }
         $('#modal_form_apoyo').modal('show');
+        $("#ApoyoServicios").button('reset');
 
     }
 
     function BuscarIndividual(id, inicio){
-        location.href = 'HistorialIndividual/'+id+'/'+inicio;
+        location.href = 'HistorialIndividual/'+id+'/'+inicio;        
     }
 
     function AgregarEstimulo(){
+        
         $("#mensaje-incorrecto-tres").fadeOut();
         Normal('Tipo_Estimulo');
         Normal('Valor_Estimulo');
@@ -124,14 +131,16 @@ $(function(e){
                 alert(xhr.Mensaje);
                 $('#Tipo_Estimulo').val('');
                 $('#Valor_Estimulo').val('');
-                //$('#Valor_SMMLV').val('');
             },
             error: function (xhr) {        
                 $("#mensajeIncorrectoTres").empty();
                 if(xhr.responseJSON.Tipo_Estimulo){ ValidacionApoyo('Tipo_Estimulo', xhr.responseJSON.Tipo_Estimulo);}else{Normal('Tipo_Estimulo');}
                 if(xhr.responseJSON.Valor_Estimulo){ ValidacionApoyo('Valor_Estimulo', xhr.responseJSON.Valor_Estimulo);}else{Normal('Valor_Estimulo');}
                 if(xhr.responseJSON.Valor_SMMLV){ ValidacionApoyo('Valor_SMMLV', xhr.responseJSON.Valor_SMMLV);}else{Normal('Valor_SMMLV');}
+                $("#AgregarEstimulo").button('reset');
             }
+        }).done(function(e){
+            $("#AgregarEstimulo").button('reset');
         });
     }
 
