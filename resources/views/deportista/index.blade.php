@@ -36,18 +36,17 @@
                               </div>
                             </div>
                             <div class="col-xs-12">
-                                    <div class="input-group">                                        
-                                        <input id="buscador" name="buscador" type="text" class="form-control" placeholder="Buscar" value="1032455961">
-                                        <span class="input-group-btn">
-                                            <button autocomplete="off" data-loading-text="Cargando..." id="buscar" data-role="buscar" class="btn btn-default" type="button">
-                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                    <br>
-                                    <div tabindex="-1" id="mensaje-incorrectoB" class=" text-left alert alert-success alert-danger" role="alert" style="display: none;">
-                                        <strong>Error </strong> <span id="mensajeIncorrectoB"></span>
-                                    </div>                                    
+                                <div class="input-group">                                        
+                                    <input id="buscador" name="buscador" type="text" class="form-control" placeholder="Buscar" value="1032455961">
+                                    <span class="input-group-btn">
+                                        <button id="buscar" data-role="buscar" class="btn btn-default" type="button">
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div tabindex="-1" id="mensaje-incorrectoB" class=" text-left alert alert-success alert-danger" role="alert" style="display: none; margin-top: 10px;">                                    
+                                    <strong>Error </strong> <span id="mensajeIncorrectoB"></span>
+                                </div>                                    
                             </div>
                             <div class="col-xs-12"><br></div>
                                 <div class="col-xs-12">

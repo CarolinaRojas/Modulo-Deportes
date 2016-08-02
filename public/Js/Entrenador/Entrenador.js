@@ -4,70 +4,18 @@ var modalidades;
 $(function(e){ 
     
     getEtapas();
+    
     getModalidades($('#Deporte').val());
-    var $personas_actuales = $('#personas').html();    
-    var URL = $('#main_persona').data('url');    
     
-    var reset = function(e){       
-        $('input[name="buscador"]').val('');
-        $('input[name="Telefono_Fijo"]').val('');     
-        $('input[name="Telefono_Celular"]').val('');     
-        $('input[name="Correo_Electronico"]').val('');     
-        $('input[name="Agrupacion"]').val('').change();     
-        $('input[name="Deporte"]').val('').change();     
-        $('input[name="Etapa_Entrenamiento"]').val('').change();     
-        $('input[name="Modalidad"]').val('');
-        $('#Fotografia').val('');
-        $('Modalidad').empty();
-        
-        $("input[type=checkbox]").prop('checked', false);
-        Normal('Telefono_Fijo'); Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Agrupacion'); Normal('Deporte'); Normal('Etapa_Entrenamiento'); Normal('Modalidad');        
-      
-        $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-search');
-        $('#personas').html($personas_actuales);
-        $('#paginador').fadeIn();
-    }; 
-    
-    $('#buscar').on('click', function(e){
-      var role = $(this).data('role');
-      switch(role)
-      {
-        case 'buscar':
-          $(this).data('role', 'reset');
-          buscar(e);
-        break;
-
-        case 'reset':
-          $(this).data('role', 'buscar');
-          reset(e);
-        break;
-      }
-    });
-    
-    
-    $('#personas').delegate('button[data-role="InformacionEntrenador"]', 'click', function(e){ var id = $(this).data('rel'); InfoBasica(id); $("#InformacionEntrenador").button('loading');}); 
-    
-    $('#Enviar').on('click', function () { RegistroEntrenador(); $("#Enviar").button('loading'); });
-    
-    $('#Agrupacion').on('change', function(e){ showDeportes($('#Agrupacion').val()); });
-    
-    $('#Deporte').on('change', function(e){ showModalidades($('#Deporte').val()); });
-    
-    
+    var $personas_actuales = $('#personas').html();   
+            
     function buscar(e){
-    var key = $('input[name="buscador"]').val();
-    if (key.length > 2){
-        $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-remove');
-        $('#buscar').data('role', 'reset');
-
-        $.get(
-            'personaBuscarDeportista/'+key,{}, 
-          function(data){              
+        var key = $('input[name="buscador"]').val();
+        $.get('personaBuscarDeportista/'+key,{}, function(data){              
             if(data.length > 0){
               var html = '';
               $.each(data, function(i, e){                                          
-                     $.get("deportista/" + e['Id_Persona'] + "", function (response) {
-                         
+                     $.get("deportista/" + e['Id_Persona'] + "", function (response) {                         
                         if(response.deportista){
                             html += '<li class="list-group-item" style="border:0">'+
                                       '<div class="row">'+
@@ -96,19 +44,49 @@ $(function(e){
                                       '</div>';
                         }
                         html += '</li>';
-                        
+
                         $('#personas').html(html);
                         $('#paginador').fadeOut();
+                    }).done(function(e){
+                        $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
+                        $('#buscar span').empty();
+                        document.getElementById("buscar").disabled = false;
                     });
               });              
             }            
           },
           'json'
-        )
-      } else if(key.length == 0){
-        reset(e);
-      }
+        ).done(function(e){
+                $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
+                $('#buscar span').empty();
+                document.getElementById("buscar").disabled = false;
+                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><br><br><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
+                $('#paginador').fadeOut();
+        });
     };
+    
+    function reset(e){       
+        $('input[name="buscador"]').val('');
+        $('input[name="Telefono_Fijo"]').val('');     
+        $('input[name="Telefono_Celular"]').val('');     
+        $('input[name="Correo_Electronico"]').val('');     
+        $('input[name="Agrupacion"]').val('').change();     
+        $('input[name="Deporte"]').val('').change();     
+        $('input[name="Etapa_Entrenamiento"]').val('').change();     
+        $('input[name="Modalidad"]').val('');
+        $('#Fotografia').val('');
+        $('Modalidad').empty();
+        
+        $("input[type=checkbox]").prop('checked', false);
+        Normal('Telefono_Fijo'); Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Agrupacion'); Normal('Deporte'); Normal('Etapa_Entrenamiento'); Normal('Modalidad');        
+      
+        $('#personas').html($personas_actuales);
+        $('#paginador').fadeIn();
+        
+        $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-search');
+        $('#buscar span').empty();
+        document.getElementById("buscar").disabled = false;
+    }; 
     
     function Validacion(campo, mensaje){
         $("#"+campo).css({ 'border-color': '#B94A48' });    
@@ -269,7 +247,6 @@ $(function(e){
 
     }
     
-    
     function showDeportes(id, sel) {      
         if(!sel){
             $("#Modalidad").empty();
@@ -309,6 +286,7 @@ $(function(e){
             etapas = etapasM;
         });
     }
+    
     function getModalidades(id){
         if(id){
             $.get("getModalidades/" + id + "", function (modalidadesM) {
@@ -316,8 +294,6 @@ $(function(e){
             });
         }
     }
-
-
 
     function guardaImagen(idPersona, mensaje){
         var token = $("#token").val();
@@ -342,4 +318,48 @@ $(function(e){
 
         });
     }    
+        
+    $('#buscar').on('click', function(e){
+        $("#mensajeIncorrectoB").empty();
+        $("#mensaje-incorrectoB").fadeOut();
+        $("#buscador").css({ 'border-color': '#CCCCCC' });    
+        $("#buscar").css({ 'border-color': '#CCCCCC' });    
+        var key = $('input[name="buscador"]').val();
+        if(!key && $(this).data('role') == 'buscar'){
+            $("#buscador").css({ 'border-color': '#B94A48' });
+            $("#buscar").css({ 'border-color': '#B94A48' });
+            var texto = $("#mensajeIncorrectoB").html();
+
+            $("#mensajeIncorrectoB").html(texto + '<br>' + 'Debe ingresar un parámetro para realizar la búsqueda.');
+            $("#mensaje-incorrectoB").fadeIn();
+            $('#mensaje-incorrectoB').focus();            
+            return false;
+        }        
+        var role = $(this).data('role');               
+        
+        switch(role){
+            case 'buscar':                
+                $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh');
+                $('#buscar span').append(' Cargando...');
+                 document.getElementById("buscar").disabled = true;
+                $(this).data('role', 'reset');
+                buscar(e);          
+            break;
+            case 'reset':                 
+                $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-refresh');
+                $('#buscar span').append(' Cargando...');
+                document.getElementById("buscar").disabled = true;
+                $(this).data('role', 'buscar');
+                reset(e);
+            break;
+        }     
+    });
+    
+    $('#personas').delegate('button[data-role="InformacionEntrenador"]', 'click', function(e){ var id = $(this).data('rel'); InfoBasica(id); $("#InformacionEntrenador").button('loading');}); 
+    
+    $('#Enviar').on('click', function () { RegistroEntrenador(); $("#Enviar").button('loading'); });
+    
+    $('#Agrupacion').on('change', function(e){ showDeportes($('#Agrupacion').val()); });
+    
+    $('#Deporte').on('change', function(e){ showModalidades($('#Deporte').val()); });
 });

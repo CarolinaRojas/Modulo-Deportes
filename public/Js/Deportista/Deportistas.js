@@ -1,20 +1,11 @@
 var html;
-$(function(e){ 
-    $('#Fecha_Ingreso_Date').datepicker({        
-       format: 'yyyy-mm-dd',
-       autoclose: true,   
-    });
-    
-    $('#Fecha_Retiro_Date').datepicker({        
-       format: 'yyyy-mm-dd',
-       autoclose: true,
-    });
+
+$(function(e){   
     
     var $personas_actuales = $('#personas').html();    
-    var URL = $('#main_persona').data('url');    
-    var buscar = function(e){        
-    var key = $('input[name="buscador"]').val();
-    if(key){
+    
+    function buscar(e){        
+        var key = $('input[name="buscador"]').val();
         $.get('personaBuscarDeportista/'+key,{}, function(data){              
             if(data.length > 0){
               var html = '';      
@@ -58,39 +49,33 @@ $(function(e){
                                          '</div>';
                            }     
                            html += '</li>';
-                           
+
                            $('#personas').html(html);
                            $('#paginador').fadeOut();
+                       }).done(function (){
+                           $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
+                           $('#buscar span').empty();
+                           document.getElementById("buscar").disabled = false;
                        });
                     }
                     html += '</li>';
                     $('#personas').html(html);
                     $('#paginador').fadeOut();                    
-                });                     
-              });              
-            }else{
-                $('#buscar').button('reset');  
-                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><br><br>'+
-                              '<h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
-            $('#paginador').fadeOut();
+                });
+              });
+            }else{     
+                $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
+                $('#buscar span').empty();
+                document.getElementById("buscar").disabled = false;
+                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><br><br><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
+                $('#paginador').fadeOut();
             }        
           },
           'json'
-        ).done(function (e){
-            $('#buscar').button('reset');            
-            
-        });
-      }else{           
-            $('#buscar').button('reset');  
-            $("#buscar").css({ 'border-color': '#B94A48' });    
-            var texto = $("#mensajeIncorrectoB").html();
-
-            $("#mensajeIncorrectoB").html(texto + '<br>' + 'Debe ingresar un parámetro para realizar la búsqueda.');
-            $("#mensaje-incorrectoB").fadeIn();
-            $('#mensaje-incorrectoB').focus();
-      }
+        );
     };
-    var reset = function(e){        
+    
+    function reset(e){        
         $('input[name="buscador"]').val('');
       
         $('input[name="Direccion_Residencia"]').val('');          
@@ -145,10 +130,12 @@ $(function(e){
         $('#personas').html($personas_actuales);
         $('#paginador').fadeIn();
         
-        $('#buscar').button('reset');
+        $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-search');
+        $('#buscar span').empty();
+        document.getElementById("buscar").disabled = false;
     };    
     
-    var popular_modal_persona = function(persona){
+    function popular_modal_persona(persona){
         
       var nombreDeportista="";
       var cedulaDeportista="";
@@ -229,45 +216,7 @@ $(function(e){
       }
         $('#modal_form_persona').modal('show');
         $("#InformacionBasica").button('reset');
-    };
-
-    $('#buscar').on('click', function(e){        
-        $("#mensajeIncorrectoB").empty();
-        $("#mensaje-incorrectoB").fadeOut();
-        
-        var role = $(this).data('role');
-        
-        switch(role){
-            case 'buscar':                
-                $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-remove');
-                $(this).data('role', 'reset');
-                $(this).button('loading');
-                buscar(e);          
-            break;
-            case 'reset': 
-                $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-search');
-                $(this).data('role', 'buscar');
-                //$(this).button('loading');
-                reset(e);
-            break;
-        }
-    });
-    
-    $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){
-        $("#InformacionBasica").button('loading');
-        $("#mensajeIncorrectoB").empty();
-        $("#mensaje-incorrectoB").fadeOut();
-        var id = $(this).data('rel');
-        $.get("deportista/" + id + "", function (response) {             
-            $("#mensaje-incorrecto").fadeOut();
-            $('#Fotografia').val('');
-            Normal('Grupo_Sanguineo'); Normal('Eps'); Normal('Estado_Civil'); Normal('Estrato'); Normal('Situacion_Militar');
-            Normal('Hijos'); Normal('Departamento'); Normal('Localidad'); Normal('Barrio'); Normal('Direccion_Residencia'); Normal('Telefono_Fijo'); 
-            Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Tipo_Deportista'); Normal('Banco'); Normal('Cuenta');
-            Normal('Deporte'); Normal('Modalidad'); Normal('Agrupacion'); Normal('EtapaNacional');Normal('EtapaInternacional');Normal('Tipo_Cuenta'); Normal('Fecha_Ingreso'); Normal('Fecha_Retiro')
-            popular_modal_persona(response);
-        });
-    });
+    };    
 
     function RegistroDeportista(){
 
@@ -478,49 +427,109 @@ $(function(e){
         }
 
     }
-        function guardaImagen(idPersona, mensaje){
-            var token = $("#token").val();
-            $.ajax({
-                url: 'AddImagen/'+idPersona,
-                type: 'POST',
-                data:  new FormData($("#Formulario_Imagen")[0]),
-                mimeType:"multipart/form-data",
-                contentType: false,
-                cache: false,
-                processData:false,
-                headers: {'X-CSRF-TOKEN': token},
-                success: function(data){
-                    alert(mensaje+data);
-                    $("#Imagen").attr('src',$("#Imagen").attr('src')+idPersona+'_deportista.png?' + (new Date()).getTime());            
-                    $("#Botonera").empty();
-                    var botonera = '<button id="InformacionBasica" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionBasica" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Información Basica</button>\
-                                    <button id="InformacionDeportiva" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionDeportiva" data-rel="'+idPersona+'" class="btn btn-default btn-sm">Información Deportiva</button>\
-                                    <button id="ApoyoServicios" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="ApoyoServicios" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>';
-                    $("#Botonera").append(botonera);
-                    $('#modal_form_persona').modal('hide');
+    
+    function guardaImagen(idPersona, mensaje){
+        var token = $("#token").val();
+        $.ajax({
+            url: 'AddImagen/'+idPersona,
+            type: 'POST',
+            data:  new FormData($("#Formulario_Imagen")[0]),
+            mimeType:"multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData:false,
+            headers: {'X-CSRF-TOKEN': token},
+            success: function(data){
+                alert(mensaje+data);
+                $("#Imagen").attr('src',$("#Imagen").attr('src')+idPersona+'_deportista.png?' + (new Date()).getTime());            
+                $("#Botonera").empty();
+                var botonera = '<button id="InformacionBasica" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionBasica" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Información Basica</button>\
+                                <button id="InformacionDeportiva" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionDeportiva" data-rel="'+idPersona+'" class="btn btn-default btn-sm">Información Deportiva</button>\
+                                <button id="ApoyoServicios" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="ApoyoServicios" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Apoyos y servicios</button>';
+                $("#Botonera").append(botonera);
+                $('#modal_form_persona').modal('hide');
 
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    Validacion('Fotografia', 'Error en la imagen');
-                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                Validacion('Fotografia', 'Error en la imagen');
+            }
 
-            });
-        }    
-
-    $(document).ready(function () {     
-        RegistroDeportista();
-
-
-        $('#Tipo_Deportista').on('change', function(e){
-            showEtapas($('#Tipo_Deportista').val());
         });
+    }    
 
-        $('#Agrupacion').on('change', function(e){
-            showDeportes($('#Agrupacion').val());
-        });
+    RegistroDeportista();
+    
+    $('#buscar').on('click', function(e){
+        $("#mensajeIncorrectoB").empty();
+        $("#mensaje-incorrectoB").fadeOut();
+        $("#buscador").css({ 'border-color': '#CCCCCC' });    
+        $("#buscar").css({ 'border-color': '#CCCCCC' });    
+        var key = $('input[name="buscador"]').val();
+        if(!key && $(this).data('role') == 'buscar'){
+            $("#buscador").css({ 'border-color': '#B94A48' });
+            $("#buscar").css({ 'border-color': '#B94A48' });
+            var texto = $("#mensajeIncorrectoB").html();
 
-        $('#Deporte').on('change', function(e){
-            showModalidades($('#Deporte').val());
+            $("#mensajeIncorrectoB").html(texto + '<br>' + 'Debe ingresar un parámetro para realizar la búsqueda.');
+            $("#mensaje-incorrectoB").fadeIn();
+            $('#mensaje-incorrectoB').focus();            
+            return false;
+        }        
+        var role = $(this).data('role');               
+        
+        switch(role){
+            case 'buscar':                
+                $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh');
+                $('#buscar span').append(' Cargando...');
+                document.getElementById("buscar").disabled = true;
+                $(this).data('role', 'reset');
+                buscar(e);          
+            break;
+            case 'reset':                 
+                $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-refresh');
+                $('#buscar span').append(' Cargando...');
+                document.getElementById("buscar").disabled = true;
+                $(this).data('role', 'buscar');
+                reset(e);
+            break;
+        }
+    });
+    
+    $('#personas').delegate('button[data-role="InformacionBasica"]', 'click', function(e){
+        $("#InformacionBasica").button('loading');
+        $("#mensajeIncorrectoB").empty();
+        $("#mensaje-incorrectoB").fadeOut();
+        var id = $(this).data('rel');
+        $.get("deportista/" + id + "", function (response) {             
+            $("#mensaje-incorrecto").fadeOut();
+            $('#Fotografia').val('');
+            Normal('Grupo_Sanguineo'); Normal('Eps'); Normal('Estado_Civil'); Normal('Estrato'); Normal('Situacion_Militar');
+            Normal('Hijos'); Normal('Departamento'); Normal('Localidad'); Normal('Barrio'); Normal('Direccion_Residencia'); Normal('Telefono_Fijo'); 
+            Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Tipo_Deportista'); Normal('Banco'); Normal('Cuenta');
+            Normal('Deporte'); Normal('Modalidad'); Normal('Agrupacion'); Normal('EtapaNacional');Normal('EtapaInternacional');Normal('Tipo_Cuenta'); Normal('Fecha_Ingreso'); Normal('Fecha_Retiro')
+            popular_modal_persona(response);
         });
+    });
+    
+    $('#Fecha_Ingreso_Date').datepicker({        
+       format: 'yyyy-mm-dd',
+       autoclose: true,   
+    });
+    
+    $('#Fecha_Retiro_Date').datepicker({        
+       format: 'yyyy-mm-dd',
+       autoclose: true,
+    });
+
+    $('#Tipo_Deportista').on('change', function(e){
+        showEtapas($('#Tipo_Deportista').val());
+    });
+
+    $('#Agrupacion').on('change', function(e){
+        showDeportes($('#Agrupacion').val());
+    });
+
+    $('#Deporte').on('change', function(e){
+        showModalidades($('#Deporte').val());
     });
 });

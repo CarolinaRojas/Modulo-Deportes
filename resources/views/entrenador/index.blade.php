@@ -32,6 +32,9 @@
                                         </button>
                                     </span>
                                 </div>
+                                <div tabindex="-1" id="mensaje-incorrectoB" class=" text-left alert alert-success alert-danger" role="alert" style="display: none; margin-top: 10px;">                                    
+                                    <strong>Error </strong> <span id="mensajeIncorrectoB"></span>
+                                </div>
                             </div>
                             <div class="col-xs-12"><br></div>
                                 <div class="col-xs-12">
