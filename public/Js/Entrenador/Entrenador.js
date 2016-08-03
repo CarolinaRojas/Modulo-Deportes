@@ -60,7 +60,7 @@ $(function(e){
                 $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
                 $('#buscar span').empty();
                 document.getElementById("buscar").disabled = false;
-                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><br><br><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
+                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
                 $('#paginador').fadeOut();
         });
     };

@@ -26,6 +26,9 @@
                                         <button id="buscar" data-role="buscar" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                     </span>
                                 </div>
+                                <div tabindex="-1" id="mensaje-incorrectoB" class=" text-left alert alert-success alert-danger" role="alert" style="display: none; margin-top: 10px;">                                    
+                                    <strong>Error </strong> <span id="mensajeIncorrectoB"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -33,7 +36,7 @@
             </div>
     </div>    
     <div class="col-xs-12">
-        <button id="crear" data-role="crear" class="btn btn-primary" type="button">Crear persona</button>
+        <button autocomplete="off" data-loading-text="Cargando..." id="crear" data-role="crear" class="btn btn-primary" type="button">Crear persona</button>
     </div>
     <div class="col-xs-12"><br></div>
     <div class="col-xs-12">
@@ -42,7 +45,7 @@
                 <li class="list-group-item">
                     <h5 class="list-group-item-heading">
                         {{ strtoupper($persona['Primer_Apellido'].' '.$persona['Segundo_Apellido'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']) }}
-                        <a data-role="editar" data-rel="{{ $persona['Id_Persona'] }}" class="pull-right btn btn-primary btn-xs">
+                        <a id="editM" data-role="editar" data-rel="{{ $persona['Id_Persona'] }}" class="pull-right btn btn-primary btn-xs">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </a>
                     </h5>
@@ -168,7 +171,7 @@
 	      		<div class="modal-footer">
                             <input type="hidden" name="Id_Persona" value="0">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
 	      		</div>
 	    	</div>
             </form>
