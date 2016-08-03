@@ -4,6 +4,7 @@ $(function(e){
     CurrentDate.setDate(1);
     CurrentDate.setMonth(CurrentDate.getMonth());
     CurrentDate.setDate(date);
+    
     $('#fInicioDate').datepicker({        
        format: 'yyyy-mm',
        startView: 'year',
@@ -19,6 +20,7 @@ $(function(e){
        autoclose: true,   
        endDate : CurrentDate.getFullYear()+'-'+CurrentDate.getMonth(),
     });
+    
     $('#fInicioDateGeneral').datepicker({        
        format: 'yyyy-mm',
        startView: 'year',
@@ -33,22 +35,9 @@ $(function(e){
        minViewMode: 'months',
        autoclose: true,   
        endDate : CurrentDate.getFullYear()+'-'+CurrentDate.getMonth(),
-    });
-    
+    });    
     
     $('[data-toggle="tooltip"]').tooltip('show');
-    
-    function Limpiar(){
-        $("#mensajeIncorrectoReporte").empty();
-        $("#mensaje-incorrecto-reporte").fadeOut();
-        
-        $("#mensajeIncorrecto2Reporte").empty();
-        $("#mensaje-incorrecto2-reporte").fadeOut();
-        Normal('Genero');Normal('Edad');Normal('Localidad');  Normal('Tipo_Deportista'); Normal('EtapaNacional'); Normal('EtapaInternacional');Normal('Agrupacion');Normal('Deporte');Normal('Modalidad');Normal('fInicioGeneral');Normal('fFinGeneral');
-        
-        Normal('fInicio');
-        Normal('fFin');
-    }
     
     $("#HistorialDeportistas").on('click', function(e){
         Limpiar();
@@ -73,7 +62,17 @@ $(function(e){
         ShowEtapas(this.value);
     });
     
-    
+    function Limpiar(){
+        $("#mensajeIncorrectoReporte").empty();
+        $("#mensaje-incorrecto-reporte").fadeOut();
+        
+        $("#mensajeIncorrecto2Reporte").empty();
+        $("#mensaje-incorrecto2-reporte").fadeOut();
+        Normal('Genero');Normal('Edad');Normal('Localidad');  Normal('Tipo_Deportista'); Normal('EtapaNacional'); Normal('EtapaInternacional');Normal('Agrupacion');Normal('Deporte');Normal('Modalidad');Normal('fInicioGeneral');Normal('fFinGeneral');
+        
+        Normal('fInicio');
+        Normal('fFin');
+    }
     
     function ShowGenero(){
         $("#Genero").empty();
@@ -185,6 +184,14 @@ function DescargaReporteEstimulos(){
 
         var inicio  = document.getElementById("fInicio").value;
         var fin  = document.getElementById("fFin").value;        
+        
+        if(Date.parse(inicio+'-01') > Date.parse(fin+'-01')){
+            ValidacionDeportiva("fInicio", 'La fecha de fin, debe ser posterior o igual a la de inicio.');
+            ValidacionDeportiva("fFin", '');
+            $("#BuscarReporte").button('reset');
+            return false;
+        }
+        
         if(!id || !inicio || !fin){
             if(!inicio){                
                 ValidacionDeportiva("fInicio", 'Ingrese una fecha de inicio para generar el reporte.');
@@ -226,10 +233,10 @@ function Validacion(campo, mensaje){
     
 }
 
-function Normal(campo){
+/*function Normal(campo){
     $("#"+campo).css({ 'border-color': '#CCCCCC' });    
     $("#"+campo+"L").css({ 'color': '#555555' });    
-}
+}*/
 
 function BuscarReporte(id, inicio, fin){
     location.href = 'HistorialEstimulos/'+id+'/'+inicio+'/'+fin;
@@ -285,8 +292,8 @@ function ValidacionReporteGeneral(){
         headers: {'X-CSRF-TOKEN': token},
         dataType: 'json',
         data: datos,        
-        success: function (xhr) {  
-            if(xhr.Genero || xhr.Edad || xhr.Localidad || xhr.Agrupacion || xhr.Deporte || xhr.Modalidad || xhr.inicio || xhr.fin){                    
+        success: function (xhr) {              
+            if(xhr.Genero || xhr.Edad || xhr.Localidad || xhr.Agrupacion || xhr.Deporte || xhr.Modalidad || xhr.inicio || xhr.fin){
                 if(xhr.Genero){ Validacion('Genero', xhr.Genero);}else{Normal('Genero');}
                 if(xhr.Edad){ Validacion('Edad', xhr.Edad);}else{Normal('Edad');}
                 if(xhr.Localidad){ Validacion('Localidad', xhr.Localidad);}else{Normal('Localidad');}
@@ -304,10 +311,19 @@ function ValidacionReporteGeneral(){
                 $(window).scrollTop(scrollPos);
                 return false;
             }else{
+                if(Date.parse(inicio+'-01') > Date.parse(fin+'-01')){
+                    Validacion("fInicioGeneral", 'La fecha de fin, debe ser posterior o igual a la de inicio.');
+                    Validacion("fFinGeneral", '');
+                    var scrollPos;                    
+                    scrollPos = $("#mensajeIncorrecto2Reporte").offset().top;
+                    $(window).scrollTop(scrollPos);
+                    return false;
+                }
                 if(xhr.Mensaje == 'validator ok'){
                     location.href = 'DRepoGeneral/'+49+'/'+conEnt;
+                    $("#mensajeIncorrecto2Reporte").fadeOut();
                 }
-            }
+            }            
             $("#ReporteGeneralB").button('reset');
         },
         error: function (xhr){
