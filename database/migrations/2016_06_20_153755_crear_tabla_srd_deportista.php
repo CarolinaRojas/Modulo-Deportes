@@ -20,9 +20,10 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_SITUACION_MILITAR')->unsigned();
             $table->integer('FK_I_ID_ESTRATO')->unsigned();
             $table->integer('FK_I_ID_EPS')->unsigned();
-            $table->integer('FK_I_ID_GRUPO_SANGUINEO')->unsigned();                        
-            $table->integer('FK_I_ID_BANCO')->unsigned();
+            $table->integer('FK_I_ID_GRUPO_SANGUINEO')->unsigned();                                    
             $table->integer('FK_I_ID_TIPO_CUENTA')->unsigned();
+            $table->integer('FK_I_ID_BANCO')->unsigned()->nullable();
+            $table->integer('FK_I_ID_BANCO')->unsigned()->nullable();
             $table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
             $table->integer('FK_I_ID_AGRUPACION')->unsigned();
             $table->integer('FK_I_ID_DEPORTE')->unsigned();
@@ -42,7 +43,7 @@ class CrearTablaSrdDeportista extends Migration
             $table->string('V_TELEFONO_CELULAR');
             $table->string('V_CORREO_ELECTRONICO');
             $table->string('V_CANTIDAD_HIJOS');
-            $table->string('V_NUMERO_CUENTA');
+            $table->string('V_NUMERO_CUENTA')->nullable();
             $table->string('V_URL_IMG');
             $table->date('D_FECHA_INGRESO');
             $table->date('D_FECHA_RETIRO')->nullable();

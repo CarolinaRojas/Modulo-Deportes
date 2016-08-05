@@ -125,36 +125,36 @@
 <br>
 <div class="row">
     <div class="col-md-2">
-        <label for="inputEmail" class="control-label" id="BancoL">Banco:</label>
-  </div>
-  <div class="col-md-4">
-    <select name="Banco" id="Banco" class="form-control">
-        <option value="">Seleccionar</option>
-        @foreach($banco as $bancos)
-            <option value="{{ $bancos['PK_I_ID_BANCO'] }}">{{ $bancos['V_NOMBRE_BANCO'] }}</option>
-        @endforeach
-    </select>
-  </div>
-</div>
-<br>
-<div class="row">
-    <div class="col-md-2">
         <label for="inputEmail" class="control-label" id="Tipo_CuentaL">Tipo de cuenta:</label>
   </div>
-  <div class="col-md-4">
+   <div class="col-md-4">
     <select name="Tipo_Cuenta" id="Tipo_Cuenta" class="form-control">
         <option value="">Seleccionar</option>
         @foreach($tipocuenta as $tipocuentas)
             <option value="{{ $tipocuentas['PK_I_ID_TIPO_CUENTA'] }}">{{ $tipocuentas['V_NOMBRE_TIPO_CUENTA'] }}</option>
         @endforeach
     </select>
-  </div>
+  </div>  
+</div>
+<br>
+<div class="row" id="CuentaD" style="visibility: hidden;">
+    <div class="col-md-2">
+        <label for="inputEmail" class="control-label" id="BancoL">Banco:</label>
+    </div>
+    <div class="col-md-4">
+        <select name="Banco" id="Banco" class="form-control">
+            <option value="">Seleccionar</option>
+            @foreach($banco as $bancos)
+                <option value="{{ $bancos['PK_I_ID_BANCO'] }}">{{ $bancos['V_NOMBRE_BANCO'] }}</option>
+            @endforeach
+        </select>
+    </div>
     <div class="col-md-2">
         <label for="inputEmail" class="control-label" id="CuentaL">N° de Cuenta:</label>
-  </div>
-  <div class="col-md-4">
-      <input class="form-control" placeholder="Cuenta" type="text" name="Cuenta" id="Cuenta">
-  </div>
+    </div>
+    <div class="col-md-4">
+        <input class="form-control" placeholder="Cuenta" type="text" name="Cuenta" id="Cuenta">
+    </div>
 </div>
 <br>
 <div class="row">

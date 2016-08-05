@@ -35,9 +35,7 @@ class RegistroDeportistaRequest extends Request
             'Correo_Electronico'=> 'required|email|min:7|max:40',
             'Estado_Civil'=> 'required',
             'Hijos'=> 'required|numeric|digits_between:1,3',
-            'Banco' => 'required',
             'Tipo_Cuenta' => 'required',
-            'Cuenta' => 'required|numeric|digits_between:1,20',
             'Deporte' => 'required',
             'Modalidad' => 'required',
             'Agrupacion' => 'required',
@@ -64,9 +62,7 @@ class RegistroDeportistaRequest extends Request
                 'Correo_Electronico'=> 'required|email|min:7|max:40',
                 'Estado_Civil'=> 'required',
                 'Hijos'=> 'required|numeric|digits_between:1,3',
-                'Banco' => 'required',
                 'Tipo_Cuenta' => 'required',
-                'Cuenta' => 'required|numeric|digits_between:1,20',
                 'Deporte' => 'required',
                 'Modalidad' => 'required',
                 'Agrupacion' => 'required',
@@ -81,6 +77,11 @@ class RegistroDeportistaRequest extends Request
                 'Fecha_Retiro' => 'date|after:Fecha_Ingreso',
 
                 ];
+        }
+        
+        if($this->Tipo_Cuenta != 3){
+               $validaciones['Banco'] = 'required';
+               $validaciones['Cuenta'] = 'required|numeric|digits_between:1,20';
         }
         return $validaciones;
     }

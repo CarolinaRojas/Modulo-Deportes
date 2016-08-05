@@ -15,6 +15,7 @@ class TipoCuentaTablaSeeder extends Seeder
         DB::table('TB_SRD_TIPO_CUENTA')->insert([
             ['V_NOMBRE_TIPO_CUENTA' => 'Cuenta ahorros'],            
             ['V_NOMBRE_TIPO_CUENTA' => 'Cuenta corriente'],            
+            ['V_NOMBRE_TIPO_CUENTA' => 'No tiene'],            
         ]);
     }
 }

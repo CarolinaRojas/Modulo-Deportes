@@ -334,8 +334,8 @@ $(function(e){
                 if(xhr.responseJSON.Telefono_Celular){ Validacion('Telefono_Celular', xhr.responseJSON.Telefono_Celular);}else{Normal('Telefono_Celular');}
                 if(xhr.responseJSON.Correo_Electronico){ Validacion('Correo_Electronico', xhr.responseJSON.Correo_Electronico);}else{Normal('Correo_Electronico');}
                 if(xhr.responseJSON.Tipo_Deportista){ Validacion('Tipo_Deportista', xhr.responseJSON.Tipo_Deportista);}else{Normal('Tipo_Deportista');}
-                if(xhr.responseJSON.Banco){ Validacion('Banco', xhr.responseJSON.Banco);}else{Normal('Banco');}
                 if(xhr.responseJSON.Tipo_Cuenta){ Validacion('Tipo_Cuenta', xhr.responseJSON.Tipo_Cuenta);}else{Normal('Tipo_Cuenta');}
+                if(xhr.responseJSON.Banco){ Validacion('Banco', xhr.responseJSON.Banco);}else{Normal('Banco');}                
                 if(xhr.responseJSON.Cuenta){ Validacion('Cuenta', xhr.responseJSON.Cuenta);}else{Normal('Cuenta');}
                 if(xhr.responseJSON.Deporte){ Validacion('Deporte', xhr.responseJSON.Deporte);}else{Normal('Deporte');}
                 if(xhr.responseJSON.Modalidad){ Validacion('Modalidad', xhr.responseJSON.Modalidad);}else{Normal('Modalidad');}
@@ -458,6 +458,16 @@ $(function(e){
     }    
 
     RegistroDeportista();
+    
+    $("#Tipo_Cuenta").on('change', function(e){
+        if(this.value != 3){
+            document.getElementById("CuentaD").style.visibility = "visible";
+        }else{
+            $("#Banco").val('').change();
+            $('#Cuenta').val('');
+            document.getElementById("CuentaD").style.visibility = "hidden";
+        }
+    });
     
     $('#buscar').on('click', function(e){
         $("#mensajeIncorrectoB").empty();
