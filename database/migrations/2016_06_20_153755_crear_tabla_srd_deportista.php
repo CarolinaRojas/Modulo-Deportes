@@ -23,7 +23,6 @@ class CrearTablaSrdDeportista extends Migration
             $table->integer('FK_I_ID_GRUPO_SANGUINEO')->unsigned();                                    
             $table->integer('FK_I_ID_TIPO_CUENTA')->unsigned();
             $table->integer('FK_I_ID_BANCO')->unsigned()->nullable();
-            $table->integer('FK_I_ID_BANCO')->unsigned()->nullable();
             $table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
             $table->integer('FK_I_ID_AGRUPACION')->unsigned();
             $table->integer('FK_I_ID_DEPORTE')->unsigned();
