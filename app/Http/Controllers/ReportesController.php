@@ -160,7 +160,7 @@ class ReportesController extends Controller
                           'EDAD' => $edad_decimal,                   
                           'PAÍS' => $pais,
                           'TIPO DE DOCUMENTO' => $tipo_documento,
-                          'N° DE DOCUMENTO' =>  (int)$num_documento,
+                          'N° DE DOCUMENTO' =>  $num_documento,
                           'SITUACIÓN MILITAR' => $sit_militar,
                           'BANCO' => $banco,
                           'TIPO DE CUENTA' => $tipo_cuenta,
@@ -272,9 +272,14 @@ class ReportesController extends Controller
                 $fecha_retiro = $persona->deportista['D_FECHA_RETIRO'];
 
                 $historialEtapas = $persona->deportista->historialEtapas()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[1].'-31 23:59:59'))->orderBy('tb_srd_historial_etapa.created_at', 'desc')->get();
-                
-                $EtapaInternacional = $historialEtapas->whereIn('FK_I_ID_TIPO_ETAPA', [2, 4])->first();
-                $EtapaNacional = $historialEtapas->whereIn('FK_I_ID_TIPO_ETAPA', [1, 3])->first();                       
+                if(count($historialEtapas) == 0){
+                    $historialEtapas = $persona->deportista->historialEtapas()->whereBetween('created_at', array( '1900-01-01 00:00:00' , $datos[1].'-31 23:59:59'))->orderBy('tb_srd_historial_etapa.created_at', 'desc')->get();
+                    $EtapaInternacional = $historialEtapas->whereIn('FK_I_ID_TIPO_ETAPA', [2, 4])->first();
+                    $EtapaNacional = $historialEtapas->whereIn('FK_I_ID_TIPO_ETAPA', [1, 3])->first();                       
+                }else{
+                    $EtapaInternacional = $historialEtapas->whereIn('FK_I_ID_TIPO_ETAPA', [2, 4])->first();
+                    $EtapaNacional = $historialEtapas->whereIn('FK_I_ID_TIPO_ETAPA', [1, 3])->first();                       
+                }
 
                 if($EtapaNacional){
                     $Nacional = ($EtapaNacional->pivot['I_SMMLV'] * $EtapaNacional['V_POR_ESTIMULO']);
@@ -338,7 +343,7 @@ class ReportesController extends Controller
                      'EDAD' => $edad_decimal,
                      'PAÍS' => $pais,
                      'TIPO DE DOCUMENTO' => $tipo_documento,
-                     'N° DE DOCUMENTO' => (int)$num_documento,
+                     'N° DE DOCUMENTO' => $num_documento,
                      'SITUACIÓN MILITAR' => $sit_militar,
                      'BANCO' => $banco,
                      'TIPO DE CUENTA' => $tipo_cuenta,
@@ -659,7 +664,7 @@ class ReportesController extends Controller
                              'EDAD' => $edad_decimal,                   
                              'PAÍS' => $pais,
                              'TIPO DE DOCUMENTO' => $tipo_documento,
-                             'N° DE DOCUMENTO' =>  (int)$num_documento,
+                             'N° DE DOCUMENTO' =>  $num_documento,
                              'SITUACIÓN MILITAR' => $sit_militar,
                              'BANCO' => $banco,
                              'TIPO DE CUENTA' => $tipo_cuenta,

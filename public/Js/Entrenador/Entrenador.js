@@ -11,7 +11,7 @@ $(function(e){
             
     function buscar(e){
         var key = $('input[name="buscador"]').val();
-        $.get('personaBuscarDeportista/'+key,{}, function(data){              
+        $.get('personaBuscarDeportista/'+key,{}, function(data){
             if(data.length > 0){
               var html = '';
               $.each(data, function(i, e){                                          
@@ -28,7 +28,7 @@ $(function(e){
                                           '<p class="list-group-item-text"> '+
                                           '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
                                       '</dvi><br>';
-                        }else{
+                        }else{                            
                             html += '<li class="list-group-item" style="border:0">'+
                                     '<br>'+                                                     
                                       '<div class="row">'+
@@ -53,15 +53,21 @@ $(function(e){
                         document.getElementById("buscar").disabled = false;
                     });
               });              
-            }            
+            }else{
+                $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
+                $('#buscar span').empty();
+                document.getElementById("buscar").disabled = false;
+                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
+                $('#paginador').fadeOut();
+            }          
           },
           'json'
         ).done(function(e){
                 $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
                 $('#buscar span').empty();
                 document.getElementById("buscar").disabled = false;
-                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
-                $('#paginador').fadeOut();
+                /*$('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
+                $('#paginador').fadeOut();*/
         });
     };
     

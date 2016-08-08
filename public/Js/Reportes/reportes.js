@@ -233,11 +233,6 @@ function Validacion(campo, mensaje){
     
 }
 
-/*function Normal(campo){
-    $("#"+campo).css({ 'border-color': '#CCCCCC' });    
-    $("#"+campo+"L").css({ 'color': '#555555' });    
-}*/
-
 function BuscarReporte(id, inicio, fin){
     location.href = 'HistorialEstimulos/'+id+'/'+inicio+'/'+fin;
     $("#BuscarReporte").button('reset');

@@ -194,7 +194,7 @@ class DeportistaController extends Controller{
                 
             $deportista->FK_I_ID_SITUACION_MILITAR = $request->Situacion_Militar;
             $deportista->D_FECHA_INGRESO = $request->Fecha_Ingreso;
-            //$deportista->created_at = $request->Fecha_Ingreso;
+            $deportista->created_at = $request->Fecha_Ingreso;
             $deportista->D_FECHA_RETIRO = $request->Fecha_Retiro;
             
             if($deportista->save()){
@@ -207,7 +207,7 @@ class DeportistaController extends Controller{
                     $historialEtapaNacional->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
                     $historialEtapaNacional->FK_I_ID_ETAPA = $request->EtapaNacional;
                     $historialEtapaNacional->I_SMMLV = $request->SMMLV;      
-                    //$historialEtapaNacional->created_at = $request->Fecha_Ingreso;      
+                    $historialEtapaNacional->created_at = $request->Fecha_Ingreso;      
                     if(!$historialEtapaNacional->save()){      
                         return response()->json(["Mensaje" => "La etapa nacional del deportista no se ha ingresado correctamente, intentelo más tarde."]);
                     }
@@ -218,7 +218,7 @@ class DeportistaController extends Controller{
                     $historialEtapaInternacional->FK_I_ID_DEPORTISTA_H = $deportista->PK_I_ID_DEPORTISTA;
                     $historialEtapaInternacional->FK_I_ID_ETAPA = $request->EtapaInternacional;
                     $historialEtapaInternacional->I_SMMLV = $request->SMMLV;   
-                    //$historialEtapaInternacional->created_at = $request->Fecha_Ingreso;      
+                    $historialEtapaInternacional->created_at = $request->Fecha_Ingreso;      
                     if(!$historialEtapaInternacional->save()){      
                         return response()->json(["Mensaje" => "La etapa nacional del deportista no se ha ingresado correctamente, intentelo más tarde."]);
                     }

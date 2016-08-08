@@ -66,7 +66,6 @@ $(function(e){
         AgregarEstimulo();
     });
 
-
     function popular_modal_apoyo(persona){
         var nombreDeportista="";
         var cedulaDeportista="";
