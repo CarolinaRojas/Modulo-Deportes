@@ -11,7 +11,7 @@
     {{Html::style('public/Css/bootstrap.css')}}
     {{Html::script('public/Js/tablesIdioma.js')}}   
     {{Html::style('public/Css/dataTables.bootstrap.min.css')}}
-    {{Html::script('public/Js/jquery.ui.datepicker-es.js')}}
+    {{Html::script('public/Js/jquery.ui.js')}}
     
     {{Html::script('public/Js/dataTables.bootstrap.min.js')}}
     
