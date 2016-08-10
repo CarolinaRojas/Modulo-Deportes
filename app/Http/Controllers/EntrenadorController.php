@@ -27,8 +27,7 @@ class EntrenadorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index()    {
         $etnia = Etnia::all();        
         $pais = Pais::all();        
         $genero = Genero::all();
@@ -62,6 +61,7 @@ class EntrenadorController extends Controller
      */
     public function store(RegistroEntrenadorRequest $request)
     {        
+       // dd('store');
         if ($request->ajax()){
             $entrenador = new EntrenadorModel;
             $entrenador->FK_I_ID_PERSONA = $request->Id_Persona;
@@ -120,6 +120,7 @@ class EntrenadorController extends Controller
      */
     public function update(RegistroEntrenadorRequest $request, $id)
     {
+    //    dd('update');
         if ($request->ajax()){            
             $entrenador = EntrenadorModel::find($id);
             $entrenador->FK_I_ID_PERSONA = $request->Id_Persona;
@@ -153,7 +154,7 @@ class EntrenadorController extends Controller
     }
     
     public function datos($id){
-        $persona = Persona::with('entrenador', 'entrenador.etapasEntrenador', 'entrenador.modalidadesEntrenador', 'entrenador.Historialdeportistas')->find($id);        
+        $persona = Persona::with('entrenador', 'entrenador.etapasEntrenador', 'entrenador.modalidadesEntrenador', 'entrenador.Historialdeportistas', 'entrenador.Historialdeportistas.persona')->find($id);
         return $persona;
     }
     
@@ -191,12 +192,5 @@ class EntrenadorController extends Controller
         $conteo = EntrenadorModel::with('')->find(2);
         dd($conteo);
         return $conteo;
-    }
-    
-    /*public function getEntrenadorEtapas(Request $request, $id) {        
-        if ($request->ajax()) {
-            $entrenadorEtapas = EntrenadorModel::with('etapasEntrenador')->find($id);
-            return $entrenadorEtapas;
-        }
-    }*/
+    }    
 }

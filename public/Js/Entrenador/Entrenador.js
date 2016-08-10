@@ -11,82 +11,93 @@ $(function(e){
             
     function buscar(e){
         var key = $('input[name="buscador"]').val();
-        $.get('personaBuscarDeportista/'+key,{}, function(data){
-            if(data.length > 0){
-              var html = '';
-              $.each(data, function(i, e){                                          
-                     $.get("deportista/" + e['Id_Persona'] + "", function (response) {                         
-                        if(response.deportista){
+        var html = '';
+        $.get('personaBuscarDeportista/'+key,{}, function(persona){
+            if(persona.length > 0){
+                //Si hay persona registrada
+                $.get("deportista/" + +persona[0].Id_Persona + "", function (deportistaE){
+                    if(deportistaE.deportista){
+                        //ES un deportista
+                        html += '<li class="list-group-item" style="border:0">'+
+                                  '<div class="row">'+
+                                      '<span class="label label-warning glyphicon-class">Esta persona ya se encuentra registrada como deportista.   '+
+                                      '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'+
+                                      '</span>'+
+                                      '<br><br>'+
+                                      '<h4 class="list-group-item-heading">'+
+                                      persona[0].Primer_Apellido.toUpperCase()+' '+persona[0].Segundo_Apellido.toUpperCase()+' '+persona[0].Primer_Nombre.toUpperCase()+' '+persona[0].Segundo_Nombre.toUpperCase()+''+'</h4>'+                                  
+                                      '<p class="list-group-item-text"> '+
+                                      '<small>Identificación: '+persona[0].tipo_documento['Nombre_TipoDocumento']+' '+persona[0].Cedula+'</small>'+
+                                  '</dvi><br>';
+                          $('#personas').html(html);
+                          $('#paginador').fadeOut();
+                          
+                    }else{ 
+                        //No es un deportista
+                        $.get('entrenador/'+persona[0].Id_Persona,{}, function(entrenador){
                             html += '<li class="list-group-item" style="border:0">'+
-                                      '<div class="row">'+
-                                          '<span class="label label-warning glyphicon-class">Esta persona ya se encuentra registrada como deportista.   '+
-                                          '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'+
-                                          '</span>'+
-                                          '<br><br>'+
-                                          '<h4 class="list-group-item-heading">'+                                              
-                                              ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
-                                          '<p class="list-group-item-text"> '+
-                                          '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
-                                      '</dvi><br>';
-                        }else{                            
-                            html += '<li class="list-group-item" style="border:0">'+
-                                    '<br>'+                                                     
-                                      '<div class="row">'+
-                                          '<h4 class="list-group-item-heading">'+
-                                              ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+'</h4>'+
-                                          '<p class="list-group-item-text">'+
-                                          '<small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small>'+
-                                      '</dvi><br><br><br>'+
-                                      '<div class="row">'+
-                                          '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
-                                              '<button id="InformacionEntrenador" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionEntrenador" data-rel="'+e['Id_Persona']+'" class="btn btn-primary btn-sm">Información Basica</button>'+
-                                          '</div>'+
-                                      '</div>';
-                        }
-                        html += '</li>';
-
-                        $('#personas').html(html);
-                        $('#paginador').fadeOut();
-                    }).done(function(e){
-                        $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
-                        $('#buscar span').empty();
-                        document.getElementById("buscar").disabled = false;
-                    });
-              });              
+                                '<br>'+                                                     
+                                  '<div class="row">'+
+                                      '<h4 class="list-group-item-heading">'+
+                                            persona[0].Primer_Apellido.toUpperCase()+' '+persona[0].Segundo_Apellido.toUpperCase()+' '+persona[0].Primer_Nombre.toUpperCase()+' '+persona[0].Segundo_Nombre.toUpperCase()+''+'</h4>'+
+                                      '<p class="list-group-item-text">'+
+                                      '<small>Identificación: '+persona[0].tipo_documento['Nombre_TipoDocumento']+' '+persona[0].Cedula+'</small>'+
+                                  '</dvi><br><br><br>'+
+                                  '<div class="row">';
+                            if(entrenador.entrenador){
+                                //Ya existe como entrenador                                
+                                      html += '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
+                                                    '<button id="InformacionEntrenador" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionEntrenador" data-rel="'+persona[0].Id_Persona+'" class="btn btn-primary btn-sm">Información Basica</button>'+
+                                                    '<button id="HistorialDeportistas" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="HistorialDeportistas" data-rel="'+persona[0].Id_Persona+'" class="btn btn-default btn-sm">Historial Deportistas</button>'+
+                                                '</div>'+
+                                            '</div>';
+                            }else{
+                                //No existe como entrenador
+                                html += '<div class="pull-left btn-group" role="group" aria-label="Informacion" id="Botonera" name="Botonera">'+
+                                                    '<button id="InformacionEntrenador" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionEntrenador" data-rel="'+persona[0].Id_Persona+'" class="btn btn-primary btn-sm">Información Basica</button>'+
+                                                '</div>'+
+                                            '</div>';
+                            }
+                            $('#personas').html(html);
+                            $('#paginador').fadeOut();
+                        });
+                    }
+                    html += '</li>';                    
+                }).done(function(e){
+                    $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
+                    $('#buscar span').empty();
+                    document.getElementById("buscar").disabled = false;
+                });                 
             }else{
-                $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
+                //'NO hay persona
+                 $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
                 $('#buscar span').empty();
                 document.getElementById("buscar").disabled = false;
-                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
-                $('#paginador').fadeOut();
-            }          
-          },
-          'json'
-        ).done(function(e){
-                $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
-                $('#buscar span').empty();
-                document.getElementById("buscar").disabled = false;
-                /*$('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
-                $('#paginador').fadeOut();*/
+                html = '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>';
+            }
+            $('#personas').html(html);
+            $('#paginador').fadeOut();            
+            
         });
     };
     
-    function reset(e){       
+    function reset(e){ 
         $('input[name="buscador"]').val('');
         $('input[name="Telefono_Fijo"]').val('');     
         $('input[name="Telefono_Celular"]').val('');     
         $('input[name="Correo_Electronico"]').val('');     
-        $('input[name="Agrupacion"]').val('').change();     
-        $('input[name="Deporte"]').val('').change();     
-        $('input[name="Etapa_Entrenamiento"]').val('').change();     
-        $('input[name="Modalidad"]').val('');
+        $("#Agrupacion").val('').change();
+        $("#Deporte").val('').change();
+        $("#Etapa_Entrenamiento").val('').change();
+        $("#Modalidad").empty();
         $('#Fotografia').val('');
         $('Modalidad').empty();
+        $('input[name="Id_Entrenador"]').val('');
         
         $("input[type=checkbox]").prop('checked', false);
         Normal('Telefono_Fijo'); Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Agrupacion'); Normal('Deporte'); Normal('Etapa_Entrenamiento'); Normal('Modalidad');        
       
-        $('#personas').html($personas_actuales);
+        $('#personas').empty();
         $('#paginador').fadeIn();
         
         $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-search');
@@ -120,13 +131,6 @@ $(function(e){
     }
     
     function popular_modal_entrenador(persona){
-        $('#Num_Deportistas').empty();
-        if(persona.entrenador){
-            $('#Num_Deportistas').append((persona.entrenador['historialdeportistas']).length);            
-        }else{
-            $('#Num_Deportistas').append('0');            
-        }
-
         var nombreEntrenador="";
         var cedulaEntrenador="";
 
@@ -318,6 +322,10 @@ $(function(e){
             success: function(data){
                 alert(mensaje+data);
                 $("#Imagen").attr('src',$("#Imagen").attr('src')+idPersona+'_deportista.png?' + (new Date()).getTime());            
+                $("#Botonera").empty();
+                var botonera = '<button id="InformacionEntrenador" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="InformacionEntrenador" data-rel="'+idPersona+'" class="btn btn-primary btn-sm">Información Basica</button>'+
+                                                    '<button id="HistorialDeportistas" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="HistorialDeportistas" data-rel="'+idPersona+'" class="btn btn-default btn-sm">Historial Deportistas</button>';
+                $("#Botonera").append(botonera);
                 $('#modal_form_entrenador').modal('hide');
 
             },
@@ -328,6 +336,53 @@ $(function(e){
         });
     }    
         
+    $('#personas').delegate('button[data-role="HistorialDeportistas"]', 'click', function(e){  
+        $("#HistorialDeportistas").button('loading');
+        var id = $(this).data('rel');
+        $("#deportistas").empty();
+        $('#numDeportistas').empty();
+        $.get("entrenador/" + id + "", function (persona) {       
+            if(persona.entrenador){
+                if((persona.entrenador.historialdeportistas).length > 0){
+                    $('#numDeportistas').append((persona.entrenador['historialdeportistas']).length);                        
+                    $('#ver_mas').append('<button id="EntrenadorDeportistas" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="EntrenadorDeportistas" data-rel="'+persona['Id_Persona']+'" class="btn btn-primary btn-sm">Ver deportistas</button>');
+                    var html = '';
+
+                    console.log(persona.entrenador['historialdeportistas']);
+
+
+                    $.each(persona.entrenador['historialdeportistas'], function(i, e){
+                        html += '<li class="list-group-item">\n\
+                            <h5 class="list-group-item-heading">\n\
+                                '+e.persona.Primer_Apellido+' '+e.persona.Segundo_Apellido+' '+e.persona.Primer_Nombre+' '+e.persona.Segundo_Nombre+'\n\
+                                <!--<a id="editM" data-role="editar" data-rel="'+e.persona.Id_Persona+'" class="pull-right btn btn-primary btn-xs">\n\
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>\n\
+                                </a>-->\n\
+                            </h5>\n\
+                            <p class="list-group-item-text">\n\
+                                <div class="row">\n\
+                                    <div class="col-xs-12">\n\
+                                        <div class="row">\n\
+                                            <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.persona.Cedula+'</small></div>\n\
+                                        </div>\n\
+                                    </div>\n\
+                                </div>\n\
+                            </p>\n\
+                        </li>';                    
+                    });
+                    $("#deportistas").append(html);
+                 //   $("#paginador").append(persona.entrenador.historialdeportistas+'->render()');
+                }else{
+                    $('#numDeportistas').append('0');
+                    $("#deportistas").append('<li class="list-group-item"><h5 class="list-group-item-heading">Este entrenador aún no cuenta con deportistas asignados.</h5></li>');
+                }
+            }
+        }).done(function(){
+            $('#modal_form_deportistas').modal('show');
+            $("#HistorialDeportistas").button('reset');
+        });        
+    }); 
+    
     $('#buscar').on('click', function(e){
         $("#mensajeIncorrectoB").empty();
         $("#mensaje-incorrectoB").fadeOut();
@@ -370,5 +425,5 @@ $(function(e){
     
     $('#Agrupacion').on('change', function(e){ showDeportes($('#Agrupacion').val()); });
     
-    $('#Deporte').on('change', function(e){ showModalidades($('#Deporte').val()); });
+    $('#Deporte').on('change', function(e){ showModalidades($('#Deporte').val()); });    
 });

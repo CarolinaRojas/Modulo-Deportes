@@ -142,7 +142,6 @@
                             </div>
                             <br>
                             <h4 class="modal-title text-uppercase">Datos del entrenador:</h4>
-                            <h4>N° deportistas a cargo: <span class="label label-default" id="Num_Deportistas"></span></h4>
                             <br>
                             <input type="hidden" name="Id_Entrenador" id="Id_Entrenador">
                             <div class="row">
@@ -235,6 +234,36 @@
                     </div>
                 </div>
             </div>
-        </div>                        
+        </div>       
+        
+        <!------------------------------------->
+        <div class="modal fade bs-example-modal-lg" id="modal_form_deportistas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button autocomplete="off" data-loading-text="Cargando..." type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-center">Número de deportistas a cargo: 
+                        <label id="numDeportistas" ></label>
+                    </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <ul class="list-group" id="deportistas">
+                                </ul>
+                            </div>
+                            <!--<div id="paginador" class="col-xs-12"></div>    -->
+                            <div class="col-xs-12 col-md-12 ">   
+                                <div class="form-group">                                   
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
     </div> 
 @stop

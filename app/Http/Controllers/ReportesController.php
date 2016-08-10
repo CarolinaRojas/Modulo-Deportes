@@ -58,8 +58,7 @@ class ReportesController extends Controller
                      $modalidad = $p->deportista->modalidad['V_NOMBRE_MODALIDAD'];
                      $etapa_nal = $p->deportista->etapa_nal['V_NOMBRE_ETAPA'];
                      $etapa_inter = $p->deportista->etapa_inter['V_NOMBRE_ETAPA'];                   
-                     $sumaEtapas = 0;                   
-                     $mensual = 0;
+                     $sumaEtapas = 0;      
                      $educacion = 0;
                      $resultados = 0;
                      $alimentacion = 0;
@@ -122,31 +121,28 @@ class ReportesController extends Controller
                           $sumaEtapas = $sumaEtapas + $Nacional + $Internacional;
 
                           $Estimulos = $p->deportista->historialEstimulos()->whereBetween('created_at', array( $nuevafecha.'-01 00:00:00' , $nuevafecha.'-31 23:59:59'))->get();                        
-                          foreach($Estimulos as  $hE){                       
+                          foreach($Estimulos as  $hE){
                               if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 1){
-                                  $mensual = $mensual + $hE->pivot['V_VALOR_ESTIMULO'];
-                              }
-                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
                                   $educacion = $educacion + $hE->pivot['V_VALOR_ESTIMULO'];
                               }
-                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
+                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
                                   $resultados = $resultados + $hE->pivot['V_VALOR_ESTIMULO'];
                               }
-                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
+                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
                                   $alimentacion = $alimentacion + $hE->pivot['V_VALOR_ESTIMULO'];
                               }
-                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
+                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
                                   $hidratantes = $hidratantes + $hE->pivot['V_VALOR_ESTIMULO'];
                               }
-                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
+                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
                                   $multidisciplina = $multidisciplina + $hE->pivot['V_VALOR_ESTIMULO'];
                               }
-                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 7){
+                              if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
                                   $monitoria = $monitoria + $hE->pivot['V_VALOR_ESTIMULO'];
                               }
                           }
                       }    
-                      $total = $sumaEtapas + $mensual + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;               
+                      $total = $sumaEtapas + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;               
                       $per[$y] = [ 
                           'N°' => $y+1,
                           'AGRUPACIÓN'=> $agrupacion,
@@ -174,7 +170,6 @@ class ReportesController extends Controller
                           'FECHA DE INGRESO' => $fecha_ingreso,
                           'FECHA DE RETIRO' => $fecha_retiro,
                           'TRANSPORTE'=> $sumaEtapas,
-                          'ESTÍMULO MENSUAL'=> $mensual,
                           'EDUCACIÓN'=> $educacion,
                           'ESTÍMULO POR RESULTADOS'=> $resultados,
                           'ALIMENTACIÓN'=> $alimentacion,
@@ -234,8 +229,7 @@ class ReportesController extends Controller
                 $agrupacion = $persona->deportista->agrupacion['V_NOMBRE_AGRUPACION'];
                 $deporte = $persona->deportista->deporte['V_NOMBRE_DEPORTE'];
                 $modalidad = $persona->deportista->modalidad['V_NOMBRE_MODALIDAD'];
-                $etapa = $persona->deportista->etapa['V_NOMBRE_ETAPA'];            
-                $mensual = 0;
+                $etapa = $persona->deportista->etapa['V_NOMBRE_ETAPA'];   
                 $transporte = 0;
                 $educacion = 0;
                 $resultados = 0;
@@ -305,30 +299,27 @@ class ReportesController extends Controller
                 $sumaEtapas = $sumaEtapas + $Nacional + $Internacional;                       
 
                 $Estimulos = $persona->deportista->historialEstimulos()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[1].'-31 23:59:59'))->get();                        
-                foreach($Estimulos as  $hE){                       
+                foreach($Estimulos as  $hE){
                     if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 1){
-                        $mensual = $mensual + $hE->pivot['V_VALOR_ESTIMULO'];
-                    }
-                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
                         $educacion = $educacion + $hE->pivot['V_VALOR_ESTIMULO'];
                     }
-                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
+                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
                         $resultados = $resultados + $hE->pivot['V_VALOR_ESTIMULO'];
                     }
-                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
+                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
                         $alimentacion = $alimentacion + $hE->pivot['V_VALOR_ESTIMULO'];
                     }
-                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
+                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
                         $hidratantes = $hidratantes + $hE->pivot['V_VALOR_ESTIMULO'];
                     }
-                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
+                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
                         $multidisciplina = $multidisciplina + $hE->pivot['V_VALOR_ESTIMULO'];
                     }
-                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 7){
+                    if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
                         $monitoria = $monitoria + $hE->pivot['V_VALOR_ESTIMULO'];
                     }
                 }                                    
-                $total = $sumaEtapas + $mensual + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;                                       
+                $total = $sumaEtapas + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;                                       
 
                 $per[0] = [
                      'PERÍODO' => $datos[1],
@@ -357,7 +348,6 @@ class ReportesController extends Controller
                      'FECHA DE INGRESO' => $fecha_ingreso,
                      'FECHA DE RETIRO' => $fecha_retiro,
                      'TRANSPORTE'=> $sumaEtapas,
-                     'ESTÍMULO MENSUAL'=> $mensual,
                      'EDUCACIÓN'=> $educacion,
                      'ESTÍMULO POR RESULTADOS'=> $resultados,
                      'ALIMENTACIÓN'=> $alimentacion,
@@ -568,8 +558,7 @@ class ReportesController extends Controller
                         $modalidad = $p->deportista->modalidad['V_NOMBRE_MODALIDAD'];
                         $etapa_nal = $p->deportista->etapa_nal['V_NOMBRE_ETAPA'];
                         $etapa_inter = $p->deportista->etapa_inter['V_NOMBRE_ETAPA'];                   
-                        $sumaEtapas = 0;                   
-                        $mensual = 0;
+                        $sumaEtapas = 0;    
                         $educacion = 0;
                         $resultados = 0;
                         $alimentacion = 0;
@@ -626,31 +615,28 @@ class ReportesController extends Controller
                              }
                              $sumaEtapas = $sumaEtapas + $Nacional + $Internacional;
                              $Estimulos = $p->deportista->historialEstimulos()->whereBetween('created_at', array( $nuevafecha.'-01 00:00:00' , $nuevafecha.'-31 23:59:59'))->get();                        
-                             foreach($Estimulos as  $hE){                       
+                             foreach($Estimulos as  $hE){ 
                                  if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 1){
-                                     $mensual = $mensual + $hE->pivot['V_VALOR_ESTIMULO'];
-                                 }
-                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
                                      $educacion = $educacion + $hE->pivot['V_VALOR_ESTIMULO'];
                                  }
-                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
+                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 2){
                                      $resultados = $resultados + $hE->pivot['V_VALOR_ESTIMULO'];
                                  }
-                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
+                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 3){
                                      $alimentacion = $alimentacion + $hE->pivot['V_VALOR_ESTIMULO'];
                                  }
-                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
+                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 4){
                                      $hidratantes = $hidratantes + $hE->pivot['V_VALOR_ESTIMULO'];
                                  }
-                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
+                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 5){
                                      $multidisciplina = $multidisciplina + $hE->pivot['V_VALOR_ESTIMULO'];
                                  }
-                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 7){
+                                 if($hE->pivot['FK_I_ID_TIPO_ESTIMULO'] == 6){
                                      $monitoria = $monitoria + $hE->pivot['V_VALOR_ESTIMULO'];
                                  }
                              }
                          }                
-                         $total = $sumaEtapas + $mensual + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;               
+                         $total = $sumaEtapas + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;               
                          $per[$y] = [ 
                              'N°' => $y+1,
                              'AGRUPACIÓN'=> $agrupacion,
@@ -678,7 +664,6 @@ class ReportesController extends Controller
                              'FECHA DE INGRESO' => $fecha_ingreso,
                              'FECHA DE RETIRO' => $fecha_retiro,
                              'TRANSPORTE'=> $sumaEtapas,
-                             'ESTÍMULO MENSUAL'=> $mensual,
                              'EDUCACIÓN'=> $educacion,
                              'ESTÍMULO POR RESULTADOS'=> $resultados,
                              'ALIMENTACIÓN'=> $alimentacion,

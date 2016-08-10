@@ -521,6 +521,9 @@ $(function(e){
         });
     });
     
+    $.datepicker.setDefaults($.datepicker.regional["es"]);
+    
+    
     $('#Fecha_Ingreso_Date').datepicker({        
        format: 'yyyy-mm-dd',
        autoclose: true,   
@@ -541,5 +544,5 @@ $(function(e){
 
     $('#Deporte').on('change', function(e){
         showModalidades($('#Deporte').val());
-    });
+    });     
 });
