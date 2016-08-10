@@ -252,7 +252,6 @@
                                 <ul class="list-group" id="deportistas">
                                 </ul>
                             </div>
-                            <!--<div id="paginador" class="col-xs-12"></div>    -->
                             <div class="col-xs-12 col-md-12 ">   
                                 <div class="form-group">                                   
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>                                   

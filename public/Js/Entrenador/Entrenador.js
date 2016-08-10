@@ -372,7 +372,6 @@ $(function(e){
                         </li>';                    
                     });
                     $("#deportistas").append(html);
-                 //   $("#paginador").append(persona.entrenador.historialdeportistas+'->render()');
                 }else{
                     $('#numDeportistas').append('0');
                     $("#deportistas").append('<li class="list-group-item"><h5 class="list-group-item-heading">Este entrenador aún no cuenta con deportistas asignados.</h5></li>');
