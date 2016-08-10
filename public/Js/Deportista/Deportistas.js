@@ -2,10 +2,10 @@ var html;
 
 $(function(e){   
     
-    var $personas_actuales = $('#personas').html();    
+    var $personas_actuales = $('#personas').html(); 
     
     function buscar(e){        
-        var key = $('input[name="buscador"]').val();
+        var key = $('input[name="buscador"]').val();     
         $.get('personaBuscarDeportista/'+key,{}, function(data){              
             if(data.length > 0){
               var html = '';      
@@ -133,6 +133,7 @@ $(function(e){
         $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-search');
         $('#buscar span').empty();
         document.getElementById("buscar").disabled = false;
+        document.getElementById("buscador").disabled = false;
     };    
     
     function popular_modal_persona(persona){
@@ -303,7 +304,7 @@ $(function(e){
         $("#mensaje-incorrecto").fadeIn();
         $('#mensaje-incorrecto').focus();
     }
-
+    
     function Normal(campo){
         $("#"+campo).css({ 'border-color': '#CCCCCC' });    
         $("#"+campo+"L").css({ 'color': '#555555' });    
@@ -461,11 +462,13 @@ $(function(e){
     
     $("#Tipo_Cuenta").on('change', function(e){
         if(this.value != 3){
-            document.getElementById("CuentaD").style.visibility = "visible";
+            //document.getElementById("CuentaD").style.visibility = "visible";
+            document.getElementById("CuentaD").style.display = "block";
         }else{
             $("#Banco").val('').change();
             $('#Cuenta').val('');
-            document.getElementById("CuentaD").style.visibility = "hidden";
+            //document.getElementById("CuentaD").style.visibility = "hidden";
+            document.getElementById("CuentaD").style.display = "none";
         }
     });
     
@@ -492,6 +495,7 @@ $(function(e){
                 $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh');
                 $('#buscar span').append(' Cargando...');
                 document.getElementById("buscar").disabled = true;
+                document.getElementById("buscador").disabled = true;
                 $(this).data('role', 'reset');
                 buscar(e);          
             break;
@@ -499,6 +503,7 @@ $(function(e){
                 $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-refresh');
                 $('#buscar span').append(' Cargando...');
                 document.getElementById("buscar").disabled = true;
+                document.getElementById("buscador").disabled = true;
                 $(this).data('role', 'buscar');
                 reset(e);
             break;
@@ -521,8 +526,7 @@ $(function(e){
         });
     });
     
-    $.datepicker.setDefaults($.datepicker.regional["es"]);
-    
+    $.datepicker.setDefaults($.datepicker.regional["es"]);    
     
     $('#Fecha_Ingreso_Date').datepicker({        
        format: 'yyyy-mm-dd',
@@ -545,4 +549,12 @@ $(function(e){
     $('#Deporte').on('change', function(e){
         showModalidades($('#Deporte').val());
     });     
+    
 });
+ function ValidaCampo(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+     if (tecla==8) return true;
+     patron =/[A-Za-z0-9\s]/;
+     te = String.fromCharCode(tecla);
+     return patron.test(te);
+ }

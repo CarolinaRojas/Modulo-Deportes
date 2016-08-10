@@ -137,7 +137,7 @@
   </div>  
 </div>
 <br>
-<div class="row" id="CuentaD" style="visibility: hidden;">
+<div class="row" id="CuentaD" style="display: none;">
     <div class="col-md-2">
         <label for="inputEmail" class="control-label" id="BancoL">Banco:</label>
     </div>

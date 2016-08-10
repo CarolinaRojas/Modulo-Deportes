@@ -103,6 +103,7 @@ $(function(e){
         $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-search');
         $('#buscar span').empty();
         document.getElementById("buscar").disabled = false;
+        document.getElementById("buscador").disabled = false;
     }; 
     
     function Validacion(campo, mensaje){
@@ -406,6 +407,7 @@ $(function(e){
                 $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh');
                 $('#buscar span').append(' Cargando...');
                  document.getElementById("buscar").disabled = true;
+                 document.getElementById("buscador").disabled = true;
                 $(this).data('role', 'reset');
                 buscar(e);          
             break;
@@ -413,6 +415,7 @@ $(function(e){
                 $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-refresh');
                 $('#buscar span').append(' Cargando...');
                 document.getElementById("buscar").disabled = true;
+                document.getElementById("buscador").disabled = true;
                 $(this).data('role', 'buscar');
                 reset(e);
             break;
@@ -427,3 +430,11 @@ $(function(e){
     
     $('#Deporte').on('change', function(e){ showModalidades($('#Deporte').val()); });    
 });
+
+function ValidaCampo(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+    if (tecla==8) return true;
+    patron =/[A-Za-z0-9\s]/;
+    te = String.fromCharCode(tecla);
+    return patron.test(te);
+ }

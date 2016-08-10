@@ -13,7 +13,6 @@ class TipoEstimuloTablaSeeder extends Seeder
     {
         DB::table('TB_SRD_TIPO_ESTIMULO')->delete();        
         DB::table('TB_SRD_TIPO_ESTIMULO')->insert([
-            ['V_NOMBRE_ESTIMULO' => 'Estímulo mensual'],
             ['V_NOMBRE_ESTIMULO' => 'Educación'],
             ['V_NOMBRE_ESTIMULO' => 'Estímulo por resultados'],
             ['V_NOMBRE_ESTIMULO' => 'Alimentación'],

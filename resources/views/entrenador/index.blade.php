@@ -25,7 +25,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <div class="input-group">
-                                    <input name="buscador" type="text" class="form-control" placeholder="Buscar" value="1016015041">
+                                    <input id="buscador" name="buscador" type="text" class="form-control" placeholder="Buscar" value="1016015041" onkeypress="return ValidaCampo(event);">
                                     <span class="input-group-btn">
                                         <button autocomplete="off" data-loading-text="Cargando..." id="buscar" data-role="buscar" class="btn btn-default" type="button">
                                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>

@@ -11,7 +11,6 @@
     {{Html::style('public/Css/bootstrap.css')}}
     {{Html::script('public/Js/tablesIdioma.js')}}   
     {{Html::style('public/Css/dataTables.bootstrap.min.css')}}
-    {{Html::script('public/Js/jquery.ui.js')}}
     
     {{Html::script('public/Js/dataTables.bootstrap.min.js')}}
     
@@ -39,7 +38,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <div class="input-group">                                        
-                                    <input id="buscador" name="buscador" type="text" class="form-control" placeholder="Buscar" value="1032455961">
+                                    <input id="buscador" name="buscador" type="text" class="form-control" placeholder="Buscar" value="1032455961" onkeypress="return ValidaCampo(event);">
                                     <span class="input-group-btn">
                                         <button id="buscar" data-role="buscar" class="btn btn-default" type="button">
                                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
