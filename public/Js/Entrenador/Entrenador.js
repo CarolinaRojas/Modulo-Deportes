@@ -348,12 +348,8 @@ $(function(e){
                     $('#numDeportistas').append((persona.entrenador['historialdeportistas']).length);                        
                     $('#ver_mas').append('<button id="EntrenadorDeportistas" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="EntrenadorDeportistas" data-rel="'+persona['Id_Persona']+'" class="btn btn-primary btn-sm">Ver deportistas</button>');
                     var html = '';
-
-                    console.log(persona.entrenador['historialdeportistas']);
-
-
                     $.each(persona.entrenador['historialdeportistas'], function(i, e){
-                        html += '<li class="list-group-item">\n\
+                        /*html += '<li class="list-group-item">\n\
                             <h5 class="list-group-item-heading">\n\
                                 '+e.persona.Primer_Apellido+' '+e.persona.Segundo_Apellido+' '+e.persona.Primer_Nombre+' '+e.persona.Segundo_Nombre+'\n\
                                 <!--<a id="editM" data-role="editar" data-rel="'+e.persona.Id_Persona+'" class="pull-right btn btn-primary btn-xs">\n\
@@ -369,7 +365,36 @@ $(function(e){
                                     </div>\n\
                                 </div>\n\
                             </p>\n\
-                        </li>';                    
+                        </li>';  */
+                       /* html += '<tr>\n\
+                                    <td>\n\
+                                        <h5 class="list-group-item-heading">'+e.persona.Primer_Apellido+' '+e.persona.Segundo_Apellido+' '+e.persona.Primer_Nombre+' '+e.persona.Segundo_Nombre+'</h5>\n\
+                                        <p class="list-group-item-text">\n\
+                                            <div class="row">\n\
+                                                <div class="col-xs-12">\n\
+                                                    <div class="row">\n\
+                                                        <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.persona.Cedula+'</small></div>\n\
+                                                    </div>\n\
+                                                </div>\n\
+                                            </div>\n\
+                                        </p>\n\
+                                    </td>\n\
+                                </tr>';*/
+                        
+                        t.row.add( ['<tr>\n\
+                                    <td>\n\
+                                        <h5 class="list-group-item-heading">'+e.persona.Primer_Apellido+' '+e.persona.Segundo_Apellido+' '+e.persona.Primer_Nombre+' '+e.persona.Segundo_Nombre+'</h5>\n\
+                                        <p class="list-group-item-text">\n\
+                                            <div class="row">\n\
+                                                <div class="col-xs-12">\n\
+                                                    <div class="row">\n\
+                                                        <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.persona.Cedula+'</small></div>\n\
+                                                    </div>\n\
+                                                </div>\n\
+                                            </div>\n\
+                                        </p>\n\
+                                    </td>\n\
+                                </tr>'] ).draw( false );
                     });
                     $("#deportistas").append(html);
                 }else{
@@ -380,7 +405,7 @@ $(function(e){
         }).done(function(){
             $('#modal_form_deportistas').modal('show');
             $("#HistorialDeportistas").button('reset');
-        });        
+        });      
     }); 
     
     $('#buscar').on('click', function(e){
@@ -428,6 +453,19 @@ $(function(e){
     $('#Agrupacion').on('change', function(e){ showDeportes($('#Agrupacion').val()); });
     
     $('#Deporte').on('change', function(e){ showModalidades($('#Deporte').val()); });    
+         
+    var t = $('#HDData').DataTable({
+        retrieve: true,
+        select: true,
+        "responsive": true,
+        "ordering": true,
+        "info": true,
+        "language": {
+            url: 'public/DataTables/Spanish.json',
+            searchPlaceholder: "Buscar"
+        }
+    });
+ 
 });
 
 function ValidaCampo(e){

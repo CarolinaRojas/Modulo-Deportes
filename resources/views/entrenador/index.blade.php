@@ -4,6 +4,14 @@
     <script src="{{ asset('public/Js/Entrenador/Entrenador.js') }}"></script> 
     {{Html::style('public/Css/bootstrap.css')}}
     
+    {{Html::script('public/Js/jquery.dataTables.js')}}
+    {{Html::script('public/Js/dataTables.responsive.min.js')}}
+    {{Html::script('public/Js/responsive.bootstrap.min.js')}}
+    {{Html::script('public/Js/responsive.bootstrap.min.js')}}
+    
+    {{Html::style('public/Css/jquery.dataTables.min.css')}}
+    {{Html::style('public/Css/responsive.bootstrap.min.css')}}
+        
 @stop  
 @section('content') 
 <center><h3>GESTIÓN DE ENTRENADORES</h3></center>
@@ -249,8 +257,14 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-xs-12">
-                                <ul class="list-group" id="deportistas">
-                                </ul>
+                                <!--<ul class="list-group" id="deportistas"></ul>-->
+                                <!----------------------------------------------------->
+                                <table id="HDData" class="table table-striped table-borderless dt-responsive nowrap " cellspacing="0" width="100%">
+                                    <thead><th>Deportistas a cargo</th></thead>
+                                    <tbody id="deportistas" name="deportistas">                                        
+                                    </tbody>
+                                </table>
+                                <!----------------------------------------------------->
                             </div>
                             <div class="col-xs-12 col-md-12 ">   
                                 <div class="form-group">                                   

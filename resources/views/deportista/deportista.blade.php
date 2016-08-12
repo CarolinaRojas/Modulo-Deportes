@@ -176,6 +176,7 @@
         <label for="inputEmail" class="control-label" id="EtapaNacionalL">Etapa Nacional:</label>
     </div>
     <div class="col-md-4">
+        <input type="hidden" id="IdNal" name="IdNal" />
         <select name="EtapaNacional" id="EtapaNacional" class="form-control">
             <option value="">Seleccionar</option>
             @foreach($etapaNacional as $etapaNacionales)
@@ -187,6 +188,7 @@
         <label for="inputEmail" class="control-label" id="EtapaInternacionalL">Etapa Internacional:</label>
     </div>
     <div class="col-md-4">
+        <input type="hidden" id="IdInterNal" name="IdInterNal" />
         <select name="EtapaInternacional" id="EtapaInternacional" class="form-control">
             <option value="">Seleccionar</option>
             @foreach($etapaInternacional as $etapaInternacionales)
@@ -212,6 +214,7 @@
         <label for="inputEmail" class="control-label"  id="DeporteL">Deporte:</label>
     </div>
     <div class="col-md-4">
+        <input type="hidden" id="IdDeporte" name="IdDeporte" />
         <select name="Deporte" id="Deporte" class="form-control">
             <option value="">Seleccionar</option>
             @foreach($deporte as $deportes)
@@ -226,6 +229,7 @@
         <label for="inputEmail" class="control-label" id="ModalidadL">Modalidad:</label>
     </div>
     <div class="col-md-4">
+        <input type="hidden" id="IdModalidad" name="IdModalidad" />
         <select name="Modalidad" id="Modalidad" class="form-control">
             <option value="">Seleccionar</option>
             @foreach($modalidad as $modalidades)

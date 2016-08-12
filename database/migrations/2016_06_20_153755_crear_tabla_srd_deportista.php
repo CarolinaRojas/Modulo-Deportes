@@ -58,7 +58,6 @@ class CrearTablaSrdDeportista extends Migration
             $table->foreign('FK_I_ID_ETAPA_INTERNACIONAL')->references('PK_I_ID_ETAPA')->on('TB_SRD_ETAPA');
             
             $table->foreign('FK_I_ID_TIPO_DEPORTISTA')->references('PK_I_ID_TIPO_DEPORTISTA')->on('TB_SRD_TIPO_DEPORTISTA');
-            $table->foreign('FK_I_ID_BANCO')->references('PK_I_ID_BANCO')->on('TB_SRD_BANCO');     
             $table->foreign('FK_I_ID_SITUACION_MILITAR')->references('PK_I_ID_SITUACION_MILITAR')->on('TB_SRD_SITUACION_MILITAR');
             $table->foreign('FK_I_ID_CLUB_DEPORTIVO')->references('PK_I_ID_CLUB_DEPORTIVO')->on('TB_SRD_CLUB_DEPORTIVO');
             
