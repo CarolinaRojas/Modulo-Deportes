@@ -38,6 +38,7 @@ class ReportesController extends Controller
                                      'personas.genero',
                                      'personas.pais',
                                      'personas.tipoDocumento',
+                                     'personas.etnia',
                                      'personas.deportista', 
                                      'personas.deportista.banco',
                                      'personas.deportista.tipoCuenta',
@@ -47,7 +48,13 @@ class ReportesController extends Controller
                                      'personas.deportista.modalidad',
                                      'personas.deportista.historialEstimulos',
                                      'personas.deportista.historialEtapas',
-                                     'personas.deportista.localidad'
+                                     'personas.deportista.localidad',
+                                     'personas.deportista.eps',
+                                     'personas.deportista.estadoCivil',
+                                     'personas.deportista.grupoSanguineo',
+                                     'personas.deportista.tipoDeportista',
+                                     'personas.deportista.clubDeportivo',
+                                     'personas.deportista.entrenadores.persona'
                        )->find(49);  
                if(count($persona->personas) > 0){
                  $y = 0;
@@ -65,7 +72,7 @@ class ReportesController extends Controller
                      $hidratantes = 0;
                      $multidisciplina =0;
                      $monitoria = 0;
-                     $total = 0;
+                     $total = 0;                     
 
                      $genero  = $p->genero['Nombre_Genero'];                   
                      $fecha_nacimiento = $p['Fecha_Nacimiento'];
@@ -91,8 +98,28 @@ class ReportesController extends Controller
                      $tel_celular = $p->deportista['V_TELEFONO_CELULAR'];
                      $email = $p->deportista['V_CORREO_ELECTRONICO'];
                      $fecha_ingreso = $p->deportista['D_FECHA_INGRESO'];
-                     $fecha_retiro = $p->deportista['D_FECHA_RETIRO'];                     
-
+                     $fecha_retiro = $p->deportista['D_FECHA_RETIRO'];  
+                     
+                     $eps = $p->deportista->eps['Nombre_Eps'];  
+                     $estadoCivil = $p->deportista->estadoCivil['V_NOMBRE_ESTADO_CIVIL'];  
+                     $num_hijos = $p->deportista['V_CANTIDAD_HIJOS'];
+                     $grupoSanguineo = $p->deportista->grupoSanguineo['Nombre_GrupoSanguineo'];
+                     $etnia = $p->etnia['Nombre_Etnia'];
+                     $club = $p->deportista->clubDeportivo['V_NOMBRE_CLUB_DEPORTIVO'];
+                     $tCamisa = $p->deportista['FK_I_ID_TALLA_CAMISA'];
+                     $tChaqueta = $p->deportista['FK_I_ID_TALLA_CHAQUETA'];
+                     $tPantalon = $p->deportista['FK_I_ID_TALLA_PANTALON'];
+                     $tZapatos = $p->deportista['FK_I_ID_TALLA_ZAPATOS'];
+                     $tipoDeportista = $p->deportista->tipoDeportista['V_NOMBRE_TIPO_DEPORTISTA'];
+                     $entrenadores = '';
+                     
+                     foreach ($p->deportista->entrenadores as $Ent){
+                         $NomEntrenadores = '';
+                         $NomEntrenadores = $Ent->persona['Primer_Nombre'].' '.$Ent->persona['Segundo_Nombre'].' '.$Ent->persona['Primer_Apellido'].' '.$Ent->persona['Segundo_Apellido'];
+                         $entrenadores = $entrenadores.', '.$NomEntrenadores;
+                     }
+                     $entrenadores = (substr($entrenadores, 2));
+                     
                      $d1 = explode('-', $datos[1]);
                      $d2 = explode('-', $datos[2]);                     
 
@@ -145,28 +172,40 @@ class ReportesController extends Controller
                       $total = $sumaEtapas + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;               
                       $per[$y] = [ 
                           'N°' => $y+1,
-                          'AGRUPACIÓN'=> $agrupacion,
-                          'DEPORTE'=> $deporte,
-                          'MODALIDAD'=> $modalidad,
-                          'ETAPA NACIONAL (Actual)'=> $etapa_nal,
-                          'ETAPA INTERNACIONAL  (Actual)'=> $etapa_inter,
-                          'ATLETA' => $nombre,
-                          'GENERO' => $genero,
+                          'DEPORTISTA' => strtoupper($nombre),
+                          'GENERO' => strtoupper($genero),
                           'FECHA DE NACIMIENTO' => $fecha_nacimiento,
                           'EDAD' => $edad_decimal,                   
-                          'PAÍS' => $pais,
-                          'TIPO DE DOCUMENTO' => $tipo_documento,
-                          'N° DE DOCUMENTO' =>  $num_documento,
-                          'SITUACIÓN MILITAR' => $sit_militar,
-                          'BANCO' => $banco,
-                          'TIPO DE CUENTA' => $tipo_cuenta,
-                          'N° DE CUENTA' => $num_cuenta,
-                          'DIRECCIÓN DE RESIDENCIA' => $dir_residencia,
-                          'BARRIO' => $barrio,
-                          'LOCALIDAD' => $localidad,
+                          'PAÍS DE NACIMIENTO' => strtoupper($pais),
+                          'TIPO DE DOCUMENTO' => strtoupper($tipo_documento),
+                          'N° DE DOCUMENTO' =>  $num_documento,                                                    
+                          'DIRECCIÓN DE RESIDENCIA' => strtoupper($dir_residencia),
+                          'BARRIO' => strtoupper($barrio),
+                          'LOCALIDAD' => strtoupper($localidad),
                           'TELÉFONO FIJO' => $tel_fijo,
                           'TELÉFONO CELULAR' => $tel_celular,
                           'E-MAIL' => $email,
+                          'EPS'=> strtoupper($eps),
+                          'ESTADO CIVIL'=> strtoupper($estadoCivil),
+                          'N° DE HIJOS'=> $num_hijos,
+                          'SITUACIÓN MILITAR' => strtoupper($sit_militar),
+                          'GRUPO SANGUINEO'=> strtoupper($grupoSanguineo), 
+                          'GRUPO ÉTNICO'=> strtoupper($etnia),
+                          'BANCO' => strtoupper($banco),
+                          'TIPO DE CUENTA' => strtoupper($tipo_cuenta),
+                          'N° DE CUENTA' => $num_cuenta,
+                          'CLUB DEPORTIVO'=> strtoupper($club),
+                          'ENTRENADORES (Actual(es))'=> strtoupper($entrenadores),
+                          'TALLA CAMISA'=> strtoupper($tCamisa),
+                          'TALLA CHAQUETA'=> strtoupper($tChaqueta),
+                          'TALLA PANTALÓN'=> strtoupper($tPantalon),
+                          'TALLA ZAPATOS'=> strtoupper($tZapatos),
+                          'TIPO DE DEPORTISTA'=> strtoupper($tipoDeportista),
+                          'AGRUPACIÓN'=> strtoupper($agrupacion),
+                          'DEPORTE'=> strtoupper($deporte),
+                          'MODALIDAD'=> strtoupper($modalidad),
+                          'ETAPA NACIONAL (Actual)'=> strtoupper($etapa_nal),
+                          'ETAPA INTERNACIONAL  (Actual)'=> strtoupper($etapa_inter),                          
                           'FECHA DE INGRESO' => $fecha_ingreso,
                           'FECHA DE RETIRO' => $fecha_retiro,
                           'TRANSPORTE'=> $sumaEtapas,
@@ -184,28 +223,31 @@ class ReportesController extends Controller
                   $per[0] = ['RESPUESTA' => 'No hay registros!'];
               }
                $sheet->freezeFirstRow();
-               $sheet->setAllBorders('thin');
-               $sheet->setHeight(1, 50); 
-               $sheet->setColumnFormat(array('L' => '0,0', 'y' => '$0,0', 'Z' => '$0,0', 'AA' => '$0,0', 'AB' => '$0,0', 'AC' => '$0,0',
-                   'AD' => '$0,0', 'AE' => '$0,0', 'AF' => '$0,0', 'AG' => '$0,0', 'AH' => '$0,0',));
-               
-                $sheet->cells('A1:AH1', function($cells) {
-                    $cells->setBackground('#CCFFFF');
-                    $cells->setFont(array(
-                        'family'     => 'Arial',
-                        'size'       => '14',
-                        'bold'       =>  true
-                    ));
-                    $cells->setBorder(array(
-                        'top'   => array(
-                            'style' => 'solid'
-                        ),
-                    ));
-                    $cells->setAlignment('center');
-                }); 
-                $sheet->cells('AH1:AH1', function($cells) {
+                $sheet->setAllBorders('thin');
+                $sheet->setHeight(1, 50); 
+                $sheet->setColumnFormat(array('E' => '0,0', 'Q' => '0,0', 'Z' => '0,0', 'AA' => '0,0', 'AB' => '0,0', 'AC' => '0,0', 'AL' => '$0,0', 'AM' => '$0,0', 
+                                              'AN' => '$0,0', 'AO' => '$0,0', 'AP' => '$0,0', 'AQ' => '$0,0', 'AR' => '$0,0', 'AS' => '$0,0', ));
+
+                $sheet->cells('A1:AS1', function($cells) {
+                     $cells->setBackground('#CCFFFF');
+                     $cells->setFont(array(
+                         'family'     => 'Arial',
+                         'size'       => '14',
+                         'bold'       =>  true
+                     ));
+
+                     $cells->setBorder(array(
+                         'top'   => array(
+                             'style' => 'solid'
+                         ),
+                     ));
+                     $cells->setAlignment('center');
+                 });                  
+
+                $sheet->cells('AS1:AS1', function($cells) {
                     $cells->setBackground('#FF0000');
-               });
+                });                
+                
                 $sheet->fromArray($per);
            });
         })->download('xls');              
@@ -222,7 +264,13 @@ class ReportesController extends Controller
                                      'deportista.agrupacion',
                                      'deportista.deporte',
                                      'deportista.modalidad',
-                                     'deportista.localidad'
+                                     'deportista.localidad',
+                                     'deportista.eps',
+                                     'deportista.estadoCivil',
+                                     'deportista.grupoSanguineo',
+                                     'deportista.tipoDeportista',
+                                     'deportista.clubDeportivo',
+                                     'deportista.entrenadores.persona'
                        )->find($datos[0]);            
                
                 $nombre = $persona->Primer_Nombre.' '.$persona->Segundo_Nombre.' '.$persona->Primer_Apellido.' '.$persona->Segundo_Apellido;
@@ -264,6 +312,28 @@ class ReportesController extends Controller
                 $email = $persona->deportista['V_CORREO_ELECTRONICO'];
                 $fecha_ingreso = $persona->deportista['D_FECHA_INGRESO'];
                 $fecha_retiro = $persona->deportista['D_FECHA_RETIRO'];
+                
+                
+                $eps = $persona->deportista->eps['Nombre_Eps'];  
+                $estadoCivil = $persona->deportista->estadoCivil['V_NOMBRE_ESTADO_CIVIL'];  
+                $num_hijos = $persona->deportista['V_CANTIDAD_HIJOS'];
+                $grupoSanguineo = $persona->deportista->grupoSanguineo['Nombre_GrupoSanguineo'];
+                $etnia = $persona->etnia['Nombre_Etnia'];
+                $club = $persona->deportista->clubDeportivo['V_NOMBRE_CLUB_DEPORTIVO'];
+                $tCamisa = $persona->deportista['FK_I_ID_TALLA_CAMISA'];
+                $tChaqueta = $persona->deportista['FK_I_ID_TALLA_CHAQUETA'];
+                $tPantalon = $persona->deportista['FK_I_ID_TALLA_PANTALON'];
+                $tZapatos = $persona->deportista['FK_I_ID_TALLA_ZAPATOS'];
+                $tipoDeportista = $persona->deportista->tipoDeportista['V_NOMBRE_TIPO_DEPORTISTA'];
+                $entrenadores = '';
+
+                foreach ($persona->deportista->entrenadores as $Ent){
+                    $NomEntrenadores = '';
+                    $NomEntrenadores = $Ent->persona['Primer_Nombre'].' '.$Ent->persona['Segundo_Nombre'].' '.$Ent->persona['Primer_Apellido'].' '.$Ent->persona['Segundo_Apellido'];
+                    $entrenadores = $entrenadores.', '.$NomEntrenadores;
+                }
+                $entrenadores = (substr($entrenadores, 2));
+
 
                 $historialEtapas = $persona->deportista->historialEtapas()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[1].'-31 23:59:59'))->orderBy('tb_srd_historial_etapa.created_at', 'desc')->get();
                 if(count($historialEtapas) == 0){
@@ -289,13 +359,7 @@ class ReportesController extends Controller
                     $LInternacional = 'No asignada';
                     $Internacional = 0;
                 }
-               /* if($EtapaInternacional){
-                    $Internacional = ($EtapaInternacional->pivot['I_SMMLV']* $EtapaInternacional['V_POR_ESTIMULO']); 
-                    $LInternacional = $LInacional['V_NOMBRE_ETAPA'];
-                }else{
-                    $LInternacional = 'No asignada';
-                    $Internacional = 0;
-                }*/
+                
                 $sumaEtapas = $sumaEtapas + $Nacional + $Internacional;                       
 
                 $Estimulos = $persona->deportista->historialEstimulos()->whereBetween('created_at', array( $datos[1].'-01 00:00:00' , $datos[1].'-31 23:59:59'))->get();                        
@@ -322,48 +386,60 @@ class ReportesController extends Controller
                 $total = $sumaEtapas + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;                                       
 
                 $per[0] = [
-                     'PERÍODO' => $datos[1],
-                     'AGRUPACIÓN'=> $agrupacion,
-                     'DEPORTE'=> $deporte,
-                     'MODALIDAD'=> $modalidad,
-                     'ETAPA NACIONAL'=> $LNacional,
-                     'ETAPA INTERNACIONAL'=> $LInternacional,
-                     'ATLETA' => $nombre,
-                     'GENERO' => $genero,
-                     'FECHA DE NACIMIENTO' => $fecha_nacimiento,
-                     'EDAD' => $edad_decimal,
-                     'PAÍS' => $pais,
-                     'TIPO DE DOCUMENTO' => $tipo_documento,
-                     'N° DE DOCUMENTO' => $num_documento,
-                     'SITUACIÓN MILITAR' => $sit_militar,
-                     'BANCO' => $banco,
-                     'TIPO DE CUENTA' => $tipo_cuenta,
-                     'N° DE CUENTA' => $num_cuenta,
-                     'DIRECCIÓN DE RESIDENCIA' => $dir_residencia,
-                     'BARRIO' => $barrio,
-                     'LOCALIDAD' => $localidad,
-                     'TELÉFONO FIJO' => $tel_fijo,
-                     'TELÉFONO CELULAR' => $tel_celular,
-                     'E-MAIL' => $email,
-                     'FECHA DE INGRESO' => $fecha_ingreso,
-                     'FECHA DE RETIRO' => $fecha_retiro,
-                     'TRANSPORTE'=> $sumaEtapas,
-                     'EDUCACIÓN'=> $educacion,
-                     'ESTÍMULO POR RESULTADOS'=> $resultados,
-                     'ALIMENTACIÓN'=> $alimentacion,
-                     'HIDRATANTES AYUDAS Y COMPLEMENTOS'=> $hidratantes,
-                     'INVERSIÓN MULTIDISCIPLINARIA'=> $multidisciplina,
-                     'MONITORIAS'=> $monitoria,
-                     'TOTAL'=> $total,
+                    'PERÍODO' => $datos[1],
+                    'DEPORTISTA' => strtoupper($nombre),
+                    'GENERO' => strtoupper($genero),
+                    'FECHA DE NACIMIENTO' => $fecha_nacimiento,
+                    'EDAD' => $edad_decimal,                   
+                    'PAÍS DE NACIMIENTO' => strtoupper($pais),
+                    'TIPO DE DOCUMENTO' => strtoupper($tipo_documento),
+                    'N° DE DOCUMENTO' =>  $num_documento,                                                    
+                    'DIRECCIÓN DE RESIDENCIA' => strtoupper($dir_residencia),
+                    'BARRIO' => strtoupper($barrio),
+                    'LOCALIDAD' => strtoupper($localidad),
+                    'TELÉFONO FIJO' => $tel_fijo,
+                    'TELÉFONO CELULAR' => $tel_celular,
+                    'E-MAIL' => $email,
+                    'EPS'=> strtoupper($eps),
+                    'ESTADO CIVIL'=> strtoupper($estadoCivil),
+                    'N° DE HIJOS'=> $num_hijos,
+                    'SITUACIÓN MILITAR' => strtoupper($sit_militar),
+                    'GRUPO SANGUINEO'=> strtoupper($grupoSanguineo), 
+                    'GRUPO ÉTNICO'=> strtoupper($etnia),
+                    'BANCO' => strtoupper($banco),
+                    'TIPO DE CUENTA' => strtoupper($tipo_cuenta),
+                    'N° DE CUENTA' => $num_cuenta,
+                    'CLUB DEPORTIVO'=> strtoupper($club),
+                    'ENTRENADORES (Actual(es))'=> strtoupper($entrenadores),
+                    'TALLA CAMISA'=> strtoupper($tCamisa),
+                    'TALLA CHAQUETA'=> strtoupper($tChaqueta),
+                    'TALLA PANTALÓN'=> strtoupper($tPantalon),
+                    'TALLA ZAPATOS'=> strtoupper($tZapatos),
+                    'TIPO DE DEPORTISTA'=> strtoupper($tipoDeportista),
+                    'AGRUPACIÓN'=> strtoupper($agrupacion),
+                    'DEPORTE'=> strtoupper($deporte),
+                    'MODALIDAD'=> strtoupper($modalidad),
+                    'ETAPA NACIONAL'=> strtoupper($LNacional),
+                    'ETAPA INTERNACIONAL'=> strtoupper($LInternacional),
+                    'FECHA DE INGRESO' => $fecha_ingreso,
+                    'FECHA DE RETIRO' => $fecha_retiro,
+                    'TRANSPORTE'=> $sumaEtapas,
+                    'EDUCACIÓN'=> $educacion,
+                    'ESTÍMULO POR RESULTADOS'=> $resultados,
+                    'ALIMENTACIÓN'=> $alimentacion,
+                    'HIDRATANTES AYUDAS Y COMPLEMENTOS'=> $hidratantes,
+                    'INVERSIÓN MULTIDISCIPLINARIA'=> $multidisciplina,
+                    'MONITORIAS'=> $monitoria,
+                    'TOTAL'=> $total,
                         ];
 
                 $sheet->freezeFirstRow();
                 $sheet->setAllBorders('thin');
                 $sheet->setHeight(1, 50); 
-                $sheet->setColumnFormat(array('L' => '0,0', 'y' => '$0,0', 'Z' => '$0,0', 'A' => '$0,0', 'AA' => '$0,0', 'AB' => '$0,0', 'AC' => '$0,0',
-                    'AD' => '$0,0', 'AE' => '$0,0', 'AF' => '$0,0', 'AG' => '$0,0', 'AH' => '$0,0', ));
+                $sheet->setColumnFormat(array('E' => '0,0', 'Q' => '0,0', 'Z' => '0,0', 'AA' => '0,0', 'AB' => '0,0', 'AC' => '0,0', 'AL' => '$0,0', 'AM' => '$0,0', 
+                                              'AN' => '$0,0', 'AO' => '$0,0', 'AP' => '$0,0', 'AQ' => '$0,0', 'AR' => '$0,0', 'AS' => '$0,0', ));
 
-                $sheet->cells('A1:AH1', function($cells) {
+                $sheet->cells('A1:AS1', function($cells) {
                      $cells->setBackground('#CCFFFF');
                      $cells->setFont(array(
                          'family'     => 'Arial',
@@ -379,7 +455,7 @@ class ReportesController extends Controller
                      $cells->setAlignment('center');
                  });                  
 
-                $sheet->cells('AH1:AH1', function($cells) {
+                $sheet->cells('AS1:AS1', function($cells) {
                     $cells->setBackground('#FF0000');
                 });                
 
@@ -472,7 +548,13 @@ class ReportesController extends Controller
                                      'personas.deportista.modalidad',
                                      'personas.deportista.historialEstimulos',
                                      'personas.deportista.historialEtapas',
-                                     'personas.deportista.localidad'
+                                     'personas.deportista.localidad',
+                                     'personas.deportista.eps',
+                                     'personas.deportista.estadoCivil',
+                                     'personas.deportista.grupoSanguineo',
+                                     'personas.deportista.tipoDeportista',
+                                     'personas.deportista.clubDeportivo',
+                                     'personas.deportista.entrenadores.persona'
                        )
                        ->find($datos[0]);  
                $ArrayDescarga = $persona->personas;
@@ -591,6 +673,26 @@ class ReportesController extends Controller
                         $email = $p->deportista['V_CORREO_ELECTRONICO'];
                         $fecha_ingreso = $p->deportista['D_FECHA_INGRESO'];
                         $fecha_retiro = $p->deportista['D_FECHA_RETIRO'];
+                        
+                        $eps = $p->deportista->eps['Nombre_Eps'];  
+                        $estadoCivil = $p->deportista->estadoCivil['V_NOMBRE_ESTADO_CIVIL'];  
+                        $num_hijos = $p->deportista['V_CANTIDAD_HIJOS'];
+                        $grupoSanguineo = $p->deportista->grupoSanguineo['Nombre_GrupoSanguineo'];
+                        $etnia = $p->etnia['Nombre_Etnia'];
+                        $club = $p->deportista->clubDeportivo['V_NOMBRE_CLUB_DEPORTIVO'];
+                        $tCamisa = $p->deportista['FK_I_ID_TALLA_CAMISA'];
+                        $tChaqueta = $p->deportista['FK_I_ID_TALLA_CHAQUETA'];
+                        $tPantalon = $p->deportista['FK_I_ID_TALLA_PANTALON'];
+                        $tZapatos = $p->deportista['FK_I_ID_TALLA_ZAPATOS'];
+                        $tipoDeportista = $p->deportista->tipoDeportista['V_NOMBRE_TIPO_DEPORTISTA'];
+                        $entrenadores = '';
+
+                        foreach ($p->deportista->entrenadores as $Ent){
+                            $NomEntrenadores = '';
+                            $NomEntrenadores = $Ent->persona['Primer_Nombre'].' '.$Ent->persona['Segundo_Nombre'].' '.$Ent->persona['Primer_Apellido'].' '.$Ent->persona['Segundo_Apellido'];
+                            $entrenadores = $entrenadores.', '.$NomEntrenadores;
+                        }
+                        $entrenadores = (substr($entrenadores, 2));
 
                         $d1 = explode('-', $datos[1]);
                         $d2 = explode('-', $datos[2]);
@@ -639,38 +741,50 @@ class ReportesController extends Controller
                          $total = $sumaEtapas + $educacion + $resultados + $alimentacion + $hidratantes + $multidisciplina + $monitoria;               
                          $per[$y] = [ 
                              'N°' => $y+1,
-                             'AGRUPACIÓN'=> $agrupacion,
-                             'DEPORTE'=> $deporte,
-                             'MODALIDAD'=> $modalidad,
-                             'ETAPA NACIONAL (Actual)'=> $etapa_nal,
-                             'ETAPA INTERNACIONAL  (Actual)'=> $etapa_inter,
-                             'ATLETA' => $nombre,
-                             'GENERO' => $genero,
-                             'FECHA DE NACIMIENTO' => $fecha_nacimiento,
-                             'EDAD' => $edad_decimal,                   
-                             'PAÍS' => $pais,
-                             'TIPO DE DOCUMENTO' => $tipo_documento,
-                             'N° DE DOCUMENTO' =>  $num_documento,
-                             'SITUACIÓN MILITAR' => $sit_militar,
-                             'BANCO' => $banco,
-                             'TIPO DE CUENTA' => $tipo_cuenta,
-                             'N° DE CUENTA' => $num_cuenta,
-                             'DIRECCIÓN DE RESIDENCIA' => $dir_residencia,
-                             'BARRIO' => $barrio,
-                             'LOCALIDAD' => $localidad,
-                             'TELÉFONO FIJO' => $tel_fijo,
-                             'TELÉFONO CELULAR' => $tel_celular,
-                             'E-MAIL' => $email,
-                             'FECHA DE INGRESO' => $fecha_ingreso,
-                             'FECHA DE RETIRO' => $fecha_retiro,
-                             'TRANSPORTE'=> $sumaEtapas,
-                             'EDUCACIÓN'=> $educacion,
-                             'ESTÍMULO POR RESULTADOS'=> $resultados,
-                             'ALIMENTACIÓN'=> $alimentacion,
-                             'HIDRATANTES AYUDAS Y COMPLEMENTOS'=> $hidratantes,
-                             'INVERSIÓN MULTIDISCIPLINARIA'=> $multidisciplina,
-                             'MONITORIAS'=> $monitoria,
-                             'TOTAL'=> $total,
+                             'DEPORTISTA' => strtoupper($nombre),
+                          'GENERO' => strtoupper($genero),
+                          'FECHA DE NACIMIENTO' => $fecha_nacimiento,
+                          'EDAD' => $edad_decimal,                   
+                          'PAÍS DE NACIMIENTO' => strtoupper($pais),
+                          'TIPO DE DOCUMENTO' => strtoupper($tipo_documento),
+                          'N° DE DOCUMENTO' =>  $num_documento,                                                    
+                          'DIRECCIÓN DE RESIDENCIA' => strtoupper($dir_residencia),
+                          'BARRIO' => strtoupper($barrio),
+                          'LOCALIDAD' => strtoupper($localidad),
+                          'TELÉFONO FIJO' => $tel_fijo,
+                          'TELÉFONO CELULAR' => $tel_celular,
+                          'E-MAIL' => $email,
+                          'EPS'=> strtoupper($eps),
+                          'ESTADO CIVIL'=> strtoupper($estadoCivil),
+                          'N° DE HIJOS'=> $num_hijos,
+                          'SITUACIÓN MILITAR' => strtoupper($sit_militar),
+                          'GRUPO SANGUINEO'=> strtoupper($grupoSanguineo), 
+                          'GRUPO ÉTNICO'=> strtoupper($etnia),
+                          'BANCO' => strtoupper($banco),
+                          'TIPO DE CUENTA' => strtoupper($tipo_cuenta),
+                          'N° DE CUENTA' => $num_cuenta,
+                          'CLUB DEPORTIVO'=> strtoupper($club),
+                          'ENTRENADORES (Actual(es))'=> strtoupper($entrenadores),
+                          'TALLA CAMISA'=> strtoupper($tCamisa),
+                          'TALLA CHAQUETA'=> strtoupper($tChaqueta),
+                          'TALLA PANTALÓN'=> strtoupper($tPantalon),
+                          'TALLA ZAPATOS'=> strtoupper($tZapatos),
+                          'TIPO DE DEPORTISTA'=> strtoupper($tipoDeportista),
+                          'AGRUPACIÓN'=> strtoupper($agrupacion),
+                          'DEPORTE'=> strtoupper($deporte),
+                          'MODALIDAD'=> strtoupper($modalidad),
+                          'ETAPA NACIONAL (Actual)'=> strtoupper($etapa_nal),
+                          'ETAPA INTERNACIONAL  (Actual)'=> strtoupper($etapa_inter),                          
+                          'FECHA DE INGRESO' => $fecha_ingreso,
+                          'FECHA DE RETIRO' => $fecha_retiro,
+                          'TRANSPORTE'=> $sumaEtapas,
+                          'EDUCACIÓN'=> $educacion,
+                          'ESTÍMULO POR RESULTADOS'=> $resultados,
+                          'ALIMENTACIÓN'=> $alimentacion,
+                          'HIDRATANTES AYUDAS Y COMPLEMENTOS'=> $hidratantes,
+                          'INVERSIÓN MULTIDISCIPLINARIA'=> $multidisciplina,
+                          'MONITORIAS'=> $monitoria,
+                          'TOTAL'=> $total,
                                 ];
                         $y++;     
                     }             
@@ -680,26 +794,28 @@ class ReportesController extends Controller
                 $sheet->freezeFirstRow();
                 $sheet->setAllBorders('thin');
                 $sheet->setHeight(1, 50); 
-                $sheet->setColumnFormat(array('L' => '0,0', 'y' => '$0,0', 'Z' => '$0,0', 'AA' => '$0,0', 'AB' => '$0,0', 'AC' => '$0,0',
-                    'AD' => '$0,0', 'AE' => '$0,0', 'AF' => '$0,0', 'AG' => '$0,0','AH' => '$0,0', ));
+                $sheet->setColumnFormat(array('E' => '0,0', 'Q' => '0,0', 'Z' => '0,0', 'AA' => '0,0', 'AB' => '0,0', 'AC' => '0,0', 'AL' => '$0,0', 'AM' => '$0,0', 
+                                              'AN' => '$0,0', 'AO' => '$0,0', 'AP' => '$0,0', 'AQ' => '$0,0', 'AR' => '$0,0', 'AS' => '$0,0', ));
 
-                $sheet->cells('A1:AH1', function($cells) {
-                    $cells->setBackground('#CCFFFF');
-                    $cells->setFont(array(
-                        'family'     => 'Arial',
-                        'size'       => '14',
-                        'bold'       =>  true
-                    ));
-                    $cells->setBorder(array(
-                        'top'   => array(
-                        'style' => 'solid'
-                        ),
-                    ));
-                    $cells->setAlignment('center');
-                }); 
-                $sheet->cells('AH1:AH1', function($cells) {
+                $sheet->cells('A1:AS1', function($cells) {
+                     $cells->setBackground('#CCFFFF');
+                     $cells->setFont(array(
+                         'family'     => 'Arial',
+                         'size'       => '14',
+                         'bold'       =>  true
+                     ));
+
+                     $cells->setBorder(array(
+                         'top'   => array(
+                             'style' => 'solid'
+                         ),
+                     ));
+                     $cells->setAlignment('center');
+                 });                  
+
+                $sheet->cells('AS1:AS1', function($cells) {
                     $cells->setBackground('#FF0000');
-                });
+                });                
             $sheet->fromArray($per);
            });
         })->download('xls');     

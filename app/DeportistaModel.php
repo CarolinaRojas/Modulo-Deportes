@@ -103,12 +103,29 @@ class DeportistaModel extends Model
     
     public function localidad(){
         return $this->belongsTo('App\Localidad', 'FK_I_ID_LOCALIDAD');
-    }
+    }    
     
-    
-    public function Historialentrenadores()
-    {
+    public function Historialentrenadores(){
         return $this->belongsToMany('App\EntrenadorModel', 'tb_srd_h_deportista_entrenador', 'FK_I_ID_DEPORTISTA_HIST', 'FK_I_ID_ENTRENADOR_HIST')->withPivot('created_at');
     }
     
+    public function eps(){
+        return $this->belongsTo('App\EpsModel', 'FK_I_ID_EPS');
+    }
+    
+    public function estadoCivil(){
+        return $this->belongsTo('App\EstadoCivilModel', 'FK_I_ID_ESTADO_CIVIL');
+    }
+    
+    public function grupoSanguineo(){
+        return $this->belongsTo('App\GrupoSanguineoModel', 'FK_I_ID_GRUPO_SANGUINEO');
+    }
+    
+    public function tipoDeportista(){
+        return $this->belongsTo('App\TipoDeportistaModel', 'FK_I_ID_TIPO_DEPORTISTA');
+    }
+    
+    public function clubDeportivo(){
+        return $this->belongsTo('App\ClubDeportivoModel', 'FK_I_ID_CLUB_DEPORTIVO');
+    }
 }
