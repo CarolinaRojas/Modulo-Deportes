@@ -53,7 +53,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('Dentrenadores/{id}','DeportistaController@deportistaEntrenadores');    
     Route::get('EntrenadorDeporte/{id}','DeportistaController@EntrenadorDeporte');
     
-    Route::get('getDeportes/{id}', 'DeportistaController@getDeporte');
+    Route::get('getDeportes/{id}/{id_tipo_deportista}', 'DeportistaController@getDeporte');
     Route::get('getModalidades/{id}', 'DeportistaController@getModalidad');
     
     

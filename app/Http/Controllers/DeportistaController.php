@@ -296,9 +296,9 @@ class DeportistaController extends Controller{
         return response()->json(["Mensaje" => 'DESTROY']);
     }
 
-    public static function getDeporte(Request $request, $id) {      
+    public static function getDeporte(Request $request, $id, $id_tipo_deportista) {      
         if ($request->ajax()) {
-            $deportes = DeporteModel::getDeportesJSON($id);            
+            $deportes = DeporteModel::getDeportesJSON($id, $id_tipo_deportista);            
         }
         return response()->json($deportes);
     }

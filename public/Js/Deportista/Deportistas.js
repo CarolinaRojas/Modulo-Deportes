@@ -370,13 +370,13 @@ $(function(e){
 
     }
 
-    function showDeportes(id, sel) {  
-        if(id){
+    function showDeportes(id, id_tipo_deportista, sel) {  
+        if(id && id_tipo_deportista){
             if(!sel){
                 $("#Modalidad").empty();
                 $("#Modalidad").append("<option value=''>Seleccionar</option>");
             }
-            $.get("getDeportes/" + id + "", function (response) {            
+            $.get("getDeportes/" + id + "/" + id_tipo_deportista, function (response) {            
                $("#Deporte").empty();            
                 $("#Deporte").append("<option value=''>Seleccionar</option>");            
                 $.each(response, function(i, e){
@@ -385,6 +385,11 @@ $(function(e){
             }).done(function(e){
                 $("#Deporte").val(sel).change();
             });
+        }else{
+            $("#Deporte").empty();            
+            $("#Deporte").append("<option value=''>Seleccionar</option>");
+            $("#Modalidad").empty();
+            $("#Modalidad").append("<option value=''>Seleccionar</option>");
         }
     }
 
@@ -547,10 +552,11 @@ $(function(e){
 
     $('#Tipo_Deportista').on('change', function(e){        
         showEtapas($('#Tipo_Deportista').val(), $("#IdNal").val(), $("#IdInterNal").val());
+        $("#Agrupacion").val('').change();
     });
 
     $('#Agrupacion').on('change', function(e){
-        showDeportes($('#Agrupacion').val(), $("#IdDeporte").val());
+        showDeportes($('#Agrupacion').val(), $("#Tipo_Deportista").val(), $("#IdDeporte").val());
     });
 
     $('#Deporte').on('change', function(e){

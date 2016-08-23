@@ -12,7 +12,7 @@ class DeporteTablaSeeder extends Seeder
     public function run()
     {        
         $arte = ['',
-            'Ajedrez',
+            /*'Ajedrez',
             'Arqueria(C+R)',
             'Billar',
             'Bolo',
@@ -21,32 +21,34 @@ class DeporteTablaSeeder extends Seeder
             'Golf',
             'Patinaje artístico',
             'Tejo',
-            'Tiro'
+            'Tiro'*/
         ];
         for ($contador = 1; $contador < count($arte); $contador ++) {
             DB::table('TB_SRD_DEPORTE')->insert([
                 'FK_I_ID_AGRUPACION' => 1,
+                'FK_I_ID_TIPO_DEPORTISTA' => 1,
                 'V_NOMBRE_DEPORTE' => ($arte [$contador])
             ]);
         }
         
         $combate = ['',
-            'Boxeo',
+            //'Boxeo',
             'Esgrima',
-            'Judo',
+            /*'Judo',
             'Karate',
             'Lucha',
-            'TaeKwondo'
+            'TaeKwondo'*/
         ];
         for ($contador = 1; $contador < count($combate); $contador ++) {
             DB::table('TB_SRD_DEPORTE')->insert([
                 'FK_I_ID_AGRUPACION' => 2,
+                'FK_I_ID_TIPO_DEPORTISTA' => 1,
                 'V_NOMBRE_DEPORTE' => ($combate [$contador])
             ]);
         }
              
         $pelota = ['',
-            'Badminton',
+           /* 'Badminton',
             'Baloncesto',
             'Balón Mano',
             'Béisbol',      
@@ -58,41 +60,49 @@ class DeporteTablaSeeder extends Seeder
             'Tenis',
             'Tenis de Mesa',
             'Tenis',
-            'Voleibol'
+            'Voleibol'*/
         ];
         
         for ($contador = 1; $contador < count($pelota); $contador ++) {
             DB::table('TB_SRD_DEPORTE')->insert([
                 'FK_I_ID_AGRUPACION' => 3,
+                'FK_I_ID_TIPO_DEPORTISTA' => 1,
                 'V_NOMBRE_DEPORTE' => ($pelota [$contador])
             ]);
         }
          $acuatico = ['',
-            'Actividades Subacuáticas',
+             'Canotaje',
+            /*'Actividades Subacuáticas',
             'Esquí Náutico' ,
             'Natación',
             'Triathlon',
-            'Vela'
+            'Vela'*/
         ];
         for ($contador = 1; $contador < count($acuatico); $contador ++) {
             DB::table('TB_SRD_DEPORTE')->insert([
                 'FK_I_ID_AGRUPACION' => 4,
+                'FK_I_ID_TIPO_DEPORTISTA' => 1,
                 'V_NOMBRE_DEPORTE' => ($acuatico [$contador])
             ]);
         }
         
         $terrestre = ['',
-            'Atletismo',
-            'Canotaje',
-            'Ciclismo',
+            //'Atletismo',
+            
+            /*'Ciclismo',
             'Levantamiento de pesas',
-            'Patinaje Carreras',
+            'Patinaje Carreras',*/
         ];        
         for ($contador = 1; $contador < count($terrestre); $contador ++) {
             DB::table('TB_SRD_DEPORTE')->insert([
                 'FK_I_ID_AGRUPACION' => 5,
+                'FK_I_ID_TIPO_DEPORTISTA' => 1,
                 'V_NOMBRE_DEPORTE' => ($terrestre [$contador])
             ]);
         }
+        
+        DB::table('TB_SRD_DEPORTE')->insert([           
+            ['FK_I_ID_AGRUPACION' => 5, 'FK_I_ID_TIPO_DEPORTISTA'=>2, 'V_NOMBRE_DEPORTE' => 'Atletismo']            
+        ]);
     }
 }

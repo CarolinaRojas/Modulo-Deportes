@@ -13,8 +13,15 @@ class ModalidadTablaSeeder extends Seeder
     {
         DB::table('TB_SRD_MODALIDAD')->delete();
         DB::table('TB_SRD_MODALIDAD')->insert([
+            ['FK_I_ID_DEPORTE' => 1, 'V_NOMBRE_MODALIDAD' => 'Canoa'],
+            ['FK_I_ID_DEPORTE' => 1, 'V_NOMBRE_MODALIDAD' => 'Kayak'],
+            ['FK_I_ID_DEPORTE' => 2, 'V_NOMBRE_MODALIDAD' => 'Florete'],
+            ['FK_I_ID_DEPORTE' => 2, 'V_NOMBRE_MODALIDAD' => 'Sable'],
+            ['FK_I_ID_DEPORTE' => 2, 'V_NOMBRE_MODALIDAD' => 'Espada'],
+            ['FK_I_ID_DEPORTE' => 3, 'V_NOMBRE_MODALIDAD' => 'Pista'],
+            ['FK_I_ID_DEPORTE' => 3, 'V_NOMBRE_MODALIDAD' => 'Campo'],
             /******ARTE********/
-            ['FK_I_ID_DEPORTE' => 1, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
+           /* ['FK_I_ID_DEPORTE' => 1, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 2, 'V_NOMBRE_MODALIDAD' => 'No aplica'],            
             ['FK_I_ID_DEPORTE' => 3, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 4, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
@@ -23,14 +30,14 @@ class ModalidadTablaSeeder extends Seeder
             ['FK_I_ID_DEPORTE' => 8, 'V_NOMBRE_MODALIDAD' => 'No aplica'],            
             ['FK_I_ID_DEPORTE' => 9, 'V_NOMBRE_MODALIDAD' => 'No aplica'],            
             /******COMBATE********/
-            ['FK_I_ID_DEPORTE' => 11, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
+          /*  ['FK_I_ID_DEPORTE' => 11, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 12, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 13, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 14, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 15, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 16, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             /*******PELOTA*********/
-            ['FK_I_ID_DEPORTE' => 17, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
+           /* ['FK_I_ID_DEPORTE' => 17, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 18, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 19, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 20, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
@@ -42,15 +49,15 @@ class ModalidadTablaSeeder extends Seeder
             ['FK_I_ID_DEPORTE' => 27, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 28, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             /*******ACUATICO*********/
-            ['FK_I_ID_DEPORTE' => 31, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
+           /* ['FK_I_ID_DEPORTE' => 31, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 33, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 34, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             /*******TERRESTRE*********/
-            ['FK_I_ID_DEPORTE' => 36, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
+           /* ['FK_I_ID_DEPORTE' => 36, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
             ['FK_I_ID_DEPORTE' => 38, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
-            ['FK_I_ID_DEPORTE' => 39, 'V_NOMBRE_MODALIDAD' => 'No aplica'],
+            ['FK_I_ID_DEPORTE' => 39, 'V_NOMBRE_MODALIDAD' => 'No aplica'],*/
         ]);
-        $gimnasia = ['Artística', 'Rítmica'];
+      /*  $gimnasia = ['Artística', 'Rítmica'];
         for ($contador = 0; $contador < count($gimnasia); $contador ++) {
             DB::table('TB_SRD_MODALIDAD')->insert([
                 'FK_I_ID_DEPORTE' => 6,
@@ -105,6 +112,6 @@ class ModalidadTablaSeeder extends Seeder
                 'FK_I_ID_DEPORTE' => 37,
                 'V_NOMBRE_MODALIDAD' => ($ciclismo [$contador])
             ]);
-        }
+        }*/
     }
 }
