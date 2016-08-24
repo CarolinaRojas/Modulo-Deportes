@@ -1,13 +1,12 @@
 var etapas = [];
 var modalidades;
+var IdMod;
 
 $(function(e){ 
     
     getEtapas();
     
     getModalidades($('#Deporte').val());
-    
-    var $personas_actuales = $('#personas').html();   
             
     function buscar(e){
         var key = $('input[name="buscador"]').val();
@@ -86,13 +85,15 @@ $(function(e){
         $('input[name="Telefono_Fijo"]').val('');     
         $('input[name="Telefono_Celular"]').val('');     
         $('input[name="Correo_Electronico"]').val('');     
+        $("#Tipo_Deportista").val('').change();
         $("#Agrupacion").val('').change();
         $("#Deporte").val('').change();
         $("#Etapa_Entrenamiento").val('').change();
         $("#Modalidad").empty();
         $('#Fotografia').val('');
-        $('Modalidad').empty();
         $('input[name="Id_Entrenador"]').val('');
+        $("#IdDeporte").val('');
+        IdMod = '';
         
         $("input[type=checkbox]").prop('checked', false);
         Normal('Telefono_Fijo'); Normal('Telefono_Celular'); Normal('Correo_Electronico'); Normal('Agrupacion'); Normal('Deporte'); Normal('Etapa_Entrenamiento'); Normal('Modalidad');        
@@ -148,7 +149,8 @@ $(function(e){
         $("#Genero").val(persona['Id_Genero']).change();
         $("#Grupo_Etnico").val(persona['Id_Etnia']).change();
         $('input[name="Id_Persona"]').val($.trim(persona['Id_Persona']));
-        $("#SImagen").empty();        
+        $("#SImagen").empty();     
+        IdMod = '';
         
         if(persona.entrenador){      
             if(persona.entrenador['V_URL_IMG'] != ''){
@@ -156,16 +158,16 @@ $(function(e){
                 $("#Imagen").attr('src',$("#Imagen").attr('src')+persona.entrenador['V_URL_IMG']+'?' + (new Date()).getTime());
             }else{            
                 $("#SImagen").append('<span class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span><br>No ha ingresado la imágen del deportista.</span>');
-            }
+            }            
+            $("#IdDeporte").val(persona.entrenador['FK_I_ID_DEPORTE']);
             $('input[name="Id_Entrenador"]').val($.trim(persona.entrenador['PK_I_ID_ENTRENADOR']));
             $('input[name="Telefono_Fijo"]').val($.trim(persona.entrenador['V_TELEFONO_FIJO']));
             $('input[name="Telefono_Celular"]').val($.trim(persona.entrenador['V_TELEFONO_CELULAR']));
             $('input[name="Correo_Electronico"]').val($.trim(persona.entrenador['V_CORREO_ELECTRONICO']));
-            $("#Agrupacion").val(persona.entrenador['FK_I_ID_AGRUPACION']).change();
+            $("#Tipo_Deportista").val(persona.entrenador['FK_I_ID_TIPO_DEPORTISTA']).change();
+            $("#Agrupacion").val(persona.entrenador['FK_I_ID_AGRUPACION']).change();            
+            IdMod = persona.entrenador.modalidades_entrenador;
             
-            showDeportes(persona.entrenador['FK_I_ID_AGRUPACION'], persona.entrenador['FK_I_ID_DEPORTE']);
-            showModalidades(persona.entrenador['FK_I_ID_DEPORTE'], persona.entrenador.modalidades_entrenador);
-           
             /*marcación de etapas de entrenamiento*/
             $.each(persona.entrenador.etapas_entrenador, function(i, e){
                 $("#etapa"+e['PK_I_ID_ETAPA_ENTRENAMIENTO']).prop("checked", "checked");
@@ -187,8 +189,9 @@ $(function(e){
         var Telefono_Celular = $('#Telefono_Celular').val();
         var Correo_Electronico = $('#Correo_Electronico').val();
         var Deporte = $('#Deporte').val();
+        var Tipo_Deportista = $("#Tipo_Deportista").val();
         var Agrupacion = $('#Agrupacion').val();    
-        var  Etapa_Entrenamiento = [];
+        var Etapa_Entrenamiento = [];
         var Modalidad = [];
         var nombre = '';
         var nombreM = '';
@@ -218,7 +221,9 @@ $(function(e){
                 Agrupacion: Agrupacion,
                 Etapa_Entrenamiento: Etapa_Entrenamiento,
                 Modalidad: Modalidad,
+                Tipo_Deportista: Tipo_Deportista
             }   
+            
         $("#mensajeIncorrecto").html(':');        
         var token = $("#token").val();
 
@@ -261,19 +266,22 @@ $(function(e){
 
     }
     
-    function showDeportes(id, sel) {      
-        if(!sel){
-            $("#Modalidad").empty();
-        }
-        if(id){                
-            $.get("getDeportes/" + id + "", function (response) {            
-                $("#Deporte").empty();
-                $("#Deporte").append("<option value=''>Seleccionar</option>");
+    function showDeportes(id, id_tipo_deportista, sel) {  
+        $("#Deporte").empty();            
+        $("#Deporte").append("<option value=''>Seleccionar</option>");
+        $("#Modalidad").empty();
+        if(id && id_tipo_deportista){
+            if(!sel){
+                $("#Modalidad").empty();
+            }
+            $.get("getDeportes/" + id + "/" + id_tipo_deportista, function (response) {            
+               $("#Deporte").empty();            
+                $("#Deporte").append("<option value=''>Seleccionar</option>");            
                 $.each(response, function(i, e){
                     $("#Deporte").append("<option value='" +e.PK_I_ID_DEPORTE + "'>" + e.V_NOMBRE_DEPORTE + "</option>");
                 });
             }).done(function(e){
-                $("#Deporte").val(sel);
+                $("#Deporte").val(sel).change();
             });
         }
     }
@@ -287,7 +295,7 @@ $(function(e){
                    $('#Modalidad').append('<input type="checkbox"  name="modalidad'+e.PK_I_ID_MODALIDAD+'" id ="modalidad'+e.PK_I_ID_MODALIDAD+'" /><small>'+e.V_NOMBRE_MODALIDAD+'</small><br>');
                 });
             }).done(function(e){
-              $.each(seleccion, function(i, e){
+              $.each(IdMod, function(i, e){
                     $("#modalidad"+e['PK_I_ID_MODALIDAD']).prop("checked", "checked");
                 });
             });
@@ -348,39 +356,7 @@ $(function(e){
                     $('#numDeportistas').append((persona.entrenador['historialdeportistas']).length);                        
                     $('#ver_mas').append('<button id="EntrenadorDeportistas" autocomplete="off" data-loading-text="Cargando..." type="button" data-role="EntrenadorDeportistas" data-rel="'+persona['Id_Persona']+'" class="btn btn-primary btn-sm">Ver deportistas</button>');
                     var html = '';
-                    $.each(persona.entrenador['historialdeportistas'], function(i, e){
-                        /*html += '<li class="list-group-item">\n\
-                            <h5 class="list-group-item-heading">\n\
-                                '+e.persona.Primer_Apellido+' '+e.persona.Segundo_Apellido+' '+e.persona.Primer_Nombre+' '+e.persona.Segundo_Nombre+'\n\
-                                <!--<a id="editM" data-role="editar" data-rel="'+e.persona.Id_Persona+'" class="pull-right btn btn-primary btn-xs">\n\
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>\n\
-                                </a>-->\n\
-                            </h5>\n\
-                            <p class="list-group-item-text">\n\
-                                <div class="row">\n\
-                                    <div class="col-xs-12">\n\
-                                        <div class="row">\n\
-                                            <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.persona.Cedula+'</small></div>\n\
-                                        </div>\n\
-                                    </div>\n\
-                                </div>\n\
-                            </p>\n\
-                        </li>';  */
-                       /* html += '<tr>\n\
-                                    <td>\n\
-                                        <h5 class="list-group-item-heading">'+e.persona.Primer_Apellido+' '+e.persona.Segundo_Apellido+' '+e.persona.Primer_Nombre+' '+e.persona.Segundo_Nombre+'</h5>\n\
-                                        <p class="list-group-item-text">\n\
-                                            <div class="row">\n\
-                                                <div class="col-xs-12">\n\
-                                                    <div class="row">\n\
-                                                        <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.persona.Cedula+'</small></div>\n\
-                                                    </div>\n\
-                                                </div>\n\
-                                            </div>\n\
-                                        </p>\n\
-                                    </td>\n\
-                                </tr>';*/
-                        
+                    $.each(persona.entrenador['historialdeportistas'], function(i, e){                        
                         t.row.add( ['<tr>\n\
                                     <td>\n\
                                         <h5 class="list-group-item-heading">'+e.persona.Primer_Apellido+' '+e.persona.Segundo_Apellido+' '+e.persona.Primer_Nombre+' '+e.persona.Segundo_Nombre+'</h5>\n\
@@ -450,9 +426,13 @@ $(function(e){
     
     $('#Enviar').on('click', function () { RegistroEntrenador(); $("#Enviar").button('loading'); });
     
-    $('#Agrupacion').on('change', function(e){ showDeportes($('#Agrupacion').val()); });
+    $("#Tipo_Deportista").on('change', function(e){
+        $("#Agrupacion").val('').change();
+    });
     
-    $('#Deporte').on('change', function(e){ showModalidades($('#Deporte').val()); });    
+    $('#Agrupacion').on('change', function(e){showDeportes($('#Agrupacion').val(), $("#Tipo_Deportista").val(), $("#IdDeporte").val());});
+    
+    $('#Deporte').on('change', function(e){showModalidades($('#Deporte').val()), $("#IdModalidad").val();});
          
     var t = $('#HDData').DataTable({
         retrieve: true,

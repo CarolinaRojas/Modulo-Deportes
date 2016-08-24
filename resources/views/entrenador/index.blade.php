@@ -190,6 +190,20 @@
                                 </div>
                             </div>
                             <br>
+                            <div class="row">
+                                 <div class="col-md-2">
+                                    <label for="inputEmail" class="control-label" id="Tipo_DeportistaL">Tipo Deportista:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="Tipo_Deportista" id="Tipo_Deportista" class="form-control">
+                                        <option value="">Seleccionar</option>
+                                        @foreach($tipo_deportista as $tipo_deportistas)
+                                            <option value="{{ $tipo_deportistas['PK_I_ID_TIPO_DEPORTISTA'] }}">{{ $tipo_deportistas['V_NOMBRE_TIPO_DEPORTISTA'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
                              <div class="row">
                                  <div class="col-md-2">
                                     <label for="inputEmail" class="control-label" id="AgrupacionL">Agrupación:</label>
@@ -205,6 +219,7 @@
                                 <div class="col-md-2">
                                     <label for="inputEmail" class="control-label" id="DeporteL">Deporte:</label>
                                 </div>
+                                 <input type="hidden" id="IdDeporte" name="IdDeporte" />
                                 <div class="col-md-4">
                                     <select name="Deporte" id="Deporte" class="form-control">
                                         <option value="">Seleccionar</option>
@@ -216,6 +231,7 @@
                                 <div class="col-md-2">
                                     <label for="inputEmail" class="control-label" id="ModalidadL">Modalidades:</label>
                                 </div>
+                                <input type="hidden" id="IdDeporte" name="IdModalidad" />
                                 <div class="col-md-4">
                                     <div class="col-md-12" id="Modalidad">
                                         <!--@foreach($etapasEntrenamiento as $etapasEntrenamientos)

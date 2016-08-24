@@ -27,6 +27,7 @@ class RegistroEntrenadorRequest extends Request
             'Telefono_Fijo'=> 'required|numeric|digits_between:7,10',
             'Telefono_Celular'=> 'required|numeric|digits:10',
             'Correo_Electronico'=> 'required|email|min:7|max:40',
+            'Tipo_Deportista' => 'required',
             'Agrupacion' => 'required',
             'Deporte' => 'required',
             'Etapa_Entrenamiento' => 'required|array',

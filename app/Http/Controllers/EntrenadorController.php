@@ -3,21 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Requests\RegistroEntrenadorRequest;
-
 use App\Models\Persona;
 use App\Models\Etnia;
 use App\Models\Pais;
 use App\Models\Genero;
 use App\Models\EntrenadorModel;
 use App\Models\EtapaEntrenamientoModel;
-//use App\DeporteModel;
+use App\Models\TipoDeportistaModel;
 use App\Models\AgrupacionModel;
-/*use App\EntrenadorEtapaModel;
-use App\EntrenadorModalidadModel;*/
-
 use Validator;
 
 class EntrenadorController extends Controller
@@ -32,6 +26,7 @@ class EntrenadorController extends Controller
         $pais = Pais::all();        
         $genero = Genero::all();
         $etapasEntrenamiento = EtapaEntrenamientoModel::all();
+        $tipo_deportista = TipoDeportistaModel::all();
         $agrupacion = AgrupacionModel::all();
      
         $entrenador = array();
@@ -40,6 +35,7 @@ class EntrenadorController extends Controller
                 ->with(compact('pais'))
                 ->with(compact('genero'))
                 ->with(compact('etapasEntrenamiento'))
+                ->with(compact('tipo_deportista'))                
                 ->with(compact('agrupacion'));
     }
 
@@ -60,11 +56,11 @@ class EntrenadorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(RegistroEntrenadorRequest $request)
-    {        
-       // dd('store');
+    {
         if ($request->ajax()){
             $entrenador = new EntrenadorModel;
             $entrenador->FK_I_ID_PERSONA = $request->Id_Persona;
+            $entrenador->FK_I_ID_TIPO_DEPORTISTA = $request->Tipo_Deportista;
             $entrenador->FK_I_ID_AGRUPACION = $request->Agrupacion;
             $entrenador->FK_I_ID_DEPORTE = $request->Deporte;
             $entrenador->V_TELEFONO_FIJO = $request->Telefono_Fijo;
@@ -120,10 +116,10 @@ class EntrenadorController extends Controller
      */
     public function update(RegistroEntrenadorRequest $request, $id)
     {
-    //    dd('update');
         if ($request->ajax()){            
             $entrenador = EntrenadorModel::find($id);
             $entrenador->FK_I_ID_PERSONA = $request->Id_Persona;
+            $entrenador->FK_I_ID_TIPO_DEPORTISTA = $request->Tipo_Deportista;
             $entrenador->FK_I_ID_AGRUPACION = $request->Agrupacion;
             $entrenador->FK_I_ID_DEPORTE = $request->Deporte;
             $entrenador->V_TELEFONO_FIJO = $request->Telefono_Fijo;

@@ -15,6 +15,7 @@ class CrearTablaSrdEntrenador extends Migration
         Schema::create('TB_SRD_ENTRENADOR', function (Blueprint $table) {
             $table->increments('PK_I_ID_ENTRENADOR');
             $table->integer('FK_I_ID_PERSONA');
+            $table->integer('FK_I_ID_TIPO_DEPORTISTA')->unsigned();
             $table->integer('FK_I_ID_AGRUPACION')->unsigned();
             $table->integer('FK_I_ID_DEPORTE')->unsigned();
             $table->string('V_TELEFONO_FIJO');
@@ -24,6 +25,7 @@ class CrearTablaSrdEntrenador extends Migration
             
             $table->timestamps();
             
+            $table->foreign('FK_I_ID_TIPO_DEPORTISTA')->references('PK_I_ID_TIPO_DEPORTISTA')->on('TB_SRD_TIPO_DEPORTISTA');
             $table->foreign('FK_I_ID_AGRUPACION')->references('PK_I_ID_AGRUPACION')->on('TB_SRD_AGRUPACION');
             $table->foreign('FK_I_ID_DEPORTE')->references('PK_I_ID_DEPORTE')->on('TB_SRD_DEPORTE');            
             

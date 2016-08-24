@@ -28,14 +28,12 @@ use App\Models\TipoCuentaModel;
 use App\Models\TipoEtapaModel;
 use App\Models\Localidad;
 use App\Models\TipoTallaModel;
-//use App\HistorialDeportistaEntrenadorModel;
 use App\Http\Requests\RegistroDeportistaRequest;
 use App\Http\Requests\DeportivaRequest;
 use App\Http\Requests\EstimuloRequest;
 use Validator;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Session;
-//use Carbon\Carbon;
 
 class DeportistaController extends Controller{
     protected $Usuario;

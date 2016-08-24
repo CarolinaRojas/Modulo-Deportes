@@ -73,7 +73,7 @@ class DeportistaModel extends Model
     }
     
     public function modalidad(){
-        return $this->belongsTo('AppModels\ModalidadModel', 'FK_I_ID_MODALIDAD');
+        return $this->belongsTo('App\Models\ModalidadModel', 'FK_I_ID_MODALIDAD');
     }
     
     public function etapa_nal(){
