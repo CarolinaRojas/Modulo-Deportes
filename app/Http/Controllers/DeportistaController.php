@@ -310,11 +310,16 @@ class DeportistaController extends Controller{
 
     public function storeDeportiva(DeportivaRequest $request, $id) {        
         if ($request->ajax()){
-
-            $ArrayEntrenadores=array_values(array_diff($request->ArrayEntrenador, array('')));
             $deportista = DeportistaModel::find($id);            
+            if($request->ArrayEntrenador){
+                $ArrayEntrenadores=array_values(array_diff($request->ArrayEntrenador, array('')));                
+                /*$deportista->entrenadores()->sync($ArrayEntrenadores);            
+                $deportista->Historialentrenadores()->attach($ArrayEntrenadores);*/
+            }else{
+                $ArrayEntrenadores = [];
+                
+            }
             $deportista->entrenadores()->sync($ArrayEntrenadores);            
-
             $deportista->Historialentrenadores()->attach($ArrayEntrenadores);
 
             $deportista->FK_I_ID_CLUB_DEPORTIVO = $request->Club_Deportivo;

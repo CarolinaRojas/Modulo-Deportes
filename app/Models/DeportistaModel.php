@@ -45,7 +45,7 @@ class DeportistaModel extends Model
     
     public function persona()
     {
-        return $this->belongsTo('App\Persona', 'FK_I_ID_PERSONA');
+        return $this->belongsTo('App\Models\Persona', 'FK_I_ID_PERSONA');
     }
     
 
