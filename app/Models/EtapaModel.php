@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\TipoEtapaModel;
+use App\Models\TipoEtapaModel;
 
 
 class EtapaModel extends Model
@@ -14,7 +14,7 @@ class EtapaModel extends Model
     
     public function tipoEtapa()
     {
-        return $this->hasMany('App\TipoEtapaModel', 'PK_I_ID_TIPO_ETAPA');
+        return $this->hasMany('App\Models\TipoEtapaModel', 'PK_I_ID_TIPO_ETAPA');
     }
     
     public function etapas()

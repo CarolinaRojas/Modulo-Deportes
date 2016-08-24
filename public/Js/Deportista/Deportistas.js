@@ -216,6 +216,7 @@ $(function(e){
           $("#Localidad").val(persona.deportista['FK_I_ID_LOCALIDAD']).change();
           $("#Grupo_Sanguineo").val(persona.deportista['FK_I_ID_GRUPO_SANGUINEO']).change();
           $("#Tipo_Deportista").val(persona.deportista['FK_I_ID_TIPO_DEPORTISTA']).change();
+          $("#Agrupacion").val(persona.deportista['FK_I_ID_AGRUPACION']).change();
           $("#Situacion_Militar").val(persona.deportista['FK_I_ID_SITUACION_MILITAR']).change();
           document.getElementById("Fecha_Ingreso").value = persona.deportista['D_FECHA_INGRESO'];
           
@@ -371,6 +372,10 @@ $(function(e){
     }
 
     function showDeportes(id, id_tipo_deportista, sel) {  
+        $("#Deporte").empty();            
+        $("#Deporte").append("<option value=''>Seleccionar</option>");
+        $("#Modalidad").empty();
+        $("#Modalidad").append("<option value=''>Seleccionar</option>");
         if(id && id_tipo_deportista){
             if(!sel){
                 $("#Modalidad").empty();
@@ -385,19 +390,14 @@ $(function(e){
             }).done(function(e){
                 $("#Deporte").val(sel).change();
             });
-        }else{
-            $("#Deporte").empty();            
-            $("#Deporte").append("<option value=''>Seleccionar</option>");
-            $("#Modalidad").empty();
-            $("#Modalidad").append("<option value=''>Seleccionar</option>");
         }
     }
 
     function showModalidades(id, seleccion) {
-        if(id){
-            $("#Modalidad").empty();
-            $.get("getModalidades/" + id + "", function (response) {                  
-                $("#Modalidad").append("<option value=''>Seleccionar</option>");
+        $("#Modalidad").empty();
+        $("#Modalidad").append("<option value=''>Seleccionar</option>");
+        if(id){            
+            $.get("getModalidades/" + id + "", function (response) {                     
                 $.each(response, function(i, e){
                    $('#Modalidad').append('<option value="'+ e.PK_I_ID_MODALIDAD +'">'+ e.V_NOMBRE_MODALIDAD +'</option>');
                 });
@@ -408,6 +408,12 @@ $(function(e){
     }
 
     function showEtapas(id_tipo_deportista, seleccion_nal, seleccion_inter){
+        
+        $("#EtapaNacional").empty();
+        $("#EtapaNacional").append("<option value=''>Seleccionar</option>");
+        $("#EtapaInternacional").empty();
+        $("#EtapaInternacional").append("<option selected value=''>Seleccionar</option>");
+        
         if(id_tipo_deportista != 0){
             var id_tipo_etapa_nac = 0;
             var id_tipo_etapa_inter = 0;
@@ -420,20 +426,15 @@ $(function(e){
                 id_tipo_etapa_nac = 3;
                 id_tipo_etapa_inter = 4;
             }
-            
-            $.get("getEtapasNac/" + id_tipo_etapa_nac + "", function (response) {
-                $("#EtapaNacional").empty();
-                    $("#EtapaNacional").append("<option value=''>Seleccionar</option>");
+            $.get("getEtapasNac/" + id_tipo_etapa_nac + "", function (response) {                
                     $.each(response, function(i, ex){
-                        $('#EtapaNacional').append('<option value="'+ ex.PK_I_ID_ETAPA +'">'+ ex.V_NOMBRE_ETAPA +'</option>');
+                        $('#EtapaNacional').append('<option value="'+ ex.PK_I_ID_ETAPA +'">'+ ex.V_NOMBRE_ETAPA +'</option>');                        
                     });
             }).done(function(){
                 $("#EtapaNacional").val(seleccion_nal).change();
             });
 
-            $.get("getEtapasInter/" + id_tipo_etapa_inter + "", function (response) {
-                $("#EtapaInternacional").empty();
-                    $("#EtapaInternacional").append("<option value=''>Seleccionar</option>");
+            $.get("getEtapasInter/" + id_tipo_etapa_inter + "", function (response) {                
                     $.each(response, function(i, e){
                         $('#EtapaInternacional').append('<option value="'+ e.PK_I_ID_ETAPA +'">'+ e.V_NOMBRE_ETAPA +'</option>');
                     });

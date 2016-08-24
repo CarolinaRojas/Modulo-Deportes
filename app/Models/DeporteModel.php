@@ -12,8 +12,7 @@ class DeporteModel extends Model
     
     
     public static function getDeportesJSON($id, $id_tipo_deportista){
-        return DeporteModel::where('FK_I_ID_AGRUPACION', '=', $id)
-                ->get();
+        return DeporteModel::where([['FK_I_ID_AGRUPACION', '=', $id], ['FK_I_ID_TIPO_DEPORTISTA', '=', $id_tipo_deportista]])->get();
     }
     
 }
