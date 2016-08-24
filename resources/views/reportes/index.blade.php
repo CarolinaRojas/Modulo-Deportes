@@ -2,16 +2,15 @@
 @section('script')
   @parent
     <script src="{{ asset('public/Js/Reportes/reportes.js') }}"></script> 
-        
-    {{Html::script('public/Js/jquery.dataTables.js')}}
-    {{Html::script('public/Js/dataTables.responsive.min.js')}}        
-    {{Html::style('public/Css/jquery.dataTables.min.css')}}
-    {{Html::style('public/Css/bootstrap.css')}}
-    {{Html::script('public/Js/tablesIdioma.js')}}   
-    {{Html::style('public/Css/dataTables.bootstrap.min.css')}}
-    {{Html::script('public/Js/dataTables.bootstrap.min.js')}}
+    <script src="{{ asset('public/Js/General/bootstrap-datepicker.js') }}"></script>
+    {{Html::script('public/Js/General/jquery.dataTables.js')}}
+    {{Html::script('public/Js/General/dataTables.responsive.min.js')}}        
+    {{Html::script('public/Js/General/tablesIdioma.js')}}   
+    {{Html::script('public/Js/General/dataTables.bootstrap.min.js')}}
     
-    <script src="{{ asset('public/Js/bootstrap-datepicker.js') }}"></script>
+    {{Html::style('public/Css/jquery.dataTables.min.css')}}
+    {{Html::style('public/Css/bootstrap.css')}}    
+    {{Html::style('public/Css/dataTables.bootstrap.min.css')}}    
     {{Html::style('public/Css/bootstrap-datepicker3.css')}}    
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyB6K1CFUQ1RwVJ-nyXxd6W0rfiIBe12Q&libraries=places" type="text/javascript"></script>

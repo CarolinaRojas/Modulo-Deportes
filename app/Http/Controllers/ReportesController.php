@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\AgrupacionModel;
-use App\DeporteModel;
-use App\ModalidadModel;
-use App\Persona;
-use App\Tipo;
-use App\Genero;
-use App\Localidad;
-use App\TipoDeportistaModel;
+use App\Models\AgrupacionModel;
+use App\Models\DeporteModel;
+use App\Models\ModalidadModel;
+use App\Models\Persona;
+use App\Models\Tipo;
+use App\Models\Genero;
+use App\Models\Localidad;
+use App\Models\TipoDeportistaModel;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 

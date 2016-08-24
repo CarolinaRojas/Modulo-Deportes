@@ -7,16 +7,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\RegistroEntrenadorRequest;
 
-use App\Persona;
-use App\Etnia;
-use App\Pais;
-use App\Genero;
-use App\EntrenadorModel;
-use App\EtapaEntrenamientoModel;
-use App\DeporteModel;
-use App\AgrupacionModel;
-use App\EntrenadorEtapaModel;
-use App\EntrenadorModalidadModel;
+use App\Models\Persona;
+use App\Models\Etnia;
+use App\Models\Pais;
+use App\Models\Genero;
+use App\Models\EntrenadorModel;
+use App\Models\EtapaEntrenamientoModel;
+//use App\DeporteModel;
+use App\Models\AgrupacionModel;
+/*use App\EntrenadorEtapaModel;
+use App\EntrenadorModalidadModel;*/
 
 use Validator;
 

@@ -1,14 +1,13 @@
 @extends('master')
 @section('script')
   @parent
-    <script src="{{ asset('public/Js/Entrenador/Entrenador.js') }}"></script> 
+    <script src="{{ asset('public/Js/Entrenador/Entrenador.js') }}"></script>     
+    {{Html::script('public/Js/General/jquery.dataTables.js')}}
+    {{Html::script('public/Js/General/dataTables.responsive.min.js')}}
+    {{Html::script('public/Js/General/responsive.bootstrap.min.js')}}
+    {{Html::script('public/Js/General/responsive.bootstrap.min.js')}}
+    
     {{Html::style('public/Css/bootstrap.css')}}
-    
-    {{Html::script('public/Js/jquery.dataTables.js')}}
-    {{Html::script('public/Js/dataTables.responsive.min.js')}}
-    {{Html::script('public/Js/responsive.bootstrap.min.js')}}
-    {{Html::script('public/Js/responsive.bootstrap.min.js')}}
-    
     {{Html::style('public/Css/jquery.dataTables.min.css')}}
     {{Html::style('public/Css/responsive.bootstrap.min.css')}}
         

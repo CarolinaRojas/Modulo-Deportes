@@ -4,17 +4,16 @@
     <script src="{{ asset('public/Js/Deportista/Deportistas.js') }}"></script> 
     <script src="{{ asset('public/Js/Deportista/Deportiva.js') }}"></script> 
     <script src="{{ asset('public/Js/Deportista/ApoyoServicios.js') }}"></script>    
+    <script src="{{ asset('public/Js/General/bootstrap-datepicker.js') }}"></script>
+    {{Html::script('public/Js/General/jquery.dataTables.js')}}
+    {{Html::script('public/Js/General/dataTables.responsive.min.js')}}        
+    {{Html::script('public/Js/General/tablesIdioma.js')}}   
+    {{Html::script('public/Js/General/dataTables.bootstrap.min.js')}}
     
-    {{Html::script('public/Js/jquery.dataTables.js')}}
-    {{Html::script('public/Js/dataTables.responsive.min.js')}}        
+    
     {{Html::style('public/Css/jquery.dataTables.min.css')}}
-    {{Html::style('public/Css/bootstrap.css')}}
-    {{Html::script('public/Js/tablesIdioma.js')}}   
+    {{Html::style('public/Css/bootstrap.css')}}    
     {{Html::style('public/Css/dataTables.bootstrap.min.css')}}
-    
-    {{Html::script('public/Js/dataTables.bootstrap.min.js')}}
-    
-    <script src="{{ asset('public/Js/bootstrap-datepicker.js') }}"></script>
     {{Html::style('public/Css/bootstrap-datepicker3.css')}}
     
 @stop  

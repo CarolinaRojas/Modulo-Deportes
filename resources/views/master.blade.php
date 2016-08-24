@@ -16,10 +16,10 @@
           <link rel="icon" type="image/png" href="{{ asset('public/Img/icono.png') }}" />
       @show
       @section('script')
-          <script src="{{ asset('public/Js/jquery.js') }}"></script>
-          <script src="{{ asset('public/Js/jquery-ui.js') }}"></script>
-          <script src="{{ asset('public/Js/bootstrap.min.js') }}"></script>
-          <script src="{{ asset('public/Js/main.js') }}"></script>
+          <script src="{{ asset('public/Js/General/jquery.js') }}"></script>
+          <script src="{{ asset('public/Js/General/jquery-ui.js') }}"></script>
+          <script src="{{ asset('public/Js/General/bootstrap.min.js') }}"></script>
+          <script src="{{ asset('public/Js/General/main.js') }}"></script>
 
           <meta name="csrf-token" content="{{ csrf_token() }}" />
           <script type="text/javascript">
