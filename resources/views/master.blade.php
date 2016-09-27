@@ -60,6 +60,22 @@
               </li>
 
               <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">SIAB<span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="themes">
+
+                  <li ><a href="#" style="color:#1995dc">DEPORTISTAS</a></li>
+                  <li class="divider"></li> 
+                  <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( 'DatosDeportista') }}">Registro único de deportistas</a></li>
+                  <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( '#') }}">Valoración psico-social</a></li>
+                  <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( '#') }}">Visita domiciliaria</a></li>
+
+                  <li ><a href="#" style="color:#1995dc">INTERVENCIÓN CULTURAL Y DE COHESIÓN</a></li>
+                  <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( '#') }}">Registro de actividades</a></li>
+                  <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( '#') }}">Ejecución de actividades</a></li>
+                </ul>
+              </li>
+
+             <!-- <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Deportista<span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="download">
                   <li><a href="#" style="color:#1995dc">GESTIÓN DEPORTIVA</a></li>
@@ -68,7 +84,7 @@
                     <li><a href="{{URL::to('DatosDeportista')}}">Gestión de deportistas</a></li>
                   @endif
                   @if($_SESSION['Usuario'][3] == 1)
-                    <li><a href="{{URL::to('reportes')}}"> <!--style="color:#1995dc"--> Reportes de deportistas</a></li>                  
+                    <li><a href="{{URL::to('reportes')}}"> Reportes de deportistas</a></li>                  
                   @endif
                 </ul>
               </li>
@@ -79,7 +95,7 @@
                       <li><a href="{{URL::to('GestionEntrenador')}}">Gestión de entrenadores</a></li>  
                 </ul>
               @endif
-              </li>
+              </li>-->
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">

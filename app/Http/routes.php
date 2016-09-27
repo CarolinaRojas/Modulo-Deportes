@@ -42,13 +42,13 @@ Route::get('/personas/service/buscar/{key}', '\Idrd\Usuarios\Controllers\Persona
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-Route::any('/', 'DeportistaController@show');
-Route::any('/logout', 'DeportistaController@logout');
+Route::any('/', 'MasterController@show');
+Route::any('/logout', 'MasterController@logout');
 
 Route::group(['middleware' => ['web']], function () {    
     
-    Route::get('DatosDeportista','DeportistaController@index');
-    Route::get('deportista/{id}','DeportistaController@datos');
+    Route::get('DatosDeportista','MasterController@index');
+  /*  Route::get('deportista/{id}','DeportistaController@datos');
     Route::get('entrenador/{id}','DeportistaController@datosEntrenador');    
     Route::get('Dentrenadores/{id}','DeportistaController@deportistaEntrenadores');    
     Route::get('EntrenadorDeporte/{id}','DeportistaController@EntrenadorDeporte');
@@ -73,7 +73,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('AddEstimulo','DeportistaController@AgregarEstimulo');
     
     /***************RUTAS PARA REPORTES******************/
-    Route::get('HistorialIndividual/{id}/{inicio}','ReportesController@HistorialIndividual');
+ /*   Route::get('HistorialIndividual/{id}/{inicio}','ReportesController@HistorialIndividual');
     Route::get('HistorialEstimulos/{id}/{inicio}/{fin}','ReportesController@ReporteDeportistaEstimulos');
     Route::resource('reportes','ReportesController');
     
@@ -88,7 +88,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('tipoDeportistas', 'ReportesController@TipoDeportistas');
     
     /************RUTAS PARA ENTRENADORES*********************/
-    Route::get('GestionEntrenador','EntrenadorController@index');
+ /*   Route::get('GestionEntrenador','EntrenadorController@index');
     Route::get('entrenador/{id}','EntrenadorController@datos');
     
     Route::post('AddEntrenador', 'EntrenadorController@store');
@@ -97,5 +97,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('getEtapasEntrenamiento', 'EntrenadorController@getEtapasEntrenamiento');
     Route::post('AddImagenEnt/{id}','EntrenadorController@AgregarImagen'); 
     Route::get('conteoDeportistas', 'EntrenadorController@conteoDeportistas');
-    
+    */
 });
